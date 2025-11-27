@@ -25,7 +25,7 @@
     margin-right: 2rem;
     
 }
-li {
+.container ul li {
   list-style: none;
   padding: 10px 20px;
   background: linear-gradient(to right, #0E1F32 0%, #0E1F32 100%);
@@ -36,13 +36,15 @@ li {
   text-decoration: underline;
 }
 
-li:hover {
+.container ul li:hover {
   background-size: 100% 100%;
   color: white;
   transition: background-size 0.4s linear;
 }
 
-
+a{
+    color: black;
+}
 
 #logo-id{
     /* margin-right: auto; */

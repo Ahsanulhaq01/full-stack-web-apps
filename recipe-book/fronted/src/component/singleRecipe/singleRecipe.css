@@ -1,5 +1,120 @@
 .recipe-container{
-    min-height: 100vh;
+    min-height: calc(100vh - 70px);
+    margin-top: 70px;
     color: white;
     width: 100%;
+    background-color: #0E1F32;
+    display: grid;
+    grid-template-columns: repeat('auto-fit' , minmax(400px ,1fr));
+    padding: 8px 16px;
+    gap: 8px;
+
+}
+.image-side-container{
+    /* border: 2px solid black; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 4px 8px;
+    border: 1px solid rgb(143, 146, 143);
+    border-radius: 10px;
+    gap: 4px;
+}
+.name-of-recipe{
+    height: 100px;
+    border-bottom: 0.5px solid white;
+    font-weight: bold;
+    text-align: center;
+    padding: 4px 8px;
+}
+.image-and-attributes{
+    display: flex;
+    justify-content: space-between;
+    gap:1rem;
+    padding: 4px 6px;
+}
+.image-and-attributes img{
+    width: 200px;
+    object-fit: contain;
+    border-radius: 8px;
+    flex-grow: 1;
+}
+.attributes{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-left: 8px;
+    border-left: 1px solid white;
+}
+.attributes p{
+    font-weight: bold;
+    font-size: 14px;
+    text-decoration: underline;
+}
+.rating-review-and-caloriesCount{
+    border-top: 1px solid rgb(175, 175, 175);
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-grow: 1;
+    padding: 4px 2px;
+}
+.rating-review-and-caloriesCount:nth-child(3){
+    font-weight: bold;
+}
+.rating-review{
+    display: flex;
+    justify-content: space-evenly;
+    border-bottom: 1px solid rgb(71, 71, 71);
+    padding: 8px;
+    width: 100%;
+   
+}
+.rating-review p , .calories-count{
+    border: 1px solid white;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+/* right side container */
+.ingrediant-instruction-container{
+    border: 1px solid rgb(143, 146, 143);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    padding: 6px 10px;
+    justify-content: space-between;
+    gap:8px
+}
+.prep-and-cook-time{
+    display: flex;
+    justify-content: space-around;
+    height: 60px;
+    border: 1px solid white;
+    align-items: center;
+    border-radius: 4px;
+    font-weight: bold;
+
+}
+.ingrediant{
+    border: 1px solid white;
+     border-radius: 4px;
+    flex-grow: 1;
+    padding: 6px 10px;
+    font-weight: bold;
+    font-size: 14px;
+}
+.instruction{
+   border: 1px solid white;
+     border-radius: 4px;
+    height: 200px;
+    padding: 6px 10px;
+    font-weight: bold;
+    font-size: 14px;
+}
+p li{
+    margin-top: 4px;
+    font-weight: normal;
+    margin-left: 20px;
 }
