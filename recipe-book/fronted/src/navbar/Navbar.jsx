@@ -3,7 +3,7 @@ function Navbar() {
   return (
    <>
     <div className="container">
-         <span id='logo-id'>Recipe Book</span>
+         <span id='logo-id'>RECIPE BOOK</span>
          <i class="fa-solid fa-bars active"></i>
         <ul className='nav-list'>
             <li key={1}>Home</li>
