@@ -3,13 +3,13 @@
     border-radius: 4px;
     height: 100vh;
     display: grid;
-    grid-template-columns: repeat(auto-fit , minmax(100px , 300px));
+    grid-template-columns: repeat(auto-fit , minmax(100px , 400px));
     place-content: center;
 }
 .login-form{
     border: 0.2px solid white;
     border-radius: 4px;
-    height: 500px;
+    height: 520px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -38,7 +38,7 @@
     flex-grow: 1;
     border-radius: 4px;
 }
-input{
+.user-inputs input{
     width: 80%;
     padding: 8px 4px;
     border: none;

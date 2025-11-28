@@ -9,7 +9,7 @@ function Navbar() {
         <ul className='nav-list'>
           <Link to={'/'}><li key={1}>Home</li></Link>
             
-            <li key={2}>Login</li>
+            <Link to={'/login'}><li key={2}>Login</li></Link>
             <li key={3}>Sign Up</li>
         </ul>
     </div>

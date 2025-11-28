@@ -1,10 +1,7 @@
-import React, { useState } from 'react'
 import './login.css'
 
-function Login() {
-    const [showPassword ,setShowPassword] = useState(false);
-
-    function handleshowpass(){
+function Login({showPassword , setShowPassword}) {
+     function handleshowpass(){
         setShowPassword(!showPassword);
     }
   return (
@@ -33,4 +30,4 @@ function Login() {
   )
 }
 
-export default Login
+export default Login;
