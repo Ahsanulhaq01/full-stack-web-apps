@@ -9,8 +9,8 @@ function Navbar() {
         <ul className='nav-list'>
           <Link to={'/'}><li key={1}>Home</li></Link>
             
-            <li key={2}>Contact</li>
-            <li key={3}>About</li>
+            <li key={2}>Login</li>
+            <li key={3}>Sign Up</li>
         </ul>
     </div>
    </>

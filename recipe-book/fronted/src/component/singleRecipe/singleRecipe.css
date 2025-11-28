@@ -5,7 +5,7 @@
     width: 100%;
     background-color: #0E1F32;
     display: grid;
-    grid-template-columns: repeat('auto-fit' , minmax(400px ,1fr));
+    grid-template-columns: repeat(auto-fit , minmax(200px ,1fr));
     padding: 8px 16px;
     gap: 8px;
 
@@ -21,7 +21,7 @@
     gap: 4px;
 }
 .name-of-recipe{
-    height: 100px;
+    height: 60px;
     border-bottom: 0.5px solid white;
     font-weight: bold;
     text-align: center;
@@ -29,12 +29,12 @@
 }
 .image-and-attributes{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     gap:1rem;
     padding: 4px 6px;
 }
 .image-and-attributes img{
-    width: 200px;
+    max-width: 200px;
     object-fit: contain;
     border-radius: 8px;
     flex-grow: 1;
@@ -104,6 +104,7 @@
     padding: 6px 10px;
     font-weight: bold;
     font-size: 14px;
+    overflow: scroll;
 }
 .instruction{
    border: 1px solid white;
@@ -112,9 +113,28 @@
     padding: 6px 10px;
     font-weight: bold;
     font-size: 14px;
+    overflow: scroll;
 }
 p li{
     margin-top: 4px;
     font-weight: normal;
     margin-left: 20px;
+}
+
+@media (max-width : 750px) {
+    .image-and-attributes{
+        flex-direction: column;
+    }
+}
+@media (max-width:420px) {
+    
+    .attributes{
+        /* flex-direction: row; */
+        padding: 0;
+        border: 1px solid white;
+        gap:4px
+    }
+    .prep-and-cook-time{
+        font-size: 14px;
+    }
 }
