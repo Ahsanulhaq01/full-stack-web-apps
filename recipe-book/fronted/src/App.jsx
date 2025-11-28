@@ -5,10 +5,12 @@ import './App.css'
 import SingleRecipe from "./component/singleRecipe/SingleRecipe"
 import Login from "./component/login/Login"
 import Signup from "./component/signup/Signup"
+import RouteTitle from "./utils/RouteTitle"
 function App() {
     const [showPassword ,setShowPassword] = useState(false);
     return(
         <>
+            <RouteTitle/>
         <Routes>
             <Route index element={<Homepage/>}/>
             <Route path="/recipe/:id" element={<SingleRecipe/>}/>

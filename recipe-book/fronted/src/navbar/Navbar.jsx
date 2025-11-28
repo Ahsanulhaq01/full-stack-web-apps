@@ -8,9 +8,8 @@ function Navbar() {
          <i className="fa-solid fa-bars active"></i>
         <ul className='nav-list'>
           <Link to={'/'}><li key={1}>Home</li></Link>
-            
-            <Link to={'/login'}><li key={2}>Login</li></Link>
-            <li key={3}>Sign Up</li>
+          <Link to={'/login'}><li key={2}>Login</li></Link>
+          <Link to={'/register'}><li key={3}>Sign up</li></Link>
         </ul>
     </div>
    </>
