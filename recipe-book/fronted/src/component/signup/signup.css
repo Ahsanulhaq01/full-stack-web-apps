@@ -4,7 +4,7 @@
     justify-content: center;
 }
 
-.signup-form{
+.signup-form form{
     display: flex;
     border: 0.3px solid white;
     border-radius: 4px;

@@ -6,7 +6,7 @@
     grid-template-columns: repeat(auto-fit , minmax(100px , 400px));
     place-content: center;
 }
-.login-form{
+.login-form form{
     border: 0.2px solid white;
     border-radius: 4px;
     height: 520px;

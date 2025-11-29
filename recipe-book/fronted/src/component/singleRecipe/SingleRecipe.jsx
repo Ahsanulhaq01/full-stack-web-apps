@@ -3,20 +3,31 @@ import './singleRecipe.css'
 import Navbar from '../../navbar/Navbar'
 import { useParams } from 'react-router';
 import axios from 'axios';
+import { Navigate } from 'react-router';
+import { axiosInstance } from '../../utils/axiosInstance';
 
 function SingleRecipe() {
     const [recipe ,setRecipe] = useState({ instructions : [] , ingredients : []});
+    const [isAuth , setIsAuth] = useState(null);
     const {id} = useParams();
 
     useEffect(()=>{
         const getRecipes = async()=>{
-            const response = await axios.get(`https://dummyjson.com/recipes/${id}`);
-            setRecipe(response.data);
+            try {
+                await axiosInstance.get('/check-auth');
+                setIsAuth(true);
+                const response = await axios.get(`https://dummyjson.com/recipes/${id}`);
+                setRecipe(response.data);
+            } catch (err) {
+                setIsAuth(false);
+                console.log(err)
+            }
         }
         getRecipes();
     },[id])
 
-   
+    if(!isAuth)return <Navigate to={"/login"}/>
+  
   return (
     <>
     <Navbar/>
