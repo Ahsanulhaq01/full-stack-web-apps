@@ -14,7 +14,7 @@ function SingleRecipe() {
     useEffect(()=>{
         const getRecipes = async()=>{
             try {
-                await axiosInstance.get('/check-auth');
+                await axiosInstance.get('/check-auth' ,{ withCredentials: true });
                 setIsAuth(true);
                 const response = await axios.get(`https://dummyjson.com/recipes/${id}`);
                 setRecipe(response.data);
@@ -26,7 +26,7 @@ function SingleRecipe() {
         getRecipes();
     },[id])
 
-    if(!isAuth)return <Navigate to={"/login"}/>
+    if(isAuth===false)return <Navigate to={"/login"}/>
   
   return (
     <>

@@ -45,8 +45,6 @@ const registerUser = asyncHandler(async(req ,res)=>{
     })
 
     const createdUser = await User.findById(user._id).select("-password -refreshToken");
-
-    console.log("hello")
     return res.status(201).json(
         new ApiResponse(200 , createdUser , "User SuccessFully Registered !")
     )
@@ -58,7 +56,7 @@ const loginUser = asyncHandler(async(req ,res)=>{
     if(!(username || email)){
         throw new ApiError(400 , "username or email is required !")
     }
-
+ 
     const user = await User.findOne({
         $or :[{username} , {email}]
     });
@@ -72,7 +70,7 @@ const loginUser = asyncHandler(async(req ,res)=>{
         throw new ApiError(401 , "Invalid Credentials !")
     }
 
-    const {accessToken , refreshToken} = generateAccesssAndRefreshToken(user._id);
+    const {accessToken , refreshToken} = await generateAccesssAndRefreshToken(user._id);
 
     //loggined user with abstraction of secret details
     const loggedInUser = await User.findById(user._id).select("-password -refreshToken");
@@ -88,12 +86,29 @@ const loginUser = asyncHandler(async(req ,res)=>{
     .cookie('accessToken' , accessToken , options)
     .cookie('refreshToken' , refreshToken , options)
     .json(
-        new ApiResponse(200 , {user : accessToken , refreshToken ,loggedInUser} , "User logged in successFully !")
+        new ApiResponse(200 , {user : loggedInUser , accessToken ,refreshToken} , "User logged in successFully !")
     )
 })
-
+ 
 const logoutUser = asyncHandler(async(req , res)=>{
-    
+
+    await User.findByIdAndUpdate
+    (
+        req.user._id,
+        {
+            $set : {refreshToken : undefined}
+        },
+        {
+            new : true
+        }
+    )
+
+    const options = {
+        httpOnly : true,
+        secure : true,
+    }
+
+    return res.status(200).clearCookie('accessToken' , options).clearCookie('refreshToken' , options).json(new ApiResponse(200 , {} , "User SuccessFully Logout"))
 })
 
-export {registerUser , loginUser}
+export {registerUser , loginUser , logoutUser }

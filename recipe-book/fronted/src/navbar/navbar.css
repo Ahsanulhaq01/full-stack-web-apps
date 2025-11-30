@@ -19,21 +19,28 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.4rem;
-    /* border: 2px solid blue; */
-    width: 20rem;
-    /* width: 100%; */
-    margin-right: 2rem;
+    margin-right: 1.8rem;
     
+}
+.logout-btn{
+    border: none;
+    outline: none;
+    font-size: 16px;
+    text-decoration: underline;
+    background : transparent;
+   
+    border-radius: 4px;
 }
 .container ul li {
   list-style: none;
-  padding: 10px 20px;
+  padding: 8px 20px;
   background: linear-gradient(to right, #0E1F32 0%, #0E1F32 100%);
   background-size: 0% 100%;
   border-radius: 10px;
   background-repeat: no-repeat;
   cursor: pointer;
   text-decoration: underline;
+    white-space: nowrap;
 }
 
 .container ul li:hover {

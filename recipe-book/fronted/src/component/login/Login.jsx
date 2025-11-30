@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import './login.css'
+import {Link, useNavigate} from 'react-router'
 import { axiosInstance } from '../../utils/axiosInstance';
+import { Navigate } from 'react-router';
 
 function Login({showPassword , setShowPassword}) {
     const [email , setEmail] = useState('');
     const [password , setPassword] = useState('');
-
+    const navigate = useNavigate();
      function handleshowpass(){
         setShowPassword(!showPassword);
     }
@@ -16,11 +18,10 @@ function Login({showPassword , setShowPassword}) {
 
         try {
             const response = await axiosInstance.post('/login' , loginData);
-            console.log(response.data);
-            alert("login successfull ")
+            alert(response.data.message)
+         navigate('/')
         } catch (error) {
-            console.error(error?.response.data);
-            alert('login-failed')
+            alert(error?.response.data.message)
         }
         
     }
@@ -44,6 +45,7 @@ function Login({showPassword , setShowPassword}) {
             <button className="submit-login-page-btn" type='submit'>
                 login
             </button>
+            <Link to={'/register'} className='register-link'>Don't have Account ?</Link>
             </form>
         </div>
        

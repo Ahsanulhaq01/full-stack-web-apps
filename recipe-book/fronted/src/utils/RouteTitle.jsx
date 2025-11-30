@@ -7,9 +7,9 @@ function RouteTitle() {
     useEffect(()=>{
         const path = location.pathname.replace("/" , "");
 
-        const title = path === "" ? "home/recipe-book" : path.charAt(0).toUpperCase() + path.slice(1);
+        const title = path === "" ? "home" : path.charAt(0).toUpperCase() + path.slice(1);
 
-        document.title = `${title}/recipe-book`
+        document.title = `${title}`
     },[location])
   return null;
 }

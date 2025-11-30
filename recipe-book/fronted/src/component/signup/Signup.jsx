@@ -2,12 +2,13 @@ import React from "react";
 import './signup.css'
 import { useState } from "react";
 import { axiosInstance } from "../../utils/axiosInstance";
+import { useNavigate } from "react-router";
 
 function Signup({showPassword , setShowPassword}) {
   const [username , setName] = useState('');
   const [email , setEmail]  = useState('');
   const [password , setPassword] = useState('');
-
+  const navigate = useNavigate();
 
     function handleshowpass(){
         setShowPassword(!showPassword);
@@ -19,11 +20,11 @@ function Signup({showPassword , setShowPassword}) {
 
       try {
         const response = await axiosInstance.post('/register' , signUpData);
-        console.log(response.data);
-        alert('user succesfully registered');
+        alert(response.data.message);
+        navigate('/');
+
       } catch (error) {
-        console.error(error?.response.data);
-        alert('registration failed !');
+        alert(error?.response.data.message);
       }
     }
   return (
