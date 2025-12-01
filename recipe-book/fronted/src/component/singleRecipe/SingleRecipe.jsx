@@ -10,7 +10,7 @@ function SingleRecipe() {
     const [recipe ,setRecipe] = useState({ instructions : [] , ingredients : []});
     const [isAuth , setIsAuth] = useState(null);
     const {id} = useParams();
-
+ 
     useEffect(()=>{
         const getRecipes = async()=>{
             try {
