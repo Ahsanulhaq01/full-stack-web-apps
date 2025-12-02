@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import './login.css'
+import { toast } from 'react-toastify';
 import {Link, useNavigate} from 'react-router'
 import { axiosInstance } from '../../utils/axiosInstance';
-import { Navigate } from 'react-router';
 
 function Login({showPassword , setShowPassword}) {
     const [email , setEmail] = useState('');
@@ -18,10 +18,10 @@ function Login({showPassword , setShowPassword}) {
 
         try {
             const response = await axiosInstance.post('/login' , loginData);
-            alert(response.data.message)
+            toast.success(response.data.message || "Login SuccessFull")
          navigate('/')
         } catch (error) {
-            alert(error?.response.data.message)
+            toast.error(error?.response.data.message)
         }
         
     }

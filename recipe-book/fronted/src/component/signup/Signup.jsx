@@ -3,6 +3,8 @@ import './signup.css'
 import { useState } from "react";
 import { axiosInstance } from "../../utils/axiosInstance";
 import { useNavigate } from "react-router";
+import { Link } from "react-router";
+import { toast } from "react-toastify";
 
 function Signup({showPassword , setShowPassword}) {
   const [username , setName] = useState('');
@@ -20,11 +22,12 @@ function Signup({showPassword , setShowPassword}) {
 
       try {
         const response = await axiosInstance.post('/register' , signUpData);
-        alert(response.data.message);
+        toast.success(response.data.message);
+
         navigate('/');
 
       } catch (error) {
-        alert(error?.response.data.message);
+        toast.error(error?.response.data.message);
       }
     }
   return (
@@ -49,11 +52,12 @@ function Signup({showPassword , setShowPassword}) {
             </div>
           </div>
             <button className="signup-submit-form" type="submit">signup</button>
+            <Link to={'/login'} className="login-link">sign in</Link>
             </form>
         </div>
       </div>
     </>
-  );
+  );           // alert(response.data.message)
 }
 
 export default Signup;

@@ -1,16 +1,19 @@
 import './navbar.css'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { axiosInstance } from '../utils/axiosInstance.js';
+import { toast } from 'react-toastify';
 function Navbar() {
 
+  const navigate = useNavigate();
   async function handleLogOut(e){
     e.preventDefault();
 
     try {
       const response = await axiosInstance.post('/logout' , {});
-      alert(response.data.message)
+      toast.success(response.data.message)
+      navigate('/')
     } catch (error) {
-      alert(error?.response.data.message);
+      toast.error(error?.response?.data.message)
     }
   }
   return (
@@ -22,7 +25,7 @@ function Navbar() {
           <Link to={'/'}><li key={1}>Home</li></Link>
           <Link to={'/login'}><li key={2}>Login</li></Link>
           <Link to={'/register'}><li key={3}>Sign up</li></Link>
-          <li><button className='logout-btn' onClick={handleLogOut}>Logout</button></li>
+          <Link onClick={handleLogOut}><li key={4}>logout</li></Link>
         </ul>
     </div>
    </>

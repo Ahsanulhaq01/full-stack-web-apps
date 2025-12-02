@@ -6,11 +6,14 @@ import SingleRecipe from "./component/singleRecipe/SingleRecipe"
 import Login from "./component/login/Login"
 import Signup from "./component/signup/Signup"
 import RouteTitle from "./utils/RouteTitle"
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
     const [showPassword ,setShowPassword] = useState(false);
     return(
         <>
             <RouteTitle/>
+            <ToastContainer/>
         <Routes>
             <Route index element={<Homepage/>}/>
             <Route path="/recipe/:id" element={<SingleRecipe/>}/>
