@@ -5,8 +5,11 @@ import { axiosInstance } from "../../utils/axiosInstance";
 import { useNavigate } from "react-router";
 import { Link } from "react-router";
 import { toast } from "react-toastify";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AthContext";
 
 function Signup({showPassword , setShowPassword}) {
+  const {setUser} = useContext(AuthContext);
   const [username , setName] = useState('');
   const [email , setEmail]  = useState('');
   const [password , setPassword] = useState('');
@@ -23,7 +26,7 @@ function Signup({showPassword , setShowPassword}) {
       try {
         const response = await axiosInstance.post('/register' , signUpData);
         toast.success(response.data.message);
-
+        setUser(username);
         navigate('/');
 
       } catch (error) {

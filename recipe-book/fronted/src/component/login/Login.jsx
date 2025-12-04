@@ -3,8 +3,11 @@ import './login.css'
 import { toast } from 'react-toastify';
 import {Link, useNavigate} from 'react-router'
 import { axiosInstance } from '../../utils/axiosInstance';
+import { AuthContext } from '../../context/AthContext';
+import { useContext } from 'react';
 
 function Login({showPassword , setShowPassword}) {
+    const {setUser} = useContext(AuthContext);
     const [email , setEmail] = useState('');
     const [password , setPassword] = useState('');
     const navigate = useNavigate();
@@ -19,6 +22,8 @@ function Login({showPassword , setShowPassword}) {
         try {
             const response = await axiosInstance.post('/login' , loginData);
             toast.success(response.data.message || "Login SuccessFull")
+            setUser(response.data.data.user.username)
+            // console.log(response.data.data.user.username)
          navigate('/')
         } catch (error) {
             toast.error(error?.response.data.message)
