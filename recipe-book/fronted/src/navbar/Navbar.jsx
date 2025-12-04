@@ -2,19 +2,35 @@ import './navbar.css'
 import { Link, useNavigate } from 'react-router'
 import { axiosInstance } from '../utils/axiosInstance.js';
 import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
+
 function Navbar() {
 
   const navigate = useNavigate();
   async function handleLogOut(e){
     e.preventDefault();
 
-    try {
+    Swal.fire({
+      title : "are you sure ?",
+      text : "you will be logout",
+      icon : 'warning',
+      width : '350px',
+      showCancelButton : true,
+      confirmButtonText : 'Yes , Logout',
+      cancelButtonText : "Cancel"
+    }).then(async(result)=>{
+      if(result.isConfirmed){
+        try {
       const response = await axiosInstance.post('/logout' , {});
       toast.success(response.data.message)
       navigate('/')
     } catch (error) {
       toast.error(error?.response?.data.message)
     }
+      }
+    })
+
+    
   }
   return (
    <>
