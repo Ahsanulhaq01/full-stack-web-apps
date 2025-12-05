@@ -81,7 +81,7 @@ const loginUser = asyncHandler(async(req ,res)=>{
         httpOnly : true,
         secure : true,
     }
-
+ 
     res.status(200)
     .cookie('accessToken' , accessToken , options)
     .cookie('refreshToken' , refreshToken , options)
