@@ -33,7 +33,7 @@ const recipeSchema = new mongoose.Schema(
             type : mongoose.Schema.Types.ObjectId,
             ref : 'User'
         },
-        image : {
+        recipeImg : {
             type : String,
             required : true,
         },
