@@ -17,5 +17,5 @@ app.use(express.static('public'));
 app.use(express.urlencoded({limit : '10kb'}))
 
 app.use("/api/v1/user" ,userRouter);
-app.use("api/v1/recipe" , recipeRouter);
+app.use("/api/v1/recipe" , recipeRouter);
 export {app};

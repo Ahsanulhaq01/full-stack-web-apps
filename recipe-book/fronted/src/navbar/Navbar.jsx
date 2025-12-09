@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AthContext.jsx';
 
+
 function Navbar() {
   const {user , setUser} = useContext(AuthContext);
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ function Navbar() {
     if(!user){
       return toast.error("You are not Logged In")
     }
+
     Swal.fire({
       title : "are you sure ?",
       text : "you will be logout",
