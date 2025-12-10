@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const recipeSchema = new mongoose.Schema(
     {
-        name : {
+        recipeName : {
             type: String,
             required : true,
         },
@@ -19,7 +19,8 @@ const recipeSchema = new mongoose.Schema(
         },
         difficulty : {
             type : String,
-            default : 'Normal',
+            enum : ["Easy" , "Medium" , "Hard"],
+            required : true,
         },
         
         caloriesPerServing : {
@@ -47,6 +48,8 @@ const recipeSchema = new mongoose.Schema(
         },
         mealType : {
             type : [String],
+            enum : ["Breakfast", "Lunch", "Dinner", "Snack"],
+            required : true,
         }
     },
     {timestamps : true}
