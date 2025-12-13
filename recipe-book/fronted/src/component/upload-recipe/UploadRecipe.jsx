@@ -97,5 +97,4 @@ function UploadRecipe() {
     </>
   )
 }
-
 export default UploadRecipe
