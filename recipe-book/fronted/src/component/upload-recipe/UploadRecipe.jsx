@@ -1,4 +1,4 @@
-import React, { use, useState } from 'react'
+import React, { useState } from 'react'
 import './upload-recipe.css'
 
 function UploadRecipe() {
@@ -44,7 +44,7 @@ function UploadRecipe() {
 
                 {/* input feild for recipe-serving */}
                 <label htmlFor="recipe-serving">Serving : </label>
-                <input type="number" placeholder='Enter the quantity of serving' onChange={e=> setServing(e.target.value)} value={serving} id='recipe-serving' />
+                <input type="number" placeholder='Enter the quantity of serving' onChange={e=> setServing(Number(e.target.value))} value={serving} id='recipe-serving' />
 
                 {/* input feild for recipe-difficulty */}
 
@@ -90,7 +90,7 @@ function UploadRecipe() {
                     <label htmlFor="recipe-image">Upload Image</label>
                     <input type="file" accept='image/*' id='recipe-image' onChange={handleImageChange} />
 
-                    {recipePreviewImage && <p>{recipePreviewImage}</p>}
+                    {recipePreviewImage && <img src={recipePreviewImage} alt="Preview" width="200" />}
             </form>
         </div>
     </div>
