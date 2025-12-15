@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import './upload-recipe.css'
 
 function UploadRecipe() {
-    
     const [recipeName , setRecipeName] = useState("");
     const [instructionInput , setInstructionInput] = useState("");
     const [instructionArray , setInstructionArray] = useState([]);
