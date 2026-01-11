@@ -6,7 +6,7 @@ const recipeSchema = new mongoose.Schema(
             type: String,
             required : true,
         },
-        instruction : {
+        instructions : {
             type :[String],
             required : true,
         },
@@ -34,7 +34,7 @@ const recipeSchema = new mongoose.Schema(
             type : mongoose.Schema.Types.ObjectId,
             ref : 'User'
         },
-        recipeImg : {
+        recipeImage : {
             type : String,
             required : true,
         },
