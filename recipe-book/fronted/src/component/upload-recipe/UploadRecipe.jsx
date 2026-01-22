@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import "./upload-recipe.css";
 
 function UploadRecipe() {
@@ -20,12 +20,19 @@ function UploadRecipe() {
     const file = e.target.files[0];
     if(!file)return;
 
+        if (itemData.previewImage) URL.revokeObjectURL(itemData.previewImage);
     setItemData(prev =>({
         ...prev,
         recipeImage : file,
         previewImage : URL.createObjectURL(file)
     }))
   };
+
+  useEffect(() => {
+  return () => {
+    if (itemData.previewImage) URL.revokeObjectURL(itemData.previewImage);
+  };
+}, [itemData.previewImage]);
 
   const handleChange = (e)=>{
     const {name , value} = e.target;
@@ -39,16 +46,41 @@ function UploadRecipe() {
     e.preventDefault();
 
     const formData = new FormData();
+    
+    const instructionsArray = itemData.instructions
+      .split(",")
+      .map((i) => i.trim())
+      .filter(Boolean);
+    const ingredientsArray = itemData.ingredients
+      .split(",")
+      .map((i) => i.trim())
+      .filter(Boolean);
 
-    formData.append("recipeName" , itemData.recipeName)
+    formData.append("recipeName", itemData.recipeName);
+    formData.append("instructions", JSON.stringify(instructionsArray));
+    formData.append("ingredients", JSON.stringify(ingredientsArray));
+    formData.append("serving", itemData.serving);
+    formData.append("difficulty", itemData.difficulty);
+    formData.append("calories", itemData.calories);
+    formData.append("perServing", itemData.perServing);
+    formData.append("tags", itemData.tags);
+    formData.append("mealType", itemData.mealType);
+    if (itemData.recipeImage) formData.append("recipeImage", itemData.recipeImage);
+
+    console.log("Form submitted with data:", {
+      ...itemData,
+      instructions: instructionsArray,
+      ingredients: ingredientsArray,
+    });
   }
   return (
     <>
       <div className="upload-recipe-container">
         <div className="upload-recipe">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} >
             {/* input feild for recipe-name */}
-            <label htmlFor="recipe-name">Enter Your Recipe Name : </label>
+            <div className="feild-for-recipe-name">
+                 <label htmlFor="recipe-name">Enter Your Recipe Name  </label>
             <input
               type="text"
               placeholder="Enter Your Recipe Name : "
@@ -57,10 +89,14 @@ function UploadRecipe() {
               value={itemData.recipeName}
               name="recipeName"
             />
+            </div>
+           
 
             {/* input feild for recipe-Instruction */}
 
-            <label htmlFor="recipe-instruction">Instruction : </label>
+            <div className="feild-for-recipe-instruction">
+
+            <label htmlFor="recipe-instruction">Instruction  </label>
             <input
               type="text"
               placeholder="Enter Instruction separated by comma"
@@ -69,9 +105,13 @@ function UploadRecipe() {
               id="recipe-instruction"
               name="instructions"
             />
+            </div>
+
 
             {/* input feild for recipe-ingrediants */}
-            <label htmlFor="recipe-ingrediant">Ingrediants : </label>
+            <div className="feild-for-recipe-ingrediant">
+
+            <label htmlFor="recipe-ingrediant">Ingrediants  </label>
             <input
               type="text"
               placeholder="Enter ingrediant separated by comma"
@@ -80,9 +120,12 @@ function UploadRecipe() {
               id="recipe-ingrediant"
               name="ingredients"
             />
+            </div>
 
             {/* input feild for recipe-serving */}
-            <label htmlFor="recipe-serving">Serving : </label>
+            <div className="feild-for-recipe-serving">
+
+            <label htmlFor="recipe-serving">Serving  </label>
             <input
               type="number"
               placeholder="Enter the quantity of serving"
@@ -91,9 +134,11 @@ function UploadRecipe() {
               id="recipe-serving"
               name="serving"
             />
+            </div>
 
             {/* input feild for recipe-difficulty */}
-
+            <div className="feild-for-recipe-difficulty">
+              
             <label htmlFor="recipe-difficulty-level">
               Select the difficulty level
             </label>
@@ -109,8 +154,12 @@ function UploadRecipe() {
               <option value="Hard">Hard</option>
             </select>
             <span className="selected-level">{itemData.difficulty}</span>
+            </div>
+
 
             {/* input feild for recipe-calories */}
+            <div className="feild-for-recipe-calories">
+
             <label htmlFor="recipe-calories">
               Enter the amount of Calories
             </label>
@@ -122,8 +171,11 @@ function UploadRecipe() {
               id="recipe-calories"
               name="calories"
             />
+            </div>
 
             {/* input feild for recipe-perserving */}
+            <div className="feild-for-recipe-perserving">
+
             <label htmlFor="recipe-perServing">
               Enter the amount of PerServing
             </label>
@@ -135,8 +187,11 @@ function UploadRecipe() {
               id="recipe-perServing"
               name="perServing"
             />
+            </div>
 
             {/* input feild for recipe-tags */}
+            <div className="feild-for-recipe-tags">
+
             <label htmlFor="recipe-tags">Enter the tags </label>
             <input
               type="text"
@@ -146,8 +201,11 @@ function UploadRecipe() {
               name="tags"
               id="recipe-tags"
             />
+            </div>
 
             {/* input feild for recipe-mealType */}
+            <div className="feild-for-recipe-mealtype">
+
             <label htmlFor="recipe-mealtype">Select the MealType </label>
             <select
               name="mealType"
@@ -161,8 +219,11 @@ function UploadRecipe() {
               <option value="Lunch">Lunch</option>
             </select>
             <span className="selected-mealtype">{itemData.mealType}</span>
+            </div>
 
             {/* input feild for recipe-image */}
+            <div className="feild-for-recipe-image">
+
             <label htmlFor="recipe-image">Upload Image</label>
             <input
               type="file"
@@ -171,10 +232,12 @@ function UploadRecipe() {
               onChange={handleImageChange}
               
             />
+            </div>
 
             {itemData.previewImage && (
-              <img src={itemData.previewImage} alt="Preview" width="200" />
+              <img src={itemData.previewImage} alt="Preview" width="200" className="preview-image" />
             )}
+          <button type="submit" className="submit-button" >Upload Recipe</button>
           </form>
         </div>
       </div>
