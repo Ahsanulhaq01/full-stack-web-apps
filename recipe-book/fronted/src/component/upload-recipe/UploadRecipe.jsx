@@ -9,9 +9,12 @@ function UploadRecipe() {
     serving: "",
     difficulty: "",
     calories: "",
-    perServing: "",
+    // perServing: "",
     tags: "",
     mealType: "",
+    cuisine : "",
+    preparationTime : "",
+    cookingTime : "",
     recipeImage: null,
     previewImage: null,
   });
@@ -62,9 +65,12 @@ function UploadRecipe() {
     formData.append("serving", itemData.serving);
     formData.append("difficulty", itemData.difficulty);
     formData.append("calories", itemData.calories);
-    formData.append("perServing", itemData.perServing);
+    // formData.append("perServing", itemData.perServing);
     formData.append("tags", itemData.tags);
     formData.append("mealType", itemData.mealType);
+    formData.append("cuisine" , itemData.cuisine);
+    formData.append("preparationTime" , itemData.preparationTime);
+    formData.append("cookingTime" , itemData.cookingTime)
     if (itemData.recipeImage) formData.append("recipeImage", itemData.recipeImage);
 
     console.log("Form submitted with data:", {
@@ -156,7 +162,37 @@ function UploadRecipe() {
             <span className="selected-level">{itemData.difficulty}</span>
             </div>
 
+            {/* input feild for cuisine */}
+            <div className="feild-for-cuisine">
+              <label htmlFor="cuisine">Enter the Cuisine</label>
+              <input type="text" placeholder="Enter the Cuisine"
+              value={itemData.cuisine}
+              onChange={handleChange}
+              id="cuisine"
+              name="cuisine"
+              />
+            </div>
+            {/* input feild for preparationTime */}
+            <div className="feild-for-preparationTime">
+              <label htmlFor="cuisine">Enter the PreparationTime</label>
+              <input type="Number" placeholder="Enter the PreparationTime"
+              value={itemData.preparationTime}
+              onChange={handleChange}
+              id="preparationTime"
+              name="preparationTime"
+              />
+            </div>
 
+            {/* input feild for CookingTime */}
+            <div className="feild-for-CookingTime">
+              <label htmlFor="cuisine">Enter the Cooking Time</label>
+              <input type="number" placeholder="Enter the CookingTime"
+              value={itemData.cookingTime}
+              onChange={handleChange}
+              id="cookingTime"
+              name="cookingTime"
+              />
+            </div>
             {/* input feild for recipe-calories */}
             <div className="feild-for-recipe-calories">
 
@@ -174,7 +210,7 @@ function UploadRecipe() {
             </div>
 
             {/* input feild for recipe-perserving */}
-            <div className="feild-for-recipe-perserving">
+            {/* <div className="feild-for-recipe-perserving">
 
             <label htmlFor="recipe-perServing">
               Enter the amount of PerServing
@@ -187,7 +223,7 @@ function UploadRecipe() {
               id="recipe-perServing"
               name="perServing"
             />
-            </div>
+            </div> */}
 
             {/* input feild for recipe-tags */}
             <div className="feild-for-recipe-tags">
