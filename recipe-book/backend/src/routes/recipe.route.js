@@ -6,7 +6,7 @@ const router = Router();
 
 
 router.route('/upload-recipe').post(
-    verifyJwt,
+    // verifyJwt,
     upload.fields([
         {
             name : 'recipeImg',

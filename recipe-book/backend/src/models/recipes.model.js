@@ -50,6 +50,16 @@ const recipeSchema = new mongoose.Schema(
             type : [String],
             enum : ["Breakfast", "Lunch", "Dinner", "Snack"],
             required : true,
+        },
+        preparationTime : {
+            type : Number,
+        },
+        cookingTime : {
+            type : Number,
+        },
+        cuisine : {
+            type : String,
+            
         }
     },
     {timestamps : true}

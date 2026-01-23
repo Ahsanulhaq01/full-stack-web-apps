@@ -4,7 +4,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { uploadToCloudinary } from "../utils/cloudinary.js";
 
 const createRecipe = asyncHandler(async (req, res) => {
-    const userId = req.user._id;
+    // const userId = req.user._id;
 
     const {
         recipeName,
@@ -13,6 +13,9 @@ const createRecipe = asyncHandler(async (req, res) => {
         servings,
         difficulty,
         caloriesPerServing,
+        preparationTime,
+        cookingTime,
+        cuisine,
         tags,
         mealType,
 
@@ -24,8 +27,9 @@ const createRecipe = asyncHandler(async (req, res) => {
         difficulty,
         caloriesPerServing,
         tags,
-        // rating,
-        // reviews,
+        preparationTime,
+        cookingTime,
+        cuisine,
         mealType].some((field) => field?.trim() === "")) {
         return res.status(400).json(new ApiResponse(400, "", "All field are required !"))
     }
