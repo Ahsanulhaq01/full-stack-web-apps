@@ -9,7 +9,7 @@ router.route('/upload-recipe').post(
     // verifyJwt,
     upload.fields([
         {
-            name : 'recipeImg',
+            name : 'recipeImage',
             maxCount :1,
         },
     ]),

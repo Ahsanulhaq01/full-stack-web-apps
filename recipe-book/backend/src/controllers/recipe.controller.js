@@ -20,21 +20,21 @@ const createRecipe = asyncHandler(async (req, res) => {
         mealType,
 
     } = req.body;
-    if ([recipeName,
-        instruction,
-        ingredients,
-        servings,
-        difficulty,
-        caloriesPerServing,
-        tags,
-        preparationTime,
-        cookingTime,
-        cuisine,
-        mealType].some((field) => field?.trim() === "")) {
-        return res.status(400).json(new ApiResponse(400, "", "All field are required !"))
-    }
+    // if ([recipeName,
+    //     instruction,
+    //     ingredients,
+    //     servings,
+    //     difficulty,
+    //     caloriesPerServing,
+    //     tags,
+    //     preparationTime,
+    //     cookingTime,
+    //     cuisine,
+    //     mealType].some((field) => field?.trim() === "")) {
+    //     return res.status(400).json(new ApiResponse(400, "", "All field are required !"))
+    // }
 
-    const localFilePath =  req.files?.recipeImg[0]?.path;
+    const localFilePath =  req.files?.recipeImage[0]?.path;
     if(!localFilePath){
         return res.status(400).json(
             new ApiResponse(400 , '' ,'Image is required')
@@ -51,8 +51,11 @@ const createRecipe = asyncHandler(async (req, res) => {
         difficulty,
         caloriesPerServing,
         tags,
-        recipeImg : cloudinaryResponse.secure_url,
-        mealType
+        recipeImage : cloudinaryResponse.secure_url,
+        mealType,
+        preparationTime,
+        cookingTime,
+        cuisine
     })
 
     return res.status(201).json(
