@@ -8,7 +8,7 @@ const createRecipe = asyncHandler(async (req, res) => {
 
     const {
         recipeName,
-        instruction,
+        instructions,
         ingredients,
         servings,
         difficulty,
@@ -45,7 +45,7 @@ const createRecipe = asyncHandler(async (req, res) => {
 
     const newRecipe = await Recipe.create({
         recipeName,
-        instruction,
+        instructions,
         ingredients,
         servings,
         difficulty,
