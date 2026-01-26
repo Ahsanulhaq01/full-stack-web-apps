@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from 'axios'
 import "./upload-recipe.css";
 
 function UploadRecipe() {
@@ -6,7 +7,7 @@ function UploadRecipe() {
     recipeName: "",
     instructions: "",
     ingredients: "",
-    serving: "",
+    servings: "",
     difficulty: "",
     calories: "",
     // perServing: "",
@@ -47,38 +48,44 @@ function UploadRecipe() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const formData = new FormData();
 
-    const formData = new FormData();
+      const instructionsArray = itemData.instructions
+        .split(",")
+        .map((i) => i.trim())
+        .filter(Boolean);
+      const ingredientsArray = itemData.ingredients
+        .split(",")
+        .map((i) => i.trim())
+        .filter(Boolean);
 
-    const instructionsArray = itemData.instructions
-      .split(",")
-      .map((i) => i.trim())
-      .filter(Boolean);
-    const ingredientsArray = itemData.ingredients
-      .split(",")
-      .map((i) => i.trim())
-      .filter(Boolean);
+      formData.append("recipeName", itemData.recipeName);
+      formData.append("instructions", JSON.stringify(instructionsArray));
+      formData.append("ingredients", JSON.stringify(ingredientsArray));
+      formData.append("servings", itemData.servings);
+      formData.append("difficulty", itemData.difficulty);
+      formData.append("calories", itemData.calories);
+      // formData.append("perServing", itemData.perServing);
+      formData.append("tags", itemData.tags);
+      formData.append("mealType", itemData.mealType);
+      formData.append("cuisine", itemData.cuisine);
+      formData.append("preparationTime", itemData.preparationTime);
+      formData.append("cookingTime", itemData.cookingTime);
+      if (itemData.recipeImage) {
+        formData.append("recipeImage", itemData.recipeImage);
+      }
 
-    formData.append("recipeName", itemData.recipeName);
-    formData.append("instructions", JSON.stringify(instructionsArray));
-    formData.append("ingredients", JSON.stringify(ingredientsArray));
-    formData.append("serving", itemData.serving);
-    formData.append("difficulty", itemData.difficulty);
-    formData.append("calories", itemData.calories);
-    // formData.append("perServing", itemData.perServing);
-    formData.append("tags", itemData.tags);
-    formData.append("mealType", itemData.mealType);
-    formData.append("cuisine", itemData.cuisine);
-    formData.append("preparationTime", itemData.preparationTime);
-    formData.append("cookingTime", itemData.cookingTime);
-    if (itemData.recipeImage)
-      formData.append("recipeImage", itemData.recipeImage);
+       const response = await axios.post(
+      "http://localhost:3000/api/v1/recipe/upload-recipe",
+      formData
+    );
 
-    console.log("Form submitted with data:", {
-      ...itemData,
-      instructions: instructionsArray,
-      ingredients: ingredientsArray,
-    });
+      console.log("Form submitted with data:",response.data);
+    } catch (error) {
+      console.error("Upload failed:", error.response?.data || error.message);
+      alert("Upload failed!");
+    }
   };
   return (
     <>
@@ -134,7 +141,7 @@ function UploadRecipe() {
                 onChange={handleChange}
                 value={itemData.serving}
                 id="recipe-serving"
-                name="serving"
+                name="servings"
               />
             </div>
 
@@ -262,6 +269,7 @@ function UploadRecipe() {
                 type="file"
                 accept="image/*"
                 id="recipe-image"
+                name="recipeImage"
                 onChange={handleImageChange}
               />
             </div>
