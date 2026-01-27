@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AthContext.jsx';
+import UploadRecipe from '../component/upload-recipe/UploadRecipe.jsx';
 
 
 function Navbar() {
@@ -52,7 +53,8 @@ function Navbar() {
           <Link to={'/login'}><li key={2}>Login</li></Link>
           <Link to={'/register'}><li key={3}>Sign up</li></Link>
           <Link onClick={handleLogOut}><li key={4}>logout</li></Link>
-          <li key={5}>{user || "guest"}</li>
+          <Link to={'/upload-recipe'}><li key={5}>{user ? "Upload-Recipe" : "guest"}</li></Link>
+          
         </ul>
     </div>
    </>

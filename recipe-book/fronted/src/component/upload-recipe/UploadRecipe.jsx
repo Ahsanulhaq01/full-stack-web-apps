@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios'
+import axios from "axios";
 import "./upload-recipe.css";
 
 function UploadRecipe() {
@@ -10,7 +10,7 @@ function UploadRecipe() {
     servings: "",
     difficulty: "",
     calories: "",
-    // perServing: "",
+    caloriesPerServing: "",
     tags: "",
     mealType: "",
     cuisine: "",
@@ -66,7 +66,7 @@ function UploadRecipe() {
       formData.append("servings", itemData.servings);
       formData.append("difficulty", itemData.difficulty);
       formData.append("calories", itemData.calories);
-      // formData.append("perServing", itemData.perServing);
+      formData.append("caloriesPerServing", itemData.caloriesPerServing);
       formData.append("tags", itemData.tags);
       formData.append("mealType", itemData.mealType);
       formData.append("cuisine", itemData.cuisine);
@@ -76,12 +76,12 @@ function UploadRecipe() {
         formData.append("recipeImage", itemData.recipeImage);
       }
 
-       const response = await axios.post(
-      "http://localhost:3000/api/v1/recipe/upload-recipe",
-      formData
-    );
+      const response = await axios.post(
+        "http://localhost:3000/api/v1/recipe/upload-recipe",
+        formData,
+      );
 
-      console.log("Form submitted with data:",response.data);
+      console.log("Form submitted with data:", response.data);
     } catch (error) {
       console.error("Upload failed:", error.response?.data || error.message);
       alert("Upload failed!");
@@ -217,21 +217,19 @@ function UploadRecipe() {
             </div>
 
             {/* input feild for recipe-perserving */}
-            {/* <div className="feild-for-recipe-perserving">
-
-            <label htmlFor="recipe-perServing">
-              Enter the amount of PerServing
-            </label>
-            <input
-              type="number"
-              placeholder="Enter the amout of perserving"
-              onChange={handleChange}
-              value={itemData.perServing}
-              id="recipe-perServing"
-              name="perServing"
-            />
-            </div> */}
-
+            <div className="feild-for-recipe-perserving">
+              <label htmlFor="recipe-perServing">
+                Enter the amount of PerServing
+              </label>
+              <input
+                type="number"
+                placeholder="Enter the amout of perserving"
+                onChange={handleChange}
+                value={itemData.caloriesPerServing}
+                id="recipe-perServing"
+                name="caloriesPerServing"
+              />
+            </div>
             {/* input feild for recipe-tags */}
             <div className="feild-for-recipe-tags">
               <label htmlFor="recipe-tags">Enter the tags </label>
