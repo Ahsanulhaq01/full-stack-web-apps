@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./upload-recipe.css";
+import { toast } from "react-toastify";
 
 function UploadRecipe() {
   const [itemData, setItemData] = useState({
@@ -81,10 +82,12 @@ function UploadRecipe() {
         formData,
       );
 
-      console.log("Form submitted with data:", response.data);
+      // console.log("Form submitted with data:", response.data);
+      toast.success(response.data.message ||"Recipe Uploaded Successfully")
     } catch (error) {
-      console.error("Upload failed:", error.response?.data || error.message);
-      alert("Upload failed!");
+      // console.error("Upload failed:", error.response?.data || error.message);
+      toast.error(error?.response.data.message);
+      // alert("Upload failed!");
     }
   };
   return (

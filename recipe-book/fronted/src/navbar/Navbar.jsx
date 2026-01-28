@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AthContext.jsx';
-import UploadRecipe from '../component/upload-recipe/UploadRecipe.jsx';
 
 
 function Navbar() {

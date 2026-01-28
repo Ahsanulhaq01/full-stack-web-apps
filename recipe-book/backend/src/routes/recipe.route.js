@@ -1,12 +1,12 @@
 import { Router } from "express";
 import { upload } from "../middleware/multer.middleware.js";
-import { createRecipe } from "../controllers/recipe.controller.js";
+import { createRecipe , getRecipes } from "../controllers/recipe.controller.js";
 import { verifyJwt } from "../middleware/auth.middleware.js";
 const router = Router();
 
 
 router.route('/upload-recipe').post(
-    verifyJwt,
+    // verifyJwt,
     upload.fields([
         {
             name : 'recipeImage',
@@ -16,5 +16,6 @@ router.route('/upload-recipe').post(
     createRecipe
 )
 
+router.route('/recipes').get(getRecipes)
 
 export default router;
