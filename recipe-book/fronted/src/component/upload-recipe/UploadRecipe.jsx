@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import {axiosInstance} from '../../utils/axiosInstance.js'
 import "./upload-recipe.css";
 import { toast } from "react-toastify";
 
@@ -77,16 +77,17 @@ function UploadRecipe() {
         formData.append("recipeImage", itemData.recipeImage);
       }
 
-      const response = await axios.post(
-        "http://localhost:3000/api/v1/recipe/upload-recipe",
+      const response = await axiosInstance.post(
+        "/recipe/upload-recipe",
         formData,
       );
 
       // console.log("Form submitted with data:", response.data);
       toast.success(response.data.message ||"Recipe Uploaded Successfully")
     } catch (error) {
-      // console.error("Upload failed:", error.response?.data || error.message);
-      toast.error(error?.response.data.message);
+      console.log('hello')
+      console.error("Upload failed:", error.response?.data || error.message);
+      toast.error(error?.response.data);
       // alert("Upload failed!");
     }
   };

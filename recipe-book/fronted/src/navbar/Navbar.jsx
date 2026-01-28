@@ -27,7 +27,7 @@ function Navbar() {
     }).then(async(result)=>{
       if(result.isConfirmed){
         try {
-      const response = await axiosInstance.post('/logout' , {});
+      const response = await axiosInstance.post('/user/logout' , {});
       toast.success(response.data.message)
       setTimeout(() => {
         setUser(null)
@@ -52,7 +52,7 @@ function Navbar() {
           <Link to={'/login'}><li key={2}>Login</li></Link>
           <Link to={'/register'}><li key={3}>Sign up</li></Link>
           <Link onClick={handleLogOut}><li key={4}>logout</li></Link>
-          <Link to={'/upload-recipe'}><li key={5}>{user ? "Upload-Recipe" : "guest"}</li></Link>
+          <Link to={user ? '/upload-recipe' : '/login'}><li key={5}>{user ? "Upload-Recipe" : "guest"}</li></Link>
           
         </ul>
     </div>

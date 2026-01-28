@@ -24,7 +24,7 @@ function Signup({showPassword , setShowPassword}) {
       const signUpData = {username , email , password}
 
       try {
-        const response = await axiosInstance.post('/register' , signUpData);
+        const response = await axiosInstance.post('/user/register' , signUpData);
         toast.success(response.data.message);
         setUser(username);
         navigate('/');

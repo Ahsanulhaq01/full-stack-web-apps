@@ -20,7 +20,7 @@ function Login({showPassword , setShowPassword}) {
         const loginData = {email , password};
 
         try {
-            const response = await axiosInstance.post('/login' , loginData);
+            const response = await axiosInstance.post('/user/login' , loginData);
             toast.success(response.data.message || "Login SuccessFull")
             setUser(response.data.data.user.username)
             // console.log(response.data.data.user.username)
