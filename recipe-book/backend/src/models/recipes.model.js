@@ -30,7 +30,7 @@ const recipeSchema = new mongoose.Schema(
         tags : {
             type : [String]
         },
-        userId : {
+        createdBy : {
             type : mongoose.Schema.Types.ObjectId,
             ref : 'User'
         },
