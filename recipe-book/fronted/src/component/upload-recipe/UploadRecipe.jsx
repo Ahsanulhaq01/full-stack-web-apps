@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {axiosInstance} from '../../utils/axiosInstance.js'
+import { axiosInstance } from "../../utils/axiosInstance.js";
 import "./upload-recipe.css";
 import { toast } from "react-toastify";
+import Navbar from '../../navbar/Navbar.jsx'
 
 function UploadRecipe() {
   const [itemData, setItemData] = useState({
@@ -49,50 +50,57 @@ function UploadRecipe() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+
+    const instructionsArray = itemData.instructions
+      .split(",")
+      .map((i) => i.trim())
+      .filter(Boolean);
+    const ingredientsArray = itemData.ingredients
+      .split(",")
+      .map((i) => i.trim())
+      .filter(Boolean);
+
+    formData.append("recipeName", itemData.recipeName);
+    formData.append("instructions", JSON.stringify(instructionsArray));
+    formData.append("ingredients", JSON.stringify(ingredientsArray));
+    formData.append("servings", itemData.servings);
+    formData.append("difficulty", itemData.difficulty);
+    formData.append("calories", itemData.calories);
+    formData.append("caloriesPerServing", itemData.caloriesPerServing);
+    formData.append("tags", itemData.tags);
+    formData.append("mealType", itemData.mealType);
+    formData.append("cuisine", itemData.cuisine);
+    formData.append("preparationTime", itemData.preparationTime);
+    formData.append("cookingTime", itemData.cookingTime);
+    if (itemData.recipeImage) {
+      formData.append("recipeImage", itemData.recipeImage);
+    }
     try {
-      const formData = new FormData();
-
-      const instructionsArray = itemData.instructions
-        .split(",")
-        .map((i) => i.trim())
-        .filter(Boolean);
-      const ingredientsArray = itemData.ingredients
-        .split(",")
-        .map((i) => i.trim())
-        .filter(Boolean);
-
-      formData.append("recipeName", itemData.recipeName);
-      formData.append("instructions", JSON.stringify(instructionsArray));
-      formData.append("ingredients", JSON.stringify(ingredientsArray));
-      formData.append("servings", itemData.servings);
-      formData.append("difficulty", itemData.difficulty);
-      formData.append("calories", itemData.calories);
-      formData.append("caloriesPerServing", itemData.caloriesPerServing);
-      formData.append("tags", itemData.tags);
-      formData.append("mealType", itemData.mealType);
-      formData.append("cuisine", itemData.cuisine);
-      formData.append("preparationTime", itemData.preparationTime);
-      formData.append("cookingTime", itemData.cookingTime);
-      if (itemData.recipeImage) {
-        formData.append("recipeImage", itemData.recipeImage);
-      }
-
       const response = await axiosInstance.post(
         "/recipe/upload-recipe",
         formData,
       );
+      toast.success(response.data.message || "Recipe Uploaded Successfully");
 
-      // console.log("Form submitted with data:", response.data);
-      toast.success(response.data.message ||"Recipe Uploaded Successfully")
     } catch (error) {
-      console.log('hello')
       console.error("Upload failed:", error.response?.data || error.message);
-      toast.error(error?.response.data);
-      // alert("Upload failed!");
+      toast.error(error?.response.data.message);
+    }
+
+    try {
+      const response = await axiosInstance.get('/recipe/recipe-count');
+      console.log(response.data.data.count);
+    } catch (error) {
+      console.log(error?.response.error);
     }
   };
+
+
   return (
     <>
+    <Navbar/>
       <div className="upload-recipe-container">
         <div className="upload-recipe">
           <form onSubmit={handleSubmit}>

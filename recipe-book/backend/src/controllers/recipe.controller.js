@@ -4,7 +4,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { uploadToCloudinary } from "../utils/cloudinary.js";
 
 const createRecipe = asyncHandler(async (req, res) => {
-    // const userId = req.user._id;
+    const userId = req.user._id;
 
     const {
         recipeName,
@@ -82,7 +82,8 @@ const createRecipe = asyncHandler(async (req, res) => {
         mealType,
         preparationTime,
         cookingTime,
-        cuisine
+        cuisine,
+        userId,
     })
 
     return res.status(201).json(
@@ -97,8 +98,20 @@ const getRecipes = asyncHandler(async (req, res) => {
     const recipes = await Recipe.find();
 
     return res.status(200).json(
-        new ApiResponse(200, recipes, "Data SuccessFully fetched")
+            recipes
     )
 
 })
-export { createRecipe, getRecipes }
+
+const getRecipesCount = asyncHandler(async(req ,res)=>{
+    const userId = req.user.id;
+
+    const recipeCount = await Recipe.countDocuments({
+        userId,
+    })
+
+    return res.status(200).json(
+        new ApiResponse(200 , {count : recipeCount},"Recipe Count fetched !")
+    )
+})
+export { createRecipe, getRecipes , getRecipesCount }

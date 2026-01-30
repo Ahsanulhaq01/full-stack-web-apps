@@ -61,7 +61,7 @@ a{
 .unactive-display{
     display: none;
 }
-@media (max-width : 550px) {
+@media (max-width : 680px) {
     .container .active{
         cursor: pointer;
         display: block;
