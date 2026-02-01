@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { axiosInstance } from "../../utils/axiosInstance.js";
 import "./upload-recipe.css";
 import { toast } from "react-toastify";
-import Navbar from '../../navbar/Navbar.jsx'
+import Navbar from "../../navbar/Navbar.jsx";
 
 function UploadRecipe() {
   const [itemData, setItemData] = useState({
@@ -83,24 +83,22 @@ function UploadRecipe() {
         formData,
       );
       toast.success(response.data.message || "Recipe Uploaded Successfully");
-
     } catch (error) {
       console.error("Upload failed:", error.response?.data || error.message);
       toast.error(error?.response.data.message);
     }
 
     try {
-      const response = await axiosInstance.get('/recipe/recipe-count');
+      const response = await axiosInstance.get("/recipe/recipe-count");
       console.log(response.data.data.count);
     } catch (error) {
       console.log(error?.response.error);
     }
   };
 
-
   return (
     <>
-    <Navbar/>
+      <Navbar />
       <div className="upload-recipe-container">
         <div className="upload-recipe">
           <form onSubmit={handleSubmit}>

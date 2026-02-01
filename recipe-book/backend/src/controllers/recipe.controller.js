@@ -83,7 +83,7 @@ const createRecipe = asyncHandler(async (req, res) => {
         preparationTime,
         cookingTime,
         cuisine,
-        createdBy : userId,
+        createdBy: userId,
     })
 
     return res.status(201).json(
@@ -98,29 +98,29 @@ const getRecipes = asyncHandler(async (req, res) => {
     const recipes = await Recipe.find();
 
     return res.status(200).json(
-            recipes
+        recipes
     )
 
 })
 
-const getRecipesCount = asyncHandler(async(req ,res)=>{
+const getRecipesCount = asyncHandler(async (req, res) => {
     const userId = req.user._id;
 
-    const recipeCount = await Recipe.countDocuments({createdBy : userId})
+    const recipeCount = await Recipe.countDocuments({ createdBy: userId })
 
     return res.status(200).json(
-        new ApiResponse(200 , {count : recipeCount},"Recipe Count fetched !")
+        new ApiResponse(200, { count: recipeCount }, "Recipe Count fetched !")
     )
 })
 
-const getMyRecipes = asyncHandler(async(req , res)=>{
+const getMyRecipes = asyncHandler(async (req, res) => {
     const userId = req.user._id;
 
-    const myRecipes = await Recipe.find({createdBy : userId});
+    const myRecipes = await Recipe.find({ createdBy: userId });
 
     return res.status(200).json(
-        new ApiResponse(200 , myRecipes , "My Recipes fetched ")
+        new ApiResponse(200, myRecipes, "My Recipes fetched ")
     )
 
 })
-export { createRecipe, getRecipes , getRecipesCount , getMyRecipes }
+export { createRecipe, getRecipes, getRecipesCount, getMyRecipes }

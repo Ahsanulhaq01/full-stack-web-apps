@@ -1,17 +1,18 @@
-import React, { useEffect } from 'react'
-import { useLocation } from 'react-router'
+import React, { useEffect } from "react";
+import { useLocation } from "react-router";
 
 function RouteTitle() {
-    const location = useLocation();
+  const location = useLocation();
 
-    useEffect(()=>{
-        const path = location.pathname.replace("/" , "");
+  useEffect(() => {
+    const path = location.pathname.replace("/", "");
 
-        const title = path === "" ? "home" : path.charAt(0).toUpperCase() + path.slice(1);
+    const title =
+      path === "" ? "home" : path.charAt(0).toUpperCase() + path.slice(1);
 
-        document.title = `${title}`
-    },[location])
+    document.title = `${title}`;
+  }, [location]);
   return null;
 }
 
-export default RouteTitle
+export default RouteTitle;

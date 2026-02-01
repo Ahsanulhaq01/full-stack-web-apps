@@ -1,91 +1,90 @@
-.login-container{
-    background-color: #0E1F32;
-    border-radius: 4px;
-    height: 100vh;
-    display: grid;
-    grid-template-columns: repeat(auto-fit , minmax(100px , 400px));
-    place-content: center;
+.login-container {
+  background-color: #0e1f32;
+  border-radius: 4px;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 400px));
+  place-content: center;
 }
-.login-form form{
-    border: 0.2px solid white;
-    border-radius: 4px;
-    height: 520px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    padding: 8px 1rem;
-
+.login-form form {
+  border: 0.2px solid white;
+  border-radius: 4px;
+  height: 520px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 8px 1rem;
 }
-.login-header{
-    border: 0.3px solid white;
-    border-radius: 4px;
-    padding: 6px 8px;
-    color: rgba(255, 255, 255, 0.788);
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    letter-spacing: 1.2px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+.login-header {
+  border: 0.3px solid white;
+  border-radius: 4px;
+  padding: 6px 8px;
+  color: rgba(255, 255, 255, 0.788);
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: 1.2px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
-.user-inputs{
-    border: 0.3px solid white;
-    max-height: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1.3rem;
-    flex-grow: 1;
-    border-radius: 4px;
+.user-inputs {
+  border: 0.3px solid white;
+  max-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.3rem;
+  flex-grow: 1;
+  border-radius: 4px;
 }
-.user-inputs input{
-    width: 80%;
-    padding: 8px 4px;
-    border: none;
-    background: transparent;
-    color: white;
-    border-bottom: 1px solid white;
-    border-radius: 4px;
-    outline: none;
+.user-inputs input {
+  width: 80%;
+  padding: 8px 4px;
+  border: none;
+  background: transparent;
+  color: white;
+  border-bottom: 1px solid white;
+  border-radius: 4px;
+  outline: none;
 }
 .password-input {
-   padding : 0px 4px;
-    width: 80%;
-    border-bottom: 1px solid white;
-    border-radius: 4px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  padding: 0px 4px;
+  width: 80%;
+  border-bottom: 1px solid white;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.password-input input{
-    border: none;
-    width: 86%;
+.password-input input {
+  border: none;
+  width: 86%;
 }
-.fa-solid{
-    color: rgba(255, 255, 255, 0.849);
-    cursor: pointer;
+.fa-solid {
+  color: rgba(255, 255, 255, 0.849);
+  cursor: pointer;
 }
-.submit-login-page-btn{
-    border-radius: 4px;
-    border: none;
-    padding: 10px 8px;
-    outline: none;
-    cursor: pointer;
-    font-weight: bold;
-    color: #0E1F32;
-}
-
-.register-link{
-    /* border: 2px solid red; */
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
-    text-align: center;
-    padding: 4px 0px;
+.submit-login-page-btn {
+  border-radius: 4px;
+  border: none;
+  padding: 10px 8px;
+  outline: none;
+  cursor: pointer;
+  font-weight: bold;
+  color: #0e1f32;
 }
 
-@media (max-width:450px) {
-    .login-container{
-        grid-template-columns: repeat(auto-fit , minmax(100px,1fr));
-    }
+.register-link {
+  /* border: 2px solid red; */
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  padding: 4px 0px;
+}
+
+@media (max-width: 450px) {
+  .login-container {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
 }

@@ -1,12 +1,12 @@
-const asyncHandler = (requestHandler)=>{
-    return async(req , res ,next)=>{
+const asyncHandler = (requestHandler) => {
+    return async (req, res, next) => {
         try {
-            await requestHandler(req , res ,next);
+            await requestHandler(req, res, next);
         } catch (error) {
-            
-            res.status(Number(error.code) || 500).json({success : false ,message : error.message})
+
+            res.status(Number(error.code) || 500).json({ success: false, message: error.message })
         }
     }
 }
 
-export {asyncHandler}
+export { asyncHandler }
