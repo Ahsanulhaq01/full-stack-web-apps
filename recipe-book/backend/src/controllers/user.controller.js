@@ -71,10 +71,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
     const { accessToken, refreshToken } = await generateAccesssAndRefreshToken(user._id);
 
-    //loggined user with abstraction of secret details
     const loggedInUser = await User.findById(user._id).select("-password -refreshToken");
-
-    //setting up the cookies
 
     const options = {
         httpOnly: true,
