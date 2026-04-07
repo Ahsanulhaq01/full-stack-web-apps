@@ -1,0 +1,217 @@
+.hero-section{
+    border: 2px solid rgb(21, 24, 49);
+    border-radius: 4px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 3rem;
+    width: 60vw;
+    padding: 10px;
+}
+.name-of-web-app{
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 4px;
+    padding: 4px;
+}
+.balance-section{
+    border: 0.5px solid rgb(22, 22, 66);
+    border-radius: 4px;
+    display: flex;
+    width: 80%;
+    /* height: 60px; */
+    justify-content: space-between;
+    padding: 10px 50px;
+    align-items: center;
+}
+.balance-section .balance-amount{
+    font-weight: bold;
+}
+button{
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: rgb(62, 109, 134);
+    outline: none;
+    color: white;
+    font-weight: bold;
+}
+.balance-section button ,.list-of-transaction li button{
+    width: 100px;
+    
+}
+
+.add-amount-container{
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    padding: 8px;
+    align-items: center;
+    gap: 1rem;
+}
+.active{
+    display: none;
+}
+.add-amount-container input{
+    padding: 10px 20px;
+    outline: none;
+    border: 1px solid silver;
+    border-radius: 4px;
+    width: 100%;
+}
+.checked-container-for-expense-and-budget{
+   border: 0.5px solid rgb(22, 22, 66);
+    border-radius: 4px;
+    display: flex;
+    /* width: 80%; */
+    justify-content: space-between;
+    align-items: center;
+
+}
+.expense-check{
+    border-right: 0.5px solid rgb(22, 22, 66);
+}
+.expense-check,.budget-check {
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    gap: 1rem;
+    padding: 2px 4px ;
+}
+.checked-container-for-expense-and-budget input ,label{
+    cursor: pointer;
+}
+
+.expense-and-budget-section{
+    border: 0.5px solid rgb(22, 22, 66);
+    border-radius: 4px;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.expense-container {
+    border-right: 0.5px solid rgb(22, 22, 66);
+     /* border-radius: 4px; */
+}
+.expense-and-budget-section .expense-container ,.budget-container{
+    /* border: 0.5px solid rgb(22, 22, 66);
+    border-radius: 4px; */
+    width: 50%;
+    height: 70px;
+    padding: 4px 8px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    /* gap: 4px; */
+    justify-content: space-between;
+}
+
+.transaction-container{
+    border: 0.5px solid rgb(22, 22, 66);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    /* height: 100%; */
+    padding: 8px;
+    gap: 1rem;
+    
+}
+.transaction-container .transaction-head{
+    font-weight: bold;
+    font-size: 20px;
+    margin: 10px 0px;
+    /* border: 2px solid red; */
+}
+.transaction-container input{
+    padding: 10px 4px;
+    outline: none;
+    border: 0.5px solid rgb(22, 22, 66);
+    border-radius: 4px;
+    border-radius: 4px;
+}
+.transaction-container input::placeholder{
+    font-weight: bold;
+    
+}
+.transaction-container .list-of-transaction  li{
+    display: flex;
+    justify-content: space-between;
+    padding: 2px 8px;
+    align-items: center;
+}
+
+@media (max-width : 680px) {
+    .hero-section{
+        width : 100vw
+
+    }
+}
+
+@media (max-width : 430px) {
+    .balance-section{
+        padding: 10px 4px;
+    }
+}
+
+@media (max-width : 290px) {
+    .balance-section{
+        flex-direction: column;
+        padding: 10px 0px;
+        gap:8px;
+
+    }
+    .expense-and-budget-section{
+        flex-direction: column;
+        /* padding: 2px; */
+        gap: 0;
+
+    }
+    .expense-and-budget-section .expense-container , .budget-container{
+        width: 100%;
+    }
+    .expense-container{
+        border-bottom: 0.5px solid rgb(22, 22, 66);;
+        border-right: none;
+    }
+
+
+}
+
+@media (max-width : 330px) {
+    .checked-container-for-expense-and-budget{
+        flex-direction: column;
+        border: 0.5px solid rgb(22, 22, 66);
+        border-radius: 4px;
+    }
+    .expense-check{
+        border-bottom: 0.5px solid rgb(22, 22, 66);
+        border-right: none;
+    }
+    
+    
+    .name-of-web-app , .balance-section ,.add-amount-container ,.expense-and-budget-section ,.transaction-container{
+        width: 100%;
+    }
+    .hero-section{
+        padding: 2px 4px;
+    }
+}
+
+@media (max-width : 230px) {
+    .transaction-container .list-of-transaction  li{
+        flex-direction: column;
+        border: 0.5px solid rgb(22, 22, 66);
+    border-radius: 4px;
+        justify-content: center;
+        gap: 8px;
+    }
+}
