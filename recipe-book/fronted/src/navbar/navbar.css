@@ -11,8 +11,16 @@
   border-bottom: 4px solid #0e1f32;
   left: 0;
   top: 0;
-  z-index: 100;
+  z-index: 10;
   padding: 0px 10px;
+}
+.btn{
+  padding: 2px 4px; 
+  border: none;
+  background-color: transparent;
+}
+.hide{
+  display: none;
 }
 .container ul {
   display: flex;
@@ -21,7 +29,7 @@
   padding: 0.4rem;
   margin-right: 1.8rem;
 }
-.container ul li {
+.container ul li  {
   list-style: none;
   padding: 8px 20px;
   background: linear-gradient(to right, #0e1f32 0%, #0e1f32 100%);
@@ -31,12 +39,12 @@
   cursor: pointer;
   text-decoration: underline;
   white-space: nowrap;
+  transition: background-size 0.4s linear;
 }
 
 .container ul li:hover {
   background-size: 100% 100%;
   color: white;
-  transition: background-size 0.4s linear;
 }
 
 a {
@@ -52,34 +60,74 @@ a {
   white-space: nowrap;
   padding: 4px 8px;
 }
-.active {
-  display: none;
-  margin-right: 1rem;
-  font-size: 20px;
-}
-.unactive-display {
-  display: none;
-}
-@media (max-width: 680px) {
-  .container .active {
-    cursor: pointer;
+.container i{
     display: block;
     color: black;
-  }
+    font-size: 20px;
+   
+}
+@media (max-width: 680px) {
   .container ul {
     display: none;
+  }
+  .hide{
+    display: block;
   }
 }
 @media (max-width: 200px) {
   #logo-id {
     font-size: 14px;
   }
-  .active {
+  .container i{
     font-size: 10px;
   }
+  
 }
-/* .container i{
-    display: block;
-    border: 2px solid rebeccapurple;
-    color: black;
-} */
+
+
+.sidebar{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 250px;
+    height: 100vh;
+    background: #0E1F32;
+    color: white;
+    padding: 20px;
+    transform: translateX(100%);
+    transition: transform 0.4s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 1rem;
+}
+
+.sidebar.active{
+    transform: translateX(0%);
+}
+
+.list-of-pages{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 4px;
+  width: 100%;
+  cursor: pointer;
+ 
+}
+.close-btn{
+  padding: 2px 4px;
+  border: none;
+}
+.list-of-pages a{
+  color: white;
+  text-decoration: none;
+  padding: 4px;
+  margin-left: 4px;
+  opacity: 0.7;
+
+}
+.list-of-pages a:hover{
+  opacity: 1;
+}

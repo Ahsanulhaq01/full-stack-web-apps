@@ -5,9 +5,11 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { useContext } from "react";
 import { AuthContext } from "../context/AthContext.jsx";
+import { useState } from "react";
 
 function Navbar() {
   const { user, setUser } = useContext(AuthContext);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
   async function handleLogOut(e) {
     e.preventDefault();
@@ -38,29 +40,51 @@ function Navbar() {
       }
     });
   }
+
   return (
     <>
       <div className="container">
         <Link to={"/"}>
           <span id="logo-id">RECIPE BOOK</span>
         </Link>
-        <i className="fa-solid fa-bars active"></i>
+
+        <button onClick={() => setIsSidebarOpen(true)} className="hide btn">
+          <i className="fa-solid fa-bars"></i>
+        </button>
+
+        <div className={isSidebarOpen ? "sidebar active" : "sidebar"}>
+          <button className="close-btn" onClick={() => setIsSidebarOpen(false)}>
+            <i className="fa-solid fa-xmark"></i>
+          </button>
+          <div className="list-of-pages">
+            <Link to={"/"}>Home</Link>
+            <Link to={"/register"}>Sign up</Link>
+            <Link to={"/login"}>Login</Link>
+            <Link onClick={handleLogOut}>logout</Link>
+            <Link to={user ? "/upload-recipe" : "/login"}>
+              {user ? "Upload-Recipe" : "guest"}
+            </Link>
+          </div>
+        </div>
+
         <ul className="nav-list">
-          <Link to={"/"}>
-            <li key={1}>Home</li>
-          </Link>
-          <Link to={"/login"}>
-            <li key={2}>Login</li>
-          </Link>
-          <Link to={"/register"}>
-            <li key={3}>Sign up</li>
-          </Link>
-          <Link onClick={handleLogOut}>
-            <li key={4}>logout</li>
-          </Link>
-          <Link to={user ? "/upload-recipe" : "/login"}>
-            <li key={5}>{user ? "Upload-Recipe" : "guest"}</li>
-          </Link>
+          <li>
+            <Link to={"/register"}>Sign up</Link>
+          </li>
+
+          <li>
+            <Link to={"/login"}>Login</Link>
+          </li>
+
+          <li>
+            <Link onClick={handleLogOut}>Logout</Link>
+          </li>
+
+          <li>
+            <Link to={user ? "/upload-recipe" : "/login"}>
+              {user ? "Upload-Recipe" : "Guest"}
+            </Link>
+          </li>
         </ul>
       </div>
     </>
