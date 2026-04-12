@@ -124,4 +124,22 @@ const getMyRecipes = asyncHandler(async (req, res) => {
     )
 
 })
-export { createRecipe, getRecipes, getRecipesCount, getMyRecipes }
+
+
+const getRecipeById = asyncHandler(async(req, res)=>{
+
+    const {id} = req.params;
+
+    const recipe = await Recipe.findById(id);
+
+    if(!recipe){
+        return res.status(404).json(
+            new ApiResponse(404 , null , "Recipe not Found")
+        )
+    }
+
+    return res.status(200).json(
+        new ApiResponse(200 , recipe , "Recipe Successfully fetched ")
+    )
+})
+export { createRecipe, getRecipes, getRecipesCount, getMyRecipes , getRecipeById }

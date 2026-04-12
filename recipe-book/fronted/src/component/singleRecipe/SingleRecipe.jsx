@@ -16,8 +16,8 @@ function SingleRecipe() {
       try {
         await axiosInstance.get("/user/check-auth", { withCredentials: true });
         setIsAuth(true);
-        const response = await axios.get(`https://dummyjson.com/recipes/${id}`);
-        setRecipe(response.data);
+        const response = await axios.get(`http://localhost:3000/api/v1/recipe/recipe/${id}`);
+        setRecipe(response.data.data);
       } catch (err) {
         setIsAuth(false);
         console.log(err);
@@ -33,9 +33,9 @@ function SingleRecipe() {
       <Navbar />
       <div className="recipe-container">
         <div className="image-side-container">
-          <p className="name-of-recipe">{recipe.name}</p>
+          <p className="name-of-recipe">{recipe.recipeName}</p>
           <div className="image-and-attributes">
-            <img src={recipe.image} alt="recipe-image" />
+            <img src={`http://localhost:3000/${recipe.recipeImage}`} alt="recipe-image" />
             <div className="attributes">
               <p className="serving-para">Serving : {recipe.servings}</p>
               <p className="difficulty-level">
@@ -46,7 +46,7 @@ function SingleRecipe() {
           </div>
           <div className="rating-review-and-caloriesCount">
             <div className="rating-review">
-              <p id="review">review : {recipe.reviewCount}</p>
+              <p id="review">review : {recipe.reviews}</p>
               <p id="rating">rating : {recipe.rating}</p>
             </div>
             <p className="calories-count">
@@ -57,10 +57,10 @@ function SingleRecipe() {
         <div className="ingrediant-instruction-container">
           <div className="prep-and-cook-time">
             <p className="prep-time">
-              Preparatng-Time : {recipe.prepTimeMinutes} Min
+              Preparatng-Time : {recipe.preparationTime} Min
             </p>
             <p className="cook-time">
-              Cooking-Time : {recipe.cookTimeMinutes} Min
+              Cooking-Time : {recipe.cookingTime} Min
             </p>
           </div>
           <p className="ingrediant">

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { upload } from "../middleware/multer.middleware.js";
-import { createRecipe, getRecipes, getRecipesCount, getMyRecipes } from "../controllers/recipe.controller.js";
+import { createRecipe, getRecipes, getRecipesCount, getMyRecipes ,getRecipeById} from "../controllers/recipe.controller.js";
 import { verifyJwt } from "../middleware/auth.middleware.js";
 const router = Router();
 
@@ -17,7 +17,7 @@ router.route('/upload-recipe').post(
 )
 
 router.route('/recipes').get(getRecipes);
-
+router.route('/recipe/:id').get(getRecipeById)
 router.route('/recipe-count').get(verifyJwt, getRecipesCount);
 router.route('/myrecipes').get(verifyJwt, getMyRecipes);
 

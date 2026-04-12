@@ -13,8 +13,8 @@ app.use(cors({
 }));
 app.use(cookieParser());
 app.use(express.json({ limit: '16kb' }))
-app.use(express.static('public/upload'));
 app.use(express.urlencoded({ limit: '10kb' }))
+app.use('/public/uploads',express.static('public/uploads'));
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/recipe", recipeRouter);

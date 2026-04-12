@@ -9,8 +9,8 @@ function Homepage() {
 
   useEffect(() => {
     const getRecipe = async () => {
-      const response = await axios.get("https://dummyjson.com/recipes");
-      setRecipe(response.data.recipes);
+      const response = await axios.get("http://localhost:3000/api/v1/recipe/recipes");
+      setRecipe(response.data);
     };
     getRecipe();
   }, []);
@@ -20,20 +20,20 @@ function Homepage() {
       <div className="recipes-container">
         {recipe.map((item) => {
           return (
-            <div className="recipe-box1" key={item.id}>
+            <div className="recipe-box1" key={item._id}>
               <div className="image-container">
                 <p className="meal-type">{item.mealType[0]}</p>
-                <img src={item.image} alt="recipe-image" />
+                <img src={`http://localhost:3000/${item.recipeImage}`} alt="recipe-image" />
               </div>
               <div className="details-container">
-                <p className="recipe-name">{item.name}</p>
+                <p className="recipe-name">{item.recipeName}</p>
                 <div className="rating-review-container">
                   <p className="review">
-                    {`reviewCount : ${item.reviewCount}`}{" "}
+                    {`reviewCount : ${item.reviews}`}{" "}
                   </p>
                   <p className="rating">{`rating : ${item.rating}`}</p>
                 </div>
-                <Link to={`/recipe/${item.id}`} target="blank">
+                <Link to={`/recipe/${item._id}`} target="blank">
                   <button className="view-more-btn">view more</button>
                 </Link>
               </div>
