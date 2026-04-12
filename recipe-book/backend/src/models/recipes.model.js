@@ -16,6 +16,7 @@ const recipeSchema = new mongoose.Schema(
         },
         servings: {
             type: Number,
+            required : true,
         },
         difficulty: {
             type: String,
@@ -28,7 +29,8 @@ const recipeSchema = new mongoose.Schema(
             required: true,
         },
         tags: {
-            type: [String]
+            type: [String],
+            required : true
         },
         createdBy: {
             type: mongoose.Schema.Types.ObjectId,
@@ -59,6 +61,7 @@ const recipeSchema = new mongoose.Schema(
         },
         cuisine: {
             type: String,
+            required : true,
 
         }
     },

@@ -29,7 +29,10 @@
   padding: 0.4rem;
   margin-right: 1.8rem;
 }
-.container ul li  {
+ul li{
+  list-style : none
+}
+.container ul li a {
   list-style: none;
   padding: 8px 20px;
   background: linear-gradient(to right, #0e1f32 0%, #0e1f32 100%);
@@ -39,18 +42,15 @@
   cursor: pointer;
   text-decoration: underline;
   white-space: nowrap;
-  transition: background-size 0.4s linear;
+  color: black;
+  
 }
 
-.container ul li:hover {
+.container ul li a:hover {
+  transition: background-size 0.4s linear;
   background-size: 100% 100%;
   color: white;
 }
-
-a {
-  color: black;
-}
-
 #logo-id {
   /* margin-right: auto; */
   cursor: pointer;

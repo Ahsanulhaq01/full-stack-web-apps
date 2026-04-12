@@ -1,15 +1,13 @@
 import { Recipe } from "../models/recipes.model.js";
 import { asyncHandler } from "../utils/asyncHandlers.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import { uploadToCloudinary } from "../utils/cloudinary.js";
+// import { uploadToCloudinary } from "../utils/cloudinary.js";
 
 const createRecipe = asyncHandler(async (req, res) => {
     const userId = req.user._id;
 
     const {
         recipeName,
-        instructions,
-        ingredients,
         servings,
         difficulty,
         caloriesPerServing,
@@ -20,6 +18,9 @@ const createRecipe = asyncHandler(async (req, res) => {
         mealType,
 
     } = req.body;
+
+    const instructions = JSON.parse(req.body.instructions);
+    const ingredients = JSON.parse(req.body.ingredients);
 
     if (
         !recipeName ||
@@ -68,7 +69,7 @@ const createRecipe = asyncHandler(async (req, res) => {
         )
     }
 
-    const cloudinaryResponse = await uploadToCloudinary(localFilePath);
+    // const cloudinaryResponse = await uploadToCloudinary(localFilePath);
 
     const newRecipe = await Recipe.create({
         recipeName,
@@ -78,7 +79,7 @@ const createRecipe = asyncHandler(async (req, res) => {
         difficulty,
         caloriesPerServing,
         tags,
-        recipeImage: cloudinaryResponse.secure_url,
+        recipeImage: localFilePath,
         mealType,
         preparationTime,
         cookingTime,

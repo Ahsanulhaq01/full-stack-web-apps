@@ -53,7 +53,7 @@ function UploadRecipe() {
 
     const formData = new FormData();
 
-    const instructionsArray = itemData.instructions
+    const instructionsArray = (itemData.instructions || "")
       .split(",")
       .map((i) => i.trim())
       .filter(Boolean);
@@ -85,14 +85,14 @@ function UploadRecipe() {
       toast.success(response.data.message || "Recipe Uploaded Successfully");
     } catch (error) {
       console.error("Upload failed:", error.response?.data || error.message);
-      toast.error(error?.response.data.message);
+      toast.error(error?.response?.data?.message || "upload-failed");
     }
 
     try {
       const response = await axiosInstance.get("/recipe/recipe-count");
       console.log(response.data.data.count);
     } catch (error) {
-      console.log(error?.response.error);
+      console.log(error?.response.data);
     }
   };
 
@@ -149,7 +149,7 @@ function UploadRecipe() {
                 type="number"
                 placeholder="Enter the quantity of serving"
                 onChange={handleChange}
-                value={itemData.serving}
+                value={itemData.servings}
                 id="recipe-serving"
                 name="servings"
               />
@@ -190,7 +190,7 @@ function UploadRecipe() {
             <div className="feild-for-preparationTime">
               <label htmlFor="cuisine">Enter the PreparationTime</label>
               <input
-                type="Number"
+                type="number"
                 placeholder="Enter the PreparationTime"
                 value={itemData.preparationTime}
                 onChange={handleChange}
