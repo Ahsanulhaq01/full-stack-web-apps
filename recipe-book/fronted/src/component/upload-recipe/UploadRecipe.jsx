@@ -266,6 +266,8 @@ function UploadRecipe() {
                 <option value="Dinner">Dinner</option>
                 <option value="Breakfast">Breakfast</option>
                 <option value="Lunch">Lunch</option>
+                <option value="Lunch/Dinner">Lunch/Dinner</option>
+                <option value="Snack">Snack</option>
               </select>
               <span className="selected-mealtype">{itemData.mealType}</span>
             </div>

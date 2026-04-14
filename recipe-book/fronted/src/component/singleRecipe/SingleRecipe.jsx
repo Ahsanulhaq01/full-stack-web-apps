@@ -2,31 +2,58 @@ import React, { useEffect, useState } from "react";
 import "./singleRecipe.css";
 import Navbar from "../../navbar/Navbar";
 import { useParams } from "react-router";
-import axios from "axios";
 import { Navigate } from "react-router";
 import { axiosInstance } from "../../utils/axiosInstance";
+import { useNavigate } from "react-router";
+import Swal from "sweetalert2";
 
 function SingleRecipe() {
   const [recipe, setRecipe] = useState({ instructions: [], ingredients: [] });
   const [isAuth, setIsAuth] = useState(null);
   const { id } = useParams();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const getRecipes = async () => {
+
+  const getRecipes = async () => {
       try {
         await axiosInstance.get("/user/check-auth", { withCredentials: true });
         setIsAuth(true);
-        const response = await axios.get(`http://localhost:3000/api/v1/recipe/recipe/${id}`);
+        const response = await axiosInstance.get(
+          `/recipe/recipe/${id}`,
+        );
         setRecipe(response.data.data);
-      } catch (err) {
+      } catch {
         setIsAuth(false);
-        console.log(err);
       }
     };
+
+    useEffect(()=>{
     getRecipes();
-  }, [id]);
+    },[recipe])
 
   if (isAuth === false) return <Navigate to={"/login"} />;
+
+  async function deleteRecipe(){
+    const result = await Swal.fire({
+      title : "Are you sure?",
+      text : "this will delete the recipe",
+      icon : "warning",
+      showCancelButton : true,
+      confirmButtonText : "Yes,  delete it"
+    })
+
+    if(result.isConfirmed){
+      try {
+        const response = await axiosInstance.delete(`/recipe/recipe/${recipe._id}`)
+        Swal.fire("Deleted!" , response.data.message , "success")
+        navigate('/')
+        setIsAuth(true)
+        
+      } catch (err) {
+        Swal.fire("Error" ,err.message || "something went wrong" ,"error")
+      }
+    }
+  }
 
   return (
     <>
@@ -35,7 +62,10 @@ function SingleRecipe() {
         <div className="image-side-container">
           <p className="name-of-recipe">{recipe.recipeName}</p>
           <div className="image-and-attributes">
-            <img src={`http://localhost:3000/${recipe.recipeImage}`} alt="recipe-image" />
+            <img
+              src={`http://localhost:3000/${recipe.recipeImage}`}
+              alt="recipe-image"
+            />
             <div className="attributes">
               <p className="serving-para">Serving : {recipe.servings}</p>
               <p className="difficulty-level">
@@ -49,9 +79,12 @@ function SingleRecipe() {
               <p id="review">review : {recipe.reviews}</p>
               <p id="rating">rating : {recipe.rating}</p>
             </div>
-            <p className="calories-count">
-              Calories-Count : {recipe.caloriesPerServing}
-            </p>
+            <div className="calories-count-and-delete-button">
+              <p className="calories-count">
+                Calories-Count : {recipe.caloriesPerServing}
+              </p>
+              <button className="delete-recipe" onClick={deleteRecipe}>Delete Recipe</button>
+            </div>
           </div>
         </div>
         <div className="ingrediant-instruction-container">
@@ -59,9 +92,7 @@ function SingleRecipe() {
             <p className="prep-time">
               Preparatng-Time : {recipe.preparationTime} Min
             </p>
-            <p className="cook-time">
-              Cooking-Time : {recipe.cookingTime} Min
-            </p>
+            <p className="cook-time">Cooking-Time : {recipe.cookingTime} Min</p>
           </div>
           <p className="ingrediant">
             Ingrediant :

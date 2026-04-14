@@ -76,6 +76,29 @@
   padding: 4px 8px;
   border-radius: 4px;
 }
+
+.calories-count-and-delete-button{
+  border-bottom: 1px solid rgb(71, 71, 71);
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding: 4px 0px;
+}
+.calories-count-and-delete-button .delete-recipe{
+  padding: 4px 8px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  opacity: 0.8;
+  font-weight: bold;
+  background-color: #0672ed;
+  color: white;
+}
+.delete-recipe:hover{
+  opacity: 1;
+  
+}
 /* right side container */
 .ingrediant-instruction-container {
   border: 1px solid rgb(143, 146, 143);
@@ -123,6 +146,11 @@ p li {
   .image-and-attributes {
     flex-direction: column;
   }
+  .calories-count-and-delete-button{
+    flex-direction: column;
+    gap: 8px;
+    padding: 4px 6px;
+  }
 }
 @media (max-width: 420px) {
   .attributes {
@@ -135,3 +163,10 @@ p li {
     font-size: 14px;
   }
 }
+
+/* @media (max-width : 340px) {
+  .calories-count-and-delete-button{
+    flex-direction: column;
+    gap: 4px;
+  }
+} */

@@ -142,4 +142,40 @@ const getRecipeById = asyncHandler(async(req, res)=>{
         new ApiResponse(200 , recipe , "Recipe Successfully fetched ")
     )
 })
-export { createRecipe, getRecipes, getRecipesCount, getMyRecipes , getRecipeById }
+
+const deleteRecipe = asyncHandler(async(req,res)=>{
+    const {id} = req.params
+    const deletedRecipe = await Recipe.findByIdAndDelete(id)
+
+    if(!deleteRecipe){
+        return res.status(404).json(
+            new ApiResponse(404 , null , "Recipe not Found")
+        )
+    }
+
+    console.log(deletedRecipe)
+    return res.status(200).json(
+        new ApiResponse(200 , null , `${deletedRecipe.recipeName} recipe is Successfully Deleted`)
+    )
+})
+
+const updateRecipe = asyncHandler(async(req,res)=>{
+    const {id} = req.params;
+
+    const updatedRecipe = await Recipe.findByIdAndUpdate(
+        id,
+        req.body,
+        {new : true}
+    );
+
+    if(!updateRecipe){
+        return res.status(404).json(
+            new ApiResponse(404 , null , "Recipe not found")
+        )
+    }
+
+    return res.status(200).json(
+        new ApiResponse(200 , updateRecipe , `${updatedRecipe.recipeName} recipe is updated Successfully`)
+    )
+})
+export { createRecipe, getRecipes, getRecipesCount, getMyRecipes , getRecipeById , deleteRecipe , updateRecipe }
