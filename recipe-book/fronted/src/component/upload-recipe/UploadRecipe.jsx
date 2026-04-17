@@ -3,23 +3,28 @@ import { axiosInstance } from "../../utils/axiosInstance.js";
 import "./upload-recipe.css";
 import { toast } from "react-toastify";
 import Navbar from "../../navbar/Navbar.jsx";
+import { useLocation, useNavigate } from "react-router";
 
 function UploadRecipe() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isUpdateMode = location.state?.isUpdate || false;
+  const recipeData = location.state?.recipe || {};
+
   const [itemData, setItemData] = useState({
-    recipeName: "",
-    instructions: "",
-    ingredients: "",
-    servings: "",
-    difficulty: "",
-    calories: "",
-    caloriesPerServing: "",
-    tags: "",
-    mealType: "",
-    cuisine: "",
-    preparationTime: "",
-    cookingTime: "",
+    recipeName: recipeData.recipeName || "",
+    instructions: recipeData.instructions?.join(", ") || "",
+    ingredients: recipeData.ingredients?.join(", ") || "",
+    servings: recipeData.servings || "",
+    difficulty: recipeData.difficulty || "",
+    calories: recipeData.calories || "",
+    caloriesPerServing: recipeData.caloriesPerServing || "",
+    tags: recipeData.tags?.join(", ") || "",
+    mealType: recipeData.mealType || "",
+    cuisine: recipeData.cuisine || "",
+    preparationTime: recipeData.preparationTime || "",
+    cookingTime: recipeData.cookingTime || "",
     recipeImage: null,
-    previewImage: null,
   });
 
   const handleImageChange = (e) => {
@@ -48,9 +53,7 @@ function UploadRecipe() {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const createFormData = () => {
     const formData = new FormData();
 
     const instructionsArray = (itemData.instructions || "")
@@ -77,6 +80,12 @@ function UploadRecipe() {
     if (itemData.recipeImage) {
       formData.append("recipeImage", itemData.recipeImage);
     }
+
+    return formData;
+  };
+
+  const createRecipe = async () => {
+    const formData = createFormData();
     try {
       const response = await axiosInstance.post(
         "/recipe/upload-recipe",
@@ -87,12 +96,38 @@ function UploadRecipe() {
       console.error("Upload failed:", error.response?.data || error.message);
       toast.error(error?.response?.data?.message || "upload-failed");
     }
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
+
+    if(isUpdateMode){
+      updateRecipe();
+    }
+    else{
+      createRecipe();
+    }
+    // try {
+    //   const response = await axiosInstance.get("/recipe/recipe-count");
+    //   console.log(response.data.data.count);
+    // } catch (error) {
+    //   console.log(error?.response.data);
+    // }
+  };
+
+  const updateRecipe = async () => {
+
+    const formData = createFormData();
     try {
-      const response = await axiosInstance.get("/recipe/recipe-count");
-      console.log(response.data.data.count);
+
+      const response = await axiosInstance.put(
+        `/recipe/recipe/${recipeData._id}`,
+        formData,
+      );
+      toast.success(response.data.message);
+      navigate("/");
     } catch (error) {
-      console.log(error?.response.data);
+      toast.error(error?.response?.data?.message || "Update failed");
     }
   };
 
@@ -293,7 +328,7 @@ function UploadRecipe() {
               />
             )}
             <button type="submit" className="submit-button">
-              Upload Recipe
+              {isUpdateMode ? "Update Recipe" : "Upload Recipe"}
             </button>
           </form>
         </div>

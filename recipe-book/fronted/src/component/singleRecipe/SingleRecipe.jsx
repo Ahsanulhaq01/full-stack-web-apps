@@ -22,14 +22,16 @@ function SingleRecipe() {
           `/recipe/recipe/${id}`,
         );
         setRecipe(response.data.data);
+        
       } catch {
         setIsAuth(false);
       }
     };
 
     useEffect(()=>{
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     getRecipes();
-    },[recipe])
+    },[id])
 
   if (isAuth === false) return <Navigate to={"/login"} />;
 
@@ -53,6 +55,15 @@ function SingleRecipe() {
         Swal.fire("Error" ,err.message || "something went wrong" ,"error")
       }
     }
+  }
+
+  async function updateRecipe(){
+   navigate("/upload-recipe", {
+      state: {
+        recipe,
+        isUpdate: true,
+      },
+    });
   }
 
   return (
@@ -81,9 +92,10 @@ function SingleRecipe() {
             </div>
             <div className="calories-count-and-delete-button">
               <p className="calories-count">
-                Calories-Count : {recipe.caloriesPerServing}
+                Calories-Count : {recipe.calories}
               </p>
-              <button className="delete-recipe" onClick={deleteRecipe}>Delete Recipe</button>
+              <button className="delete-recipe del-and-upt-btn" onClick={deleteRecipe}>Delete Recipe</button>
+              <button className="update-recipe del-and-upt-btn" onClick={updateRecipe}>Update Recipe</button>
             </div>
           </div>
         </div>

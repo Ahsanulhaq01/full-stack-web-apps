@@ -84,7 +84,7 @@
   justify-content: space-around;
   padding: 4px 0px;
 }
-.calories-count-and-delete-button .delete-recipe{
+.calories-count-and-delete-button .del-and-upt-btn{
   padding: 4px 8px;
   cursor: pointer;
   border: none;
@@ -95,7 +95,7 @@
   background-color: #0672ed;
   color: white;
 }
-.delete-recipe:hover{
+.del-and-upt-btn:hover{
   opacity: 1;
   
 }
@@ -146,11 +146,7 @@ p li {
   .image-and-attributes {
     flex-direction: column;
   }
-  .calories-count-and-delete-button{
-    flex-direction: column;
-    gap: 8px;
-    padding: 4px 6px;
-  }
+ 
 }
 @media (max-width: 420px) {
   .attributes {
@@ -164,9 +160,10 @@ p li {
   }
 }
 
-/* @media (max-width : 340px) {
-  .calories-count-and-delete-button{
+@media (max-width : 940px) {
+   .calories-count-and-delete-button{
     flex-direction: column;
-    gap: 4px;
+    gap: 8px;
+    padding: 4px 6px;
   }
-} */
+}

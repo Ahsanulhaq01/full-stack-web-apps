@@ -1,6 +1,7 @@
 import { Recipe } from "../models/recipes.model.js";
 import { asyncHandler } from "../utils/asyncHandlers.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import { User } from "../models/user.model.js";
 // import { uploadToCloudinary } from "../utils/cloudinary.js";
 
 const createRecipe = asyncHandler(async (req, res) => {
@@ -13,6 +14,7 @@ const createRecipe = asyncHandler(async (req, res) => {
         caloriesPerServing,
         preparationTime,
         cookingTime,
+        calories,
         cuisine,
         tags,
         mealType,
@@ -48,7 +50,7 @@ const createRecipe = asyncHandler(async (req, res) => {
         );
     }
 
-    if (caloriesPerServing < 0) {
+    if (caloriesPerServing < 0 || calories < 0) {
         return res.status(400).json(
             new ApiResponse(400, null, "Calories cannot be negative")
         );
@@ -84,6 +86,7 @@ const createRecipe = asyncHandler(async (req, res) => {
         preparationTime,
         cookingTime,
         cuisine,
+        calories,
         createdBy: userId,
     })
 
@@ -153,29 +156,60 @@ const deleteRecipe = asyncHandler(async(req,res)=>{
         )
     }
 
-    console.log(deletedRecipe)
+
     return res.status(200).json(
         new ApiResponse(200 , null , `${deletedRecipe.recipeName} recipe is Successfully Deleted`)
     )
 })
 
-const updateRecipe = asyncHandler(async(req,res)=>{
-    const {id} = req.params;
+const updateRecipe = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  
+  const recipe = await Recipe.findById(id)
 
-    const updatedRecipe = await Recipe.findByIdAndUpdate(
-        id,
-        req.body,
-        {new : true}
-    );
+  if (
+  !recipe.createdBy ||
+  recipe.createdBy.toString() !== req.user._id.toString()
+) {
+  return res.status(403).json(
+    new ApiResponse(403, null, "you cannot edit someone else recipe")
+  );
+}
+  
+  if (req.body.instructions)
+    req.body.instructions = JSON.parse(req.body.instructions);
 
-    if(!updateRecipe){
-        return res.status(404).json(
-            new ApiResponse(404 , null , "Recipe not found")
-        )
+  if (req.body.ingredients)
+    req.body.ingredients = JSON.parse(req.body.ingredients);
+
+  req.body.servings = Number(req.body.servings);
+  req.body.calories = Number(req.body.calories);
+  req.body.caloriesPerServing = Number(req.body.caloriesPerServing);
+  req.body.preparationTime = Number(req.body.preparationTime);
+  req.body.cookingTime = Number(req.body.cookingTime);
+
+    if (req.file) {
+    req.body.recipeImage = req.file.path;
     }
 
-    return res.status(200).json(
-        new ApiResponse(200 , updateRecipe , `${updatedRecipe.recipeName} recipe is updated Successfully`)
+  const updatedRecipe = await Recipe.findByIdAndUpdate(
+    id,
+    req.body,
+    { new: true, runValidators: true }
+  );
+
+  if (!updatedRecipe) {
+    return res.status(404).json(
+      new ApiResponse(404, null, "Recipe not found")
+    );
+  }
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      updatedRecipe,
+      `${updatedRecipe.recipeName} recipe is updated Successfully`
     )
-})
+  );
+});
 export { createRecipe, getRecipes, getRecipesCount, getMyRecipes , getRecipeById , deleteRecipe , updateRecipe }

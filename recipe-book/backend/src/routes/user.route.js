@@ -7,7 +7,7 @@ const router = Router();
 router.route('/register').post(registerUser);
 router.route('/login').post(loginUser)
 router.route('/check-auth').get(verifyJwt, (req, res) => {
-   return res.json({ message: "loggin user" })
+   return res.json({ message: "loggin user" ,data : req.user })
 })
 router.route('/logout').post(verifyJwt, logoutUser);
 
