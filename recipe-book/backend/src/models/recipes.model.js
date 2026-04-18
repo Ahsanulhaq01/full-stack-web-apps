@@ -40,14 +40,14 @@ const recipeSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        rating: {
-            type: Number,
-            default: 0,
-        },
-        reviews: {
-            type: Number,
-            default: 0,
-        },
+        likes: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref : "User",
+        }],
+        dislikes : [{
+            type : mongoose.Schema.Types.ObjectId,
+            ref: "User",
+        }],
         mealType: {
             type: [String],
             enum: ["Breakfast", "Lunch", "Dinner", "Snack" ,"Lunch/Dinner"],

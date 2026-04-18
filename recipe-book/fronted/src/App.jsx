@@ -9,6 +9,7 @@ import RouteTitle from "./utils/RouteTitle";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UploadRecipe from "./component/upload-recipe/UploadRecipe";
+import MyRecipes from "./component/my-recipes/MyRecipes";
 function App() {
   const [showPassword, setShowPassword] = useState(false);
   return (
@@ -37,6 +38,7 @@ function App() {
           }
         />
         <Route path="/upload-recipe" element={<UploadRecipe />} />
+        <Route path="/my-recipes" element= {<MyRecipes/>}/>
       </Routes>
     </>
   );

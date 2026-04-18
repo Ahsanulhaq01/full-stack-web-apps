@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router";
 import { axiosInstance } from "../../utils/axiosInstance";
 import { AuthContext } from "../../context/AthContext";
 import { useContext } from "react";
+import Navbar from "../../navbar/Navbar";
 
 function Login({ showPassword, setShowPassword }) {
   const { setUser } = useContext(AuthContext);
@@ -23,7 +24,6 @@ function Login({ showPassword, setShowPassword }) {
       const response = await axiosInstance.post("/user/login", loginData);
       toast.success(response.data.message || "Login SuccessFull");
       setUser(response.data.data.user.username);
-      // console.log(response.data.data.user.username)
       navigate("/");
     } catch (error) {
       toast.error(error?.response.data.message);
@@ -31,6 +31,7 @@ function Login({ showPassword, setShowPassword }) {
   }
   return (
     <>
+    <Navbar/>
       <div className="login-container">
         <div className="login-form">
           <form onSubmit={handleLogin}>

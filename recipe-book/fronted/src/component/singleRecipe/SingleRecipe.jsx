@@ -10,55 +10,62 @@ import Swal from "sweetalert2";
 function SingleRecipe() {
   const [recipe, setRecipe] = useState({ instructions: [], ingredients: [] });
   const [isAuth, setIsAuth] = useState(null);
+  const [userobj, setUserObj] = useState();
   const { id } = useParams();
   const navigate = useNavigate();
-
+   const isOwner =
+  userobj?._id ==
+  (recipe.createdBy);
+ 
 
   const getRecipes = async () => {
-      try {
-        await axiosInstance.get("/user/check-auth", { withCredentials: true });
-        setIsAuth(true);
-        const response = await axiosInstance.get(
-          `/recipe/recipe/${id}`,
-        );
-        setRecipe(response.data.data);
-        
-      } catch {
-        setIsAuth(false);
-      }
-    };
+    try {
+      const userObject = await axiosInstance.get("/user/check-auth", {
+        withCredentials: true,
+      });
+      setUserObj(userObject.data.data);
+      setIsAuth(true);
+      const response = await axiosInstance.get(`/recipe/recipe/${id}`);
+      setRecipe(response.data.data);
+    } catch {
+      setIsAuth(false);
+    }
+  };
 
-    useEffect(()=>{
+  useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     getRecipes();
-    },[id])
+  }, [id]);
 
   if (isAuth === false) return <Navigate to={"/login"} />;
 
-  async function deleteRecipe(){
+  async function deleteRecipe() {
     const result = await Swal.fire({
-      title : "Are you sure?",
-      text : "this will delete the recipe",
-      icon : "warning",
-      showCancelButton : true,
-      confirmButtonText : "Yes,  delete it"
-    })
+      title: "Are you sure?",
+      text: "this will delete the recipe",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes,  delete it",
+    });
 
-    if(result.isConfirmed){
+    if (result.isConfirmed) {
       try {
-        const response = await axiosInstance.delete(`/recipe/recipe/${recipe._id}`)
-        Swal.fire("Deleted!" , response.data.message , "success")
-        navigate('/')
-        setIsAuth(true)
-        
+        const response = await axiosInstance.delete(
+          `/recipe/recipe/${recipe._id}`,
+        );
+        Swal.fire("Deleted!", response.data.message, "success");
+        navigate("/");
+        setIsAuth(true);
       } catch (err) {
-        Swal.fire("Error" ,err.message || "something went wrong" ,"error")
+        Swal.fire("Error", err.message || "something went wrong", "error");
       }
     }
   }
 
-  async function updateRecipe(){
-   navigate("/upload-recipe", {
+
+
+  async function updateRecipe() {
+    navigate("/upload-recipe", {
       state: {
         recipe,
         isUpdate: true,
@@ -66,6 +73,8 @@ function SingleRecipe() {
     });
   }
 
+
+  
   return (
     <>
       <Navbar />
@@ -74,7 +83,7 @@ function SingleRecipe() {
           <p className="name-of-recipe">{recipe.recipeName}</p>
           <div className="image-and-attributes">
             <img
-              src={`http://localhost:3000/${recipe.recipeImage}`}
+              src={`${recipe.recipeImage}`}
               alt="recipe-image"
             />
             <div className="attributes">
@@ -85,17 +94,29 @@ function SingleRecipe() {
               <p className="cuisine-identity">Cuisine : {recipe.cuisine}</p>
             </div>
           </div>
-          <div className="rating-review-and-caloriesCount">
-            <div className="rating-review">
-              <p id="review">review : {recipe.reviews}</p>
-              <p id="rating">rating : {recipe.rating}</p>
+          <div className="update-delete-and-caloriesCount">
+            <div className="update-and-delete-button">
+               <button
+              disabled={!isOwner}
+              title={!isOwner ? "You cannot delete someone else recipe" : ""}
+                className={!isOwner ? "hide-btn" : "delete-recipe del-and-upt-btn"}
+                onClick={deleteRecipe}
+              >
+                Delete Recipe
+              </button>
+              <button
+               disabled={!isOwner}
+               title={!isOwner ? "You cannot edit someone else recipe" : " "  }
+                className={!isOwner ? "hide-btn" : "update-recipe del-and-upt-btn"}
+                onClick={updateRecipe}
+              >
+                Update Recipe
+              </button>
             </div>
-            <div className="calories-count-and-delete-button">
+            <div className="calories-count-container">
               <p className="calories-count">
                 Calories-Count : {recipe.calories}
               </p>
-              <button className="delete-recipe del-and-upt-btn" onClick={deleteRecipe}>Delete Recipe</button>
-              <button className="update-recipe del-and-upt-btn" onClick={updateRecipe}>Update Recipe</button>
             </div>
           </div>
         </div>

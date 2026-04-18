@@ -50,7 +50,7 @@
   font-size: 14px;
   text-decoration: underline;
 }
-.rating-review-and-caloriesCount {
+.update-delete-and-caloriesCount {
   border-top: 1px solid rgb(175, 175, 175);
   height: 150px;
   display: flex;
@@ -60,31 +60,30 @@
   flex-grow: 1;
   padding: 4px 2px;
 }
-.rating-review-and-caloriesCount:nth-child(3) {
+.update-delete-and-caloriesCount:nth-child(3) {
   font-weight: bold;
 }
-.rating-review {
-  display: flex;
-  justify-content: space-evenly;
-  border-bottom: 1px solid rgb(71, 71, 71);
-  padding: 8px;
-  width: 100%;
-}
-.rating-review p,
-.calories-count {
+.calories-count-container {
   border: 1px solid white;
   padding: 4px 8px;
   border-radius: 4px;
 }
 
-.calories-count-and-delete-button{
+.update-and-delete-button{
   border-bottom: 1px solid rgb(71, 71, 71);
   width: 100%;
   display: flex;
   justify-content: space-around;
-  padding: 4px 0px;
+  padding: 4px 2px;
+  /* border: 2px solid red; */
 }
-.calories-count-and-delete-button .del-and-upt-btn{
+.hide-btn{
+  color: white;
+  padding: 4px 2px;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.update-and-delete-button .del-and-upt-btn{
   padding: 4px 8px;
   cursor: pointer;
   border: none;
@@ -160,10 +159,15 @@ p li {
   }
 }
 
-@media (max-width : 940px) {
-   .calories-count-and-delete-button{
+@media (max-width : 620px) {
+  .update-and-delete-button{
     flex-direction: column;
     gap: 8px;
     padding: 4px 6px;
+  }
+  .calories-count-container{
+    width: 95%;
+    display: flex;
+    justify-content: center;
   }
 }

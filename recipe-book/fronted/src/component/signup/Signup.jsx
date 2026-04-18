@@ -7,6 +7,7 @@ import { Link } from "react-router";
 import { toast } from "react-toastify";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AthContext";
+import Navbar from "../../navbar/Navbar";
 
 function Signup({ showPassword, setShowPassword }) {
   const { setUser } = useContext(AuthContext);
@@ -34,6 +35,7 @@ function Signup({ showPassword, setShowPassword }) {
   }
   return (
     <>
+    <Navbar/>
       <div className="signup-container">
         <div className="signup-form">
           <form onSubmit={handleSignUp}>

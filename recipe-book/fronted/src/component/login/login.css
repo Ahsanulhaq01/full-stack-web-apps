@@ -5,6 +5,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 400px));
   place-content: center;
+  margin-top: 30px;
 }
 .login-form form {
   border: 0.2px solid white;

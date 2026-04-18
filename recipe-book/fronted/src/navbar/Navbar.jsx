@@ -48,7 +48,7 @@ function Navbar() {
           <span id="logo-id">RECIPE BOOK</span>
         </Link>
 
-        <button onClick={() => setIsSidebarOpen(true)} className="hide btn">
+        {/* <button onClick={() => setIsSidebarOpen(true)} className="hide btn">
           <i className="fa-solid fa-bars"></i>
         </button>
 
@@ -65,9 +65,52 @@ function Navbar() {
               {user ? "Upload-Recipe" : "guest"}
             </Link>
           </div>
-        </div>
+        </div> */}
 
-        <ul className="nav-list">
+        <div className="list-and-humburger-icon-container">
+          <ul className="nav-list">
+            <li>
+              <Link to={"/register"}>Sign up</Link>
+            </li>
+
+            <li>
+              <Link to={"/login"}>Login</Link>
+            </li>
+
+            <li>
+              <Link onClick={handleLogOut}>Logout</Link>
+            </li>
+
+            <li>
+              <Link to={user ? "/upload-recipe" : "/login"}>
+                {user ? "Upload-Recipe" : "Guest"}
+              </Link>
+            </li>
+          </ul>
+          <button onClick={() => setIsSidebarOpen(true)} className="btn">
+            <i className="fa-solid fa-bars"></i>
+          </button>
+
+          <div className={isSidebarOpen ? "sidebar active" : "sidebar"}>
+            <button
+              className="close-btn"
+              onClick={() => setIsSidebarOpen(false)}
+            >
+              <i className="fa-solid fa-xmark"></i>
+            </button>
+            <div className="list-of-pages">
+              <Link to={"/"}>Home</Link>
+              <Link to={"/register"}>Sign up</Link>
+              <Link to={"/login"}>Login</Link>
+              <Link onClick={handleLogOut}>logout</Link>
+              <Link to={user ? "/upload-recipe" : "/login"}>
+                {user ? "Upload-Recipe" : "guest"}
+              </Link>
+              <Link to= {"/my-recipes"} >My Recipes</Link>
+            </div>
+          </div>
+        </div>
+        {/* <ul className="nav-list">
           <li>
             <Link to={"/register"}>Sign up</Link>
           </li>
@@ -85,7 +128,7 @@ function Navbar() {
               {user ? "Upload-Recipe" : "Guest"}
             </Link>
           </li>
-        </ul>
+        </ul> */}
       </div>
     </>
   );

@@ -19,8 +19,13 @@
   border: none;
   background-color: transparent;
 }
-.hide{
+/* .hide{
   display: none;
+} */
+
+.list-and-humburger-icon-container{
+  display: flex;
+  margin-right: 1em;
 }
 .container ul {
   display: flex;

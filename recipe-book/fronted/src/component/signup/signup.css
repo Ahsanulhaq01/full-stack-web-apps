@@ -2,6 +2,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 400px));
   justify-content: center;
+  margin-top: 75px;
+  /* place-items: center; */
 }
 
 .signup-form form {

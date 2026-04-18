@@ -107,12 +107,6 @@ function UploadRecipe() {
     else{
       createRecipe();
     }
-    // try {
-    //   const response = await axiosInstance.get("/recipe/recipe-count");
-    //   console.log(response.data.data.count);
-    // } catch (error) {
-    //   console.log(error?.response.data);
-    // }
   };
 
   const updateRecipe = async () => {
