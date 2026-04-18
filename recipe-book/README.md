@@ -4,8 +4,8 @@ A full-stack Recipe Management Web App built using the MERN stack.
 Users can register, login,logout , create recipes, upload images,update recipes,delete recipes,and also checked the recipes that are created by the user itself
 
 🚀 Live Demo
-🌐 Frontend: add after deployment
-⚙️ Backend API: add after Render deployment
+🌐 Frontend: https://www.recipebook.dev
+⚙️ Backend API: https://full-stack-web-apps.onrender.com
 
 
 🧠 Features
@@ -102,7 +102,7 @@ Frontend renders image via URL
 🚀 Deployment
 
 Frontend
-Vercel or Netlify
+Vercel
 
 Backend
 Render
