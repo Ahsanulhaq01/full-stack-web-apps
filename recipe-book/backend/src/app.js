@@ -8,7 +8,7 @@ import recipeRouter from './routes/recipe.route.js';
 const app = express();
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "https://www.recipebook.dev",
     credentials: true,
 }));
 app.use(cookieParser());
