@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
 import { axiosInstance } from "../../utils/axiosInstance";
 import "./homepage.css";
 import Navbar from "../../navbar/Navbar";
@@ -26,9 +25,7 @@ function Homepage() {
 };
 
   const getRecipe = async () => {
-      const response = await axios.get(
-        "http://localhost:3000/api/v1/recipe/recipes",
-      );
+      const response = await axiosInstance.get("/recipe/recipes",);
       setRecipe(response.data);
     };
 
