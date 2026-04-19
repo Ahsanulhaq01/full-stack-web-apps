@@ -90,6 +90,7 @@ function UploadRecipe() {
       const response = await axiosInstance.post(
         "/recipe/upload-recipe",
         formData,
+        {withCredentials : true}
       );
       toast.success(response.data.message || "Recipe Uploaded Successfully");
     } catch (error) {
