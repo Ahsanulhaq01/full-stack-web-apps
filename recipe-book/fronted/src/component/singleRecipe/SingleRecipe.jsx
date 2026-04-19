@@ -46,6 +46,7 @@ function SingleRecipe() {
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes,  delete it",
+      width : window.innerWidth < 600 ? "90%" : "400px",
     });
 
     if (result.isConfirmed) {
