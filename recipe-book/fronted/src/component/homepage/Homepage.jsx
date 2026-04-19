@@ -50,14 +50,10 @@ function Homepage() {
               </div>
               <div className="details-container">
                 <p className="recipe-name">{item.recipeName}</p>
-                <div className="rating-review-container">
-                  {/* <p className="review">
-                    {`reviewCount : ${item.reviews}`}{" "}
-                  </p>
-                  <p className="rating">{`rating : ${item.rating}`}</p> */}
-
+                <div className="like-dislike-emoji-container">
                   <button
                     style={{ color: isLiked ? "green" : "black" }}
+                    className="emoji-btn"
                     onClick={() => handleReaction(item._id , "like")}
                   >
                     👍 {item?.likes?.length}
@@ -65,6 +61,7 @@ function Homepage() {
 
                   <button
                     style={{ color: isDisliked ? "red" : "black" }}
+                    className="emoji-btn"
                     onClick={() => handleReaction(item._id , "dislike")}
                   >
                     👎 {item?.dislikes?.length}

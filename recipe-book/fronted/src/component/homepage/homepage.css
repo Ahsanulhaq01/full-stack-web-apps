@@ -65,7 +65,7 @@
   font-size: 14px;
   font-weight: bold;
 }
-.rating-review-container {
+.like-dislike-emoji-container {
   width: 100%;
   border-radius: 4px;
   display: flex;
@@ -77,16 +77,6 @@
   padding: 2px 8px;
   gap: 4px;
   font-weight: bold;
-}
-.rating {
-  font-size: 14px;
-  color: #0e1f32;
-  white-space: nowrap;
-}
-.review {
-  white-space: nowrap;
-  color: #0e1f32;
-  font-size: 12px;
 }
 .view-more-btn {
   height: 40px;
