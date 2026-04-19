@@ -199,15 +199,25 @@ const updateRecipe = asyncHandler(async (req, res) => {
   req.body.cookingTime = Number(req.body.cookingTime);
 
 
-  const localFilePath = req.file?.path || req.files?.recipeImage?.[0]?.path;
+  // const localFilePath = req.file?|| req.files?.recipeImage?.[0]?.path;
 
-  if (localFilePath) {
-    const cloudinaryResponse = await uploadToCloudinary(localFilePath);
+  // if (localFilePath) {
+  //   const cloudinaryResponse = await uploadToCloudinary(localFilePath);
 
-    if (cloudinaryResponse?.secure_url) {
-      req.body.recipeImage = cloudinaryResponse.secure_url;
-    }
+  //   if (cloudinaryResponse?.secure_url) {
+  //     req.body.recipeImage = cloudinaryResponse.secure_url;
+  //   }
+  // }
+
+  const file = req.file || req.files?.recipeImage?.[0];
+
+if (file) {
+  const cloudinaryResponse = await uploadToCloudinary(file.buffer);
+
+  if (cloudinaryResponse?.secure_url) {
+    req.body.recipeImage = cloudinaryResponse.secure_url;
   }
+}
 
   const updatedRecipe = await Recipe.findByIdAndUpdate(
     id,
