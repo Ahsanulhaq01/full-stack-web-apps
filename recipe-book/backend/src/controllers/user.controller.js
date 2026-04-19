@@ -15,7 +15,7 @@ const generateAccesssAndRefreshToken = async (userId) => {
         const refreshToken = user.generateRefreshToken();
         const accessToken = user.generateAccessToken();
         user.refreshToken = refreshToken;
-        await user.save({ ValidateBeforeSave: false });
+        await user.save({ validateBeforeSave: false });
         return { accessToken, refreshToken };
 
     } catch (error) {
@@ -76,6 +76,7 @@ const loginUser = asyncHandler(async (req, res) => {
     const options = {
         httpOnly: true,
         secure: true,
+        sameSite : "none"
     }
 
     res.status(200)
@@ -102,6 +103,7 @@ const logoutUser = asyncHandler(async (req, res) => {
     const options = {
         httpOnly: true,
         secure: true,
+        sameSite : "none"
     }
 
     return res.status(200).clearCookie('accessToken', options).clearCookie('refreshToken', options).json(new ApiResponse(200, {}, "User SuccessFully Logout"))
