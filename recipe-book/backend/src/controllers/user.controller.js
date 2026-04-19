@@ -37,14 +37,27 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new ApiError(409, "user with this email or username already exist")
     }
 
+    const options = {
+        httpOnly : true,
+        secure : true,
+        sameSite : "none"
+    }
+
+    res.clearCookie("accessToken" , options);
+    res.clearCookie("refreshToken" , options)
     const user = await User.create({
         username: username.toLowerCase(),
         email,
         password,
     })
 
+    const {accessToken , refreshToken} = await generateAccesssAndRefreshToken(user._id);
+
     const createdUser = await User.findById(user._id).select("-password -refreshToken");
-    return res.status(201).json(
+    return res.status(201)
+    .cookie("accessToken" , accessToken , options)
+    .cookie("refreshToken" , refreshToken , options)
+    .json(
         new ApiResponse(200, createdUser, "User SuccessFully Registered !")
     )
 })
