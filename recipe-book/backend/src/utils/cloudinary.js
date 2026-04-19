@@ -11,18 +11,43 @@ cloudinary.config({
 
 })
 
-const uploadToCloudinary = async (localFilePath) => {
+// const uploadToCloudinary = async (localFilePath) => {
+//     try {
+//         if (!localFilePath) return null;
+//         const response = await cloudinary.uploader.upload(localFilePath, { resource_type: 'auto' })
+//         console.log('file upload to cloudinary successfully ' + response.url)
+//         fs.unlinkSync(localFilePath)
+//         return response;
+//     } catch (error) {
+//         console.log('file upload failed to cloudinary' , error);
+//         fs.unlinkSync(localFilePath);
+//         return null;
+//     }
+// }
+
+// for buffer upload directly to cloudinary
+const uploadToCloudinary = async (fileBuffer) => {
     try {
-        if (!localFilePath) return null;
-        const response = await cloudinary.uploader.upload(localFilePath, { resource_type: 'auto' })
-        console.log('file upload to cloudinary successfully ' + response.url)
-        fs.unlinkSync(localFilePath)
-        return response;
+        if (!fileBuffer) return null;
+
+        return new Promise((resolve, reject) => {
+            cloudinary.uploader.upload_stream(
+                { resource_type: 'auto' },
+                (error, result) => {
+                    if (error) {
+                        console.log('Upload failed:', error);
+                        return reject(error);
+                    }
+                    console.log('Uploaded successfully:', result.secure_url);
+                    resolve(result);
+                }
+            ).end(fileBuffer);
+        });
+
     } catch (error) {
-        console.log('file upload failed to cloudinary' , error);
-        fs.unlinkSync(localFilePath);
+        console.log('Cloudinary error:', error);
         return null;
     }
-}
+};
 
 export { uploadToCloudinary };
