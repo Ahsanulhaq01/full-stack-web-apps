@@ -4,16 +4,21 @@
     min-height: 100vh;
     display: flex;
     align-items: center;
+    text-align: center;
     justify-content: center;
     flex-direction: column;
     gap: 3rem;
-    width: 60vw;
+    /* width: 60vw; */
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
     padding: 10px;
 }
 .expense-tracker-header{
     display: flex;
     border: 1px solid rgb(0, 0, 0);
-    width: 80%;
+    width: 100%;
+max-width: 700px;
     justify-content: space-between;
     padding: 4px 10px;
 }
@@ -30,7 +35,8 @@
     border: 0.5px solid rgb(22, 22, 66);
     border-radius: 4px;
     display: flex;
-    width: 80%;
+    width: 100%;
+max-width: 700px;
     /* height: 60px; */
     justify-content: space-between;
     padding: 10px 50px;
@@ -50,8 +56,15 @@ button{
     font-weight: bold;
 }
 .balance-section button ,.list-of-transaction li button{
-    width: 100px;
+    min-width: 80px;
+    width: auto;
     
+}
+
+.transaction-container input,
+.add-amount-container input{
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .add-amount-container{
@@ -59,7 +72,8 @@ button{
     border-radius: 4px;
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 100%;
+max-width: 700px;
     padding: 8px;
     align-items: center;
     gap: 1rem;
@@ -131,7 +145,8 @@ button{
     border-radius: 4px;
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 100%;
+max-width: 700px;
     /* height: 100%; */
     padding: 8px;
     gap: 1rem;
@@ -157,8 +172,9 @@ button{
 .transaction-container .list-of-transaction  li{
     display: flex;
     justify-content: space-between;
-    padding: 2px 8px;
     align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
 }
 
 .red-border{
@@ -235,12 +251,12 @@ button{
     }
 }
 
-@media (max-width : 230px) {
+@media (max-width : 450px) {
     .transaction-container .list-of-transaction  li{
         flex-direction: column;
         border: 0.5px solid rgb(22, 22, 66);
     border-radius: 4px;
-        justify-content: center;
+        /* align-items: center; */
         gap: 8px;
     }
 }
