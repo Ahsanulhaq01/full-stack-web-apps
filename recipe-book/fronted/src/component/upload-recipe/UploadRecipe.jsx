@@ -92,10 +92,10 @@ function UploadRecipe() {
         formData,
         {withCredentials : true}
       );
-      toast.success(response.data.message || "Recipe Uploaded Successfully");
+      toast.success(response.data.message || "Recipe Uploaded Successfully" , {position : "bottom-right"});
     } catch (error) {
       console.error("Upload failed:", error.response?.data || error.message);
-      toast.error(error?.response?.data?.message || "upload-failed");
+      toast.error(error?.response?.data?.message || "upload-failed" , {position : "bottom-right"});
     }
   };
   const handleSubmit = async (e) => {
@@ -119,10 +119,10 @@ function UploadRecipe() {
         `/recipe/recipe/${recipeData._id}`,
         formData,
       );
-      toast.success(response.data.message);
+      toast.success(response.data.message , {position : "bottom-right"});
       navigate("/");
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Update failed");
+      toast.error(error?.response?.data?.message || "Update failed" , {position : "bottom-right"});
     }
   };
 

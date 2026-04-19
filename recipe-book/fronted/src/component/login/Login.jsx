@@ -22,11 +22,15 @@ function Login({ showPassword, setShowPassword }) {
 
     try {
       const response = await axiosInstance.post("/user/login", loginData);
-      toast.success(response.data.message || "Login SuccessFull");
+      toast.success(response.data.message || "Login SuccessFull" , {
+        position : "bottom-right"
+      });
       setUser(response.data.data.user.username);
       navigate("/");
     } catch (error) {
-      toast.error(error?.response.data.message);
+      toast.error(error?.response.data.message , {
+        position : "bottom-right"
+      });
     }
   }
   return (

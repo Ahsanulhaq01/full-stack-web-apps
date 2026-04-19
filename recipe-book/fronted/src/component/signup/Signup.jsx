@@ -26,11 +26,13 @@ function Signup({ showPassword, setShowPassword }) {
 
     try {
       const response = await axiosInstance.post("/user/register", signUpData);
-      toast.success(response.data.message);
+      toast.success(response.data.message , {
+        position : "bottom-right"
+      });
       setUser(username);
       navigate("/");
     } catch (error) {
-      toast.error(error?.response.data.message);
+      toast.error(error?.response.data.message , {position : "bottom-right"});
     }
   }
   return (

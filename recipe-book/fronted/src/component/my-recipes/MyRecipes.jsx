@@ -12,9 +12,13 @@ function MyRecipes() {
         try {
             const response = await axiosInstance.get(`/recipe/myrecipes`);
             setMyRecipe(response.data.data)
-            toast.success(response.data.message || "My self created recipes are fetched successfully")
+            toast.success(response.data.message || "My self created recipes are fetched successfully" , {
+              position : "bottom-right"
+            })
         } catch (error) {
-            toast.error(error?.response?.data?.message || "Error while fetching my own recipes")
+            toast.error(error?.response?.data?.message || "Error while fetching my own recipes" , {
+              position : "bottom-right"
+            })
         }
     }
 

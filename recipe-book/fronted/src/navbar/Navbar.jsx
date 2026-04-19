@@ -29,13 +29,13 @@ function Navbar() {
       if (result.isConfirmed) {
         try {
           const response = await axiosInstance.post("/user/logout", {});
-          toast.success(response.data.message);
+          toast.success(response.data.message , {position : "bottom-right"});
           setTimeout(() => {
             setUser(null);
           }, 1000);
           navigate("/");
         } catch (error) {
-          toast.error(error?.response?.data.message);
+          toast.error(error?.response?.data.message , {position : "bottom-right"});
         }
       }
     });

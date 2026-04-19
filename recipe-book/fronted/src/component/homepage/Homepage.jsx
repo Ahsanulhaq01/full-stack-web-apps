@@ -17,10 +17,14 @@ function Homepage() {
       { action: type, },
       { withCredentials: true }
     );
-      toast.success(response?.data?.message)
+      toast.success(response?.data?.message , {
+        position : "bottom-right"
+      })
     getRecipe();
   } catch (err) {
-    toast.error(err?.response?.data?.message)
+    toast.error(err?.response?.data?.message , {
+      position :"bottom-right"
+    })
   }
 };
 
