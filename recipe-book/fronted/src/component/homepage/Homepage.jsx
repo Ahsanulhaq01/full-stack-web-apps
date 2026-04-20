@@ -60,7 +60,7 @@ function Homepage() {
                     className="emoji-btn"
                     onClick={() => handleReaction(item._id , "like")}
                   >
-                    👍 {item?.likes?.length}
+                    Likes 👍 : {item?.likes?.length}
                   </button>
 
                   <button
@@ -68,7 +68,7 @@ function Homepage() {
                     className="emoji-btn"
                     onClick={() => handleReaction(item._id , "dislike")}
                   >
-                    👎 {item?.dislikes?.length}
+                    Dislikes👎 : {item?.dislikes?.length}
                   </button>
                 </div>
                 <Link to={`/recipe/${item._id}`} target="blank">

@@ -67,33 +67,45 @@
 }
 .like-dislike-emoji-container {
   width: 100%;
-  border-radius: 4px;
+  max-width: 400px;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  /* background-color: #f7e9cd; */
-
+  border-bottom: 0.5px solid rgb(94, 92, 92);
   height: 40px;
-  padding: 2px 8px;
   gap: 4px;
   font-weight: bold;
+  
+}
+.like-dislike-emoji-container button{
+  padding: 4px;
+  outline: none;
+  border: 0.5px solid #0E1F32;
+  color: white;
+  font-weight: bold;
+  
 }
 .view-more-btn {
   height: 40px;
   cursor: pointer;
   width: 100%;
-  background-color: #98aaaa;
-  border: none;
+  background-color: #000000bf;
+  border: 0.5 solid #0E1F32;
   border-radius: 4px;
   font-weight: bold;
-  color: #0e1f32;
-  /* margin-bottom: auto; */
+  color: white;
+  outline: none;
 }
-
 @media (max-width: 220px) {
-  .rating-review-container {
+  .like-dislike-emoji-container {
     flex-direction: column;
     gap: 12px;
+    border-bottom: none;
+    
+  }
+  .like-dislike-emoji-container button{
+    min-width: 100px;
+    padding: 2px 4px;
   }
   .recipe-name {
     white-space: wrap;

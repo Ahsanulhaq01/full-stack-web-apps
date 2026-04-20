@@ -57,11 +57,9 @@
 }
 
 @media (max-width: 520px) {
-  .upload-recipe {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+   .upload-recipe {
+    min-width: 100%;
+    border: none;
   }
   .upload-recipe form {
     display: grid;
