@@ -5,3 +5,9 @@
   --neutralColor : #867369;
   --border-radius-value : 8px;
 }
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
