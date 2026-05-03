@@ -1,0 +1,76 @@
+.parent-container{
+    background-color: #f5d5d578;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px 100px #f5d5d578;
+}
+.home-section{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* padding :20px 10px; */
+    width: 90%;
+    /* align-items: center; */
+    /* border: 2px solid red; */
+}
+
+.browse-by-category-container{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 5px 20px;
+    /* border: 2px solid red; */
+}
+.browse-by-category-container h2{
+    color: var(--tertiaryColor);
+    font-size: clamp(16px , 24px, 30px );
+
+
+}
+
+.select-mealType-container{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    /* border: 2px solid red; */
+    overflow-x: auto;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+}
+.select-mealType-container button{
+    padding: 10px;
+    border: 1px solid var(--tertiaryColor);
+    border-radius: 20px;
+    color: var(--tertiaryColor);
+    font-size: 12px;
+    font-weight: 400;
+    width: 100px;
+    cursor: pointer;
+    background-color: white;
+    white-space: nowrap;
+    flex: 0 0 auto;
+}
+
+
+.select-mealType-container .active{
+    background-color: #994700;
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+
+.show-all-recipe-card-container{
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit ,minmax(300px , 1fr));
+    /* border: 2px solid red; */
+    padding: 10px;
+}
+
+
+@media (max-width :360px) {
+    .home-section{width: 100%;}
+}
