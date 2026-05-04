@@ -1,0 +1,116 @@
+.signup-section{
+    min-height: 100vh;
+    /* border: 2px solid red; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFF8F5;
+}
+
+.sign-up-container{
+    /* border: 2px solid red; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+    padding: 20px;
+    box-shadow: 5px 5px 10px hsl(29, 35%, 46%);
+    border-radius: 10px;
+}
+
+.sign-up-header-container{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    /* border: 2px solid red; */
+}
+.sign-up-header-container h4{
+    color: var(--tertiaryColor);
+}
+.sign-up-header-container p{
+    font-size: 14px;
+    color: var(--tertiaryColor);
+}
+
+.sign-up-container form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* border: 2px solid red; */
+    padding: 10px;
+}
+
+.sign-up-container form input{
+    padding: 16px 4px 16px 30px;
+    outline: none;
+    width: 100%;
+}
+
+.full-name-container ,.email-address-conatiner{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 14px;
+    color: var(--tertiaryColor);
+    justify-content: center;
+}
+
+
+.password-and-confirm-pass-container{
+    display: flex;
+    gap: 4px;
+    /* align-items: center;
+    justify-content: center; */
+    font-size: 14px;
+    color: var(--tertiaryColor);
+
+}
+.password-and-confirm-pass-container input{
+    max-width: 200px;
+}
+
+.name-input-cont ,.email-input-cont, .password-input ,.confirm-password-input{
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.checkCircle ,.lock-icon ,.mail-icon ,.user-icon{
+    position: absolute;
+    left: 8px;
+}
+
+
+.create-acc-btn{
+    padding: 16px;
+    color: white;
+    font-weight: 600px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: linear-gradient(to right ,var(--primaryColor) ,  hsl(29, 97%, 35%));
+}
+
+.exist-account-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+    font-size: 14px;
+    gap: 10px;
+}
+
+.exist-account-container a{
+    text-decoration: none;
+    color: var(--primaryColor);
+
+    font-weight: bold;
+}
+
+@media (max-width:420px) {
+        .password-and-confirm-pass-container{
+            flex-direction: column;
+        }
+        .password-and-confirm-pass-container input{
+            min-width: 100%;
+        }
+}

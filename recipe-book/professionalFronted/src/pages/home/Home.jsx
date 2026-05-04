@@ -1,3 +1,4 @@
+import MessagetoUser from "../../components/homepageComponents/MessagetoUser"
 import Navbar from "../../components/navbar/Navbar"
 import RecipeCard from "../../components/recipeCard/RecipeCard"
 
@@ -8,7 +9,9 @@ function Home() {
    <Navbar/>
     
    <div className="parent-container">
+   
    <div className="home-section">
+     <MessagetoUser/>
         <div className="browse-by-category-container">
             <h2>Browse by Category</h2>
             <div className="select-mealType-container">

@@ -7,6 +7,14 @@
     padding: 0px 0px 20px 0px;
     border-radius: 20px;
     background-color: white;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.recipe-card-container:hover{
+    transform: translateY(-4px); 
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+
 }
 
 .recipe-card-container img{
