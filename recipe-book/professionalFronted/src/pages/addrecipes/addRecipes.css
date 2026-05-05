@@ -1,21 +1,23 @@
 .add-recipes-section{
-    /* border: 2px solid red; */
     min-height: 100vh;
     background-color: #FFF8F5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 
 .add-recipes-container{
-    /* border: 2px solid red; */
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* align-items: start; */
     gap: 30px;
     padding: 20px;
+    width: 100%;
+    max-width: 90%;
+    margin-top: 10px;
 }
 .add-recipes-heading-container{
-    /* border:2px solid red; */
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -33,12 +35,10 @@
 
 .recipes-upload-container{
     display: flex;
-    /* border: 2px solid red; */
     gap: 20px;
 }
 
 .recipe-essential-instruction-ingrediant-container{
-    /* padding: 10px; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -47,7 +47,6 @@
     max-width: 800px;
 }
 .inputs-and-heading-container{
-    /* border: 2px solid red; */
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -63,9 +62,7 @@
 }
 
 .inputs-and-heading-container .heading{
-    /* border: 2px solid red; */
     font-size: clamp(14px , 20px , 30px);
-    /* white-space: nowrap; */
     display: flex;
     align-items: center;
     gap: 10px;
@@ -73,7 +70,6 @@
 }
 
 .recipe-title-container{
-    /* border: 2px solid red; */
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -86,15 +82,12 @@ label{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* border: 2px solid red; */
     gap: 20px;
 }
 
 .category-container{
-    /* border: 2px solid red; */
     flex: 1;
     max-width: 250px;
-    /* padding: 16px; */
     display: flex;
     flex-direction: column;
     
@@ -103,7 +96,6 @@ label{
 
 .category-container select{
     padding: 16px;
-    /* border: 2px solid red; */
     border-radius: 10px;
     cursor: pointer;
     background-color: white;
@@ -124,10 +116,8 @@ label{
 
 
 
-/* recipe ingredient container */
 
 .ingrediant-container{
-    /* border: 2px solid red; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -139,7 +129,6 @@ label{
 
 }
 .ingrediant-container .ingrediant-heading , .preparation-step-heading{
-    /* border: 2px solid red; */
     background-color: #fff;
     display: flex;
     align-items: center;
@@ -149,7 +138,6 @@ label{
 }
 
 h3 , .ingrediant-heading button{
-    /* border: 2px solid red; */
     display: flex;
     align-items: center;
     gap: 10px;
@@ -159,7 +147,6 @@ h3 , .ingrediant-heading button{
 .ingrediant-heading button , .preparation-step-heading button{
     padding: 4px 10px;
     border-radius: 8px;
-    /* border: 2px solid red; */
     background-color: transparent;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -170,11 +157,9 @@ h3 , .ingrediant-heading button{
 }
 .ingrediant-heading button:hover , .preparation-step-heading button:hover{
     background-color: #FBE3D7;
-    /* color: var(--tertiaryColor); */
 }
 
 .ingrediant-list ul{
-    /* border: 2px solid red; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -183,7 +168,6 @@ h3 , .ingrediant-heading button{
 
 .ingrediant-list ul li{
     list-style: none;
-    /* border: 2px solid red; */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -194,7 +178,6 @@ h3 , .ingrediant-heading button{
 
 .ingrediant-list ul li input {
     background-color: #FFF8F5;
-    /* border: 2px solid red; */
     padding: 10px;
     border-radius: 10px;
     border: none;
@@ -213,7 +196,6 @@ h3 , .ingrediant-heading button{
 /* preparation step  */
 
 .preparation-steps-container{
-    /* border: 2px solid red; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -225,15 +207,12 @@ h3 , .ingrediant-heading button{
 }
 
 .preparation-step-heading{
-    /* border: 2px solid red; */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* color: ; */
 }
 
 .list-of-preparation-steps ul{
-    /* border: 2px solid red; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -264,7 +243,6 @@ h3 , .ingrediant-heading button{
     padding: 10px;
 }
 .step-container p:nth-child(1){
-    /* border: 2px solid red; */
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -276,7 +254,6 @@ h3 , .ingrediant-heading button{
 }
 
 .step-container .delete-icon{
-    /* border: 2px solid red; */
     cursor: pointer;
     color: var(--tertiaryColor);
 }
@@ -286,12 +263,9 @@ h3 , .ingrediant-heading button{
 
 
 .image-and-tag-container{
-    /* border: 2px solid red; */
     display: flex;
     flex-direction: column;
     align-self: flex-start;
-    /* justify-content: center; */
-    /* align-items: center; */
     border-radius: 10px;
     gap: 20px;
     padding: 20px;
@@ -302,7 +276,6 @@ h3 , .ingrediant-heading button{
 }
 
 .image-container{
-    /* border: 2px solid red; */
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -312,10 +285,10 @@ h3 , .ingrediant-heading button{
     align-items: center;
     gap: 10px;
     color: var(--primaryColor);
+    font-size: clamp(16px , 20px , 30px);
 }
 
 .image-upload-container{
-    /* border: 2px solid red; */
     display: flex;
     flex-direction: column;
     height: 300px;
@@ -332,7 +305,6 @@ h3 , .ingrediant-heading button{
 }
 
 .tips-container{
-    /* border: 2px solid red; */
     font-size: 14px;
 }
 .tips-container span{
@@ -340,7 +312,6 @@ h3 , .ingrediant-heading button{
 }
 
 .publish-recipe-btn{
-    /* border: 2px solid red; */
     padding: 12px;
     display: flex;
     align-items: center;
@@ -363,14 +334,17 @@ h3 , .ingrediant-heading button{
     }
     .preparation-time{
         min-width: 100%;
-        /* border: 2px solid red; */
+    }
+     .add-recipes-container{
+        max-width: 100%;
     }
 }
 
 @media (max-width : 730px) {
+   
     .recipes-upload-container{
-        /* border: 2px solid red; */
         flex-direction: column;
+        max-width: 100%;
     }
 }
 

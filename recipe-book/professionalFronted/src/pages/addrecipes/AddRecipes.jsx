@@ -7,6 +7,8 @@ import { MdOutlineConstruction } from "react-icons/md";
 import { FiX } from "react-icons/fi";
 import { FiUpload } from "react-icons/fi";
 import { FiCamera } from "react-icons/fi";
+import Navbar from './../../components/navbar/Navbar'
+// import Navbar
 import { MdOutlineShoppingBasket } from "react-icons/md";
 
 
@@ -21,6 +23,7 @@ function AddRecipes() {
   }
   return (
     <>
+      <Navbar/>
       <section className="add-recipes-section">
         <div className="add-recipes-container">
           <div className="add-recipes-heading-container">
