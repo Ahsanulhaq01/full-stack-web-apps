@@ -126,7 +126,7 @@ label{
     background-color: white;
     box-shadow: 0px 0px 2px black;
     border-radius: 10px;
-
+    min-width: 100%;
 }
 .ingrediant-container .ingrediant-heading , .preparation-step-heading{
     background-color: #fff;
@@ -243,8 +243,8 @@ h3 , .ingrediant-heading button{
     padding: 10px;
 }
 .step-container p:nth-child(1){
-    width: 30px;
-    height: 30px;
+    min-width: 30px;
+    min-height: 30px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -292,16 +292,19 @@ h3 , .ingrediant-heading button{
     display: flex;
     flex-direction: column;
     height: 300px;
+    width: 100%;
     max-width: 300px;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
     color: white;
     gap: 16px;
     border-radius: 10px;
     box-shadow: 0px 0px 1px black;
     color: var(--tertiaryColor);
     cursor: pointer;
+}
+.image-upload-container p{
+    font-size: 14px;
 }
 
 .tips-container{
@@ -329,13 +332,9 @@ h3 , .ingrediant-heading button{
     .category-and-preparation-time-container{
         flex-direction: column;
     }
-    .category-container{
-        min-width: 100%;
-    }
-    .preparation-time{
-        min-width: 100%;
-    }
-     .add-recipes-container{
+
+    .category-container , .preparation-time ,.add-recipes-container{
+        width: 100%;
         max-width: 100%;
     }
 }
@@ -346,6 +345,14 @@ h3 , .ingrediant-heading button{
         flex-direction: column;
         max-width: 100%;
     }
+    .image-and-tag-container{
+        min-width: 100%;
+        align-items: center;
+    }
+    .image-and-tag-container div {
+        min-width: 100%;
+    }
+    
 }
 
 @media (max-width : 420px){

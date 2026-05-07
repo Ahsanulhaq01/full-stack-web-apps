@@ -4,10 +4,12 @@ import { LuUtensils } from "react-icons/lu";
 import { FaPen } from "react-icons/fa";
 import { FiShare2 } from "react-icons/fi";
 import RecipeCard from "./../../components/recipeCard/RecipeCard";
+import Navbar from "../../components/navbar/Navbar";
 import "./profilePage.css";
 function ProfilePage() {
   return (
     <>
+      <Navbar/>
       <section className="profile-page-section">
         <div className="profile-page-container">
           <div className="profile-picture-and-intro-container">

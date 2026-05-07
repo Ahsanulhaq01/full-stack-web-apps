@@ -161,7 +161,7 @@ function AddRecipes() {
                 <div className="image-upload-container" onClick={handleConsole}>
                   <FiUpload size={20} />
                   <p>Drag and drop or click to upload</p>
-                  <p>High resolution PNG, JPG (Max 10MB)</p>
+                  <p>High resolution PNG,JPG(Max 10MB)</p>
                 </div>
                 <div className="tips-container">
                   <p>
