@@ -77,8 +77,17 @@ function AddRecipes() {
                   hello ahsan
                 </textarea>
               </div>
+
+              <div className="recipe-difficulty-level">
+                <label htmlFor="difficulty-lvl">Difficulty</label>
+                <select name="difficulty" id="difficulty-lvl">
+                  <option value="Easy">Easy</option>
+                  <option value="Intermediate">Intermediate</option>
+                  <option value="Advance">Advance</option>
+                </select>
+              </div>
                </div>
-              <div className="ingrediant-container">
+              <div className="add-recipes-ingrediant-container">
                 <div className="ingrediant-heading">
                   <h3>
                     

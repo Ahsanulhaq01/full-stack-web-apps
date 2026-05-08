@@ -12,7 +12,7 @@ function Navbar() {
                 <NavLink to='/' className='navbar-heading'>GourmetKitchen</NavLink>
                 <ul>
                     <li><NavLink to="/">Home</NavLink></li>
-                    <li><NavLink to="/recipes">Recipes</NavLink></li>
+                    <li><NavLink to="/recipe-details">Recipes</NavLink></li>
                     <li><NavLink to="/add-recipes">Add Recipes</NavLink></li>
                     <li><NavLink to="/profile-page">Profile</NavLink></li>
                 </ul>

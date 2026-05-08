@@ -1,12 +1,14 @@
 import panSeardeImage from "../../assets/images/Pan-Seared-Duck-Breast.png";
 import { FiClock } from "react-icons/fi";
 import { FiUsers } from "react-icons/fi";
+import Navbar from "../../components/navbar/Navbar";
 
 import "./recipeDetails.css";
 
 function RecipeDetails() {
   return (
     <>
+    <Navbar/>
       <section className="reciep-details-page">
         <div className="image-with-recipe-name-container">
           <img src={panSeardeImage} alt="" />

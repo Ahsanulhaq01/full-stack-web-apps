@@ -85,7 +85,7 @@ label{
     gap: 20px;
 }
 
-.category-container{
+.category-container ,.recipe-difficulty-level{
     flex: 1;
     max-width: 250px;
     display: flex;
@@ -94,7 +94,7 @@ label{
     gap: 10px;
 }
 
-.category-container select{
+.category-container select ,.recipe-difficulty-level select{
     padding: 16px;
     border-radius: 10px;
     cursor: pointer;
@@ -117,7 +117,7 @@ label{
 
 
 
-.ingrediant-container{
+.add-recipes-ingrediant-container{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -128,7 +128,7 @@ label{
     border-radius: 10px;
     min-width: 100%;
 }
-.ingrediant-container .ingrediant-heading , .preparation-step-heading{
+.add-recipes-ingrediant-container .ingrediant-heading , .preparation-step-heading{
     background-color: #fff;
     display: flex;
     align-items: center;
@@ -333,7 +333,7 @@ h3 , .ingrediant-heading button{
         flex-direction: column;
     }
 
-    .category-container , .preparation-time ,.add-recipes-container{
+    .category-container , .preparation-time ,.add-recipes-container ,.recipe-difficulty-level{
         width: 100%;
         max-width: 100%;
     }
@@ -359,7 +359,7 @@ h3 , .ingrediant-heading button{
     .preparation-steps-container{
         padding: 2px;
     }
-    .ingrediant-container{
+    .add-recipes-ingrediant-container{
         padding: 2px;
     }
 }
