@@ -1,0 +1,195 @@
+
+.login-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.login-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 10px;
+    /* border: 2px solid red; */
+    padding: 10px 0px;
+    width: 100%;
+   max-width:800px;
+    background-color: #FFF1EA;
+    box-shadow: 20px 20px 1090px rgb(224, 168, 168);
+}
+
+.image-container-with-text{
+    cursor: pointer;
+  /* border: 2px solid red; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* width: 100%;
+  max-width: 400px; */
+  height: 400px;
+}
+.image-container-with-text:hover{
+    border-right: 1px solid rgb(224, 168, 168);
+}
+.image-container{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 20px;
+   width: 100%;
+   max-width: 250px;
+}
+ .image-container img{
+    width: 100%;
+    max-width: 240px;
+    border-radius: var(--border-radius-value);
+}
+.image-container p{
+        font-size: 14px;
+}
+
+.login-field-container{
+    /* border: 2px solid red; */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--secondaryColor);
+    box-shadow: 2px 5px 200px 2px rgb(171, 165, 165);
+    /* gap: 20px; */
+    width: 100%;
+    max-width: 350px;
+
+}
+.login-page-header{
+    /* border: 2px solid yellow; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+
+}
+
+.login-page-header .app-name-with-icon-container{
+    display: flex;
+    align-items: center;
+    /* border: 2px solid red; */
+    gap: 4px;
+    color: #c16005;
+}
+
+.login-page-header .welcome-heading{
+    font-size: clamp(16px , 18px, 20px);
+    font-weight: 600;
+    /* border: 2px solid red; */
+    color: var(--tertiaryColor);
+}
+
+.login-page-header .welcome-para{
+    font-size: 14px;
+    color: var(--neutralColor);
+}
+
+/* input-fields-and-login-btn-container */
+
+
+.input-fields-and-login-btn-container{
+    display: flex;
+    flex-direction: column;
+    /* border: 2px solid red; */
+    height: 300px;
+    justify-content: space-evenly;
+}
+.input-fields-and-login-btn-container input{
+    padding: 10px;
+    padding-left: 30px;
+    outline: none;
+    border-radius: var(--border-radius-value);
+    width: 100%;
+    max-width: 400px;
+}
+
+.input-fields-and-login-btn-container label{
+    font-size: 14px;
+}
+
+.email-address-container{
+   /* border:  2px solid red; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+}
+.email-address-container .email-input{
+    display: flex;
+    align-items: center;
+    position: relative;
+    /* border: 2px solid red; */
+    max-width: 400px;
+}
+.email-icon{
+    position: absolute;
+    left: 10px;
+}
+
+.password-and-forget-pass-container{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-width: 400px;
+}
+.password-and-forget-pass-container .label-icon{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+}
+
+.password-feild-container{
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.password-feild-container .lock-icon , .eye-icon{
+    position: absolute;
+}
+
+.password-feild-container input::placeholder{
+    font-weight: bold;
+}
+.lock-icon{
+    left: 10px;
+}
+.eye-icon{
+    right: 16px;
+}
+
+
+.login-btn{
+    padding: 10px;
+    border-radius: var(--border-radius-value);
+    background-color: var(--primaryColor);
+    outline: none;
+    border: none;
+    cursor: pointer;
+    color: var(--secondaryColor);
+    font-weight: bold;
+    max-width: 400px;
+}
+
+.signup-container{
+    display: flex;
+    font-size: 14px;
+    justify-content: space-evenly;
+}
+.signup-container a{
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+    .login-container{
+        flex-direction: column;
+        
+    }
+}
