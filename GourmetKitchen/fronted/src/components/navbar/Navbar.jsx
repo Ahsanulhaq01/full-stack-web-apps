@@ -2,7 +2,7 @@
 import { FiBell } from 'react-icons/fi'
 import userPic from '../../assets/profile-pic.jpeg'
 import './navbar.css'
-import { NavLink } from 'react-router-dom'
+import {Link, NavLink } from 'react-router-dom'
 
 function Navbar() {
   return (
@@ -21,7 +21,9 @@ function Navbar() {
              <div className="notification-icon">
                 <FiBell size={25} color= '#a96b3c' />
             </div>
+            <Link to='/profile-page'>
             <img src= {userPic}  alt="profile_picture"  />
+            </Link>
         </div>
     </div>
     </>
