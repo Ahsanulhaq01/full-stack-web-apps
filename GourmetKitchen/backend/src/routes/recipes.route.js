@@ -4,7 +4,7 @@ import {createRecipe} from '../controllers/recipes.controller.js'
 
 const router = Router();
 
-router.route('/upload-img').post(
+router.route('/create').post(
     upload.fields([
         {
             name : 'recipeImage',
