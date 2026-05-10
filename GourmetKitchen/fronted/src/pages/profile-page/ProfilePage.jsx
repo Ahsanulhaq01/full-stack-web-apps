@@ -6,7 +6,9 @@ import { FiShare2 } from "react-icons/fi";
 import RecipeCard from "./../../components/recipeCard/RecipeCard";
 import Navbar from "../../components/navbar/Navbar";
 import "./profilePage.css";
+import useGetRecipes from "../../customHook/useGetRecipes";
 function ProfilePage() {
+  const [recipes] = useGetRecipes([]);
   return (
     <>
       <Navbar/>
@@ -58,10 +60,13 @@ function ProfilePage() {
               </button>
             </div>
             <div className="recipe-card-container">
-              <RecipeCard />
-              <RecipeCard />
-              <RecipeCard />
-              <RecipeCard />
+              {
+              recipes?.map((recipe) =>(
+
+                
+                <RecipeCard items = {{ recipeImage :recipe.recipeImage ,recipeTitle: recipe.recipeTitle ,description : recipe.description ,preparationTime : recipe.preparationTime ,difficulty : recipe.difficulty ,id : recipe._id}  }/>
+              ))
+              }
             </div>
           </div>
         </div>

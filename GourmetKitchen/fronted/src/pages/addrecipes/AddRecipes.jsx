@@ -1,8 +1,6 @@
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
-import axios from "axios";
 import { GiKnifeFork } from "react-icons/gi";
-// import { GiFruitBowl } from "react-icons/gi";
 import { FiPlus } from "react-icons/fi";
 import { FiTrash2 } from "react-icons/fi";
 import { FiCheckCircle } from "react-icons/fi";
@@ -15,6 +13,7 @@ import Navbar from "./../../components/navbar/Navbar";
 import { MdOutlineShoppingBasket } from "react-icons/md";
 import "./addRecipes.css";
 import useDynamicList from "../../customHook/useDynamicList";
+import axiosInstance from "../../utils/axiosInstance";
 
 function AddRecipes() {
   const [image, setImage] = useState(null);
@@ -54,8 +53,8 @@ const handleSubmit = async (e)=>{
   
   try {
 
-    const response = await axios.post(
-      "http://localhost:3000/api/v1/recipes/create",
+    const response = await axiosInstance.post(
+      "/create",
       formData
     );
     toast.success(response.data.message)

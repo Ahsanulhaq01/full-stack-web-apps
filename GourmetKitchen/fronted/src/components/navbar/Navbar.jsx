@@ -11,19 +11,19 @@ function Navbar() {
             <nav className='left-content-container'>
                 <NavLink to='/' className='navbar-heading'>GourmetKitchen</NavLink>
                 <ul>
-                    <li><NavLink to="/">Home</NavLink></li>
-                    <li><NavLink to="/recipe-details">Recipes</NavLink></li>
-                    <li><NavLink to="/add-recipes">Add Recipes</NavLink></li>
-                    <li><NavLink to="/profile-page">Profile</NavLink></li>
+                    <li key={1}><NavLink to="/">Home</NavLink></li>
+                    <li key={2}><NavLink to="/recipe-details">Recipes</NavLink></li>
+                    <li key={3}><NavLink to="/add-recipes">Add Recipes</NavLink></li>
+                    <li key={4}><NavLink to="/profile-page">Profile</NavLink></li>
                 </ul>
             </nav>
         <div className="right-content-container">
-             <div className="notification-icon">
-                <FiBell size={25} color= '#a96b3c' />
-            </div>
             <Link to='/profile-page'>
             <img src= {userPic}  alt="profile_picture"  />
             </Link>
+             <div className="notification-icon">
+                <FiBell size={25} color= '#a96b3c' />
+            </div>
         </div>
     </div>
     </>
