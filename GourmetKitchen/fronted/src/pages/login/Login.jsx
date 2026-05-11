@@ -1,12 +1,16 @@
 import { GiForkKnifeSpoon } from "react-icons/gi";
 import { MdEmail } from "react-icons/md";
-import { FaEye , FaEyeSlash , FaLock } from "react-icons/fa";
+import { FaEye  , FaLock } from "react-icons/fa";
 import loginPageImage from "./../../assets/loginPageImage.png";
 import "./login.css";
+import { Link } from "react-router-dom";
+import Navbar from "../../components/navbar/Navbar";
 
 function Login() {
+
   return (
     <>
+      <Navbar/>
       <section className="login-section">
         <div className="login-container">
             <div className="image-container-with-text">
@@ -61,7 +65,7 @@ function Login() {
             </form>
             <div className="signup-container">
                 <p>Don't have an account ?</p>
-                <a href="/signup">Signup</a>
+                <Link to="/signup">Signup</Link>
             </div>
           </div>
         </div>

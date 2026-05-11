@@ -2,6 +2,8 @@ import { FiUser ,FiLock , FiCheckCircle } from "react-icons/fi";
 import { FiMail } from "react-icons/fi";
 
 import './signup.css'
+import { Link } from "react-router-dom";
+import Navbar from "../../components/navbar/Navbar";
 
 
 function SignUp() {
@@ -11,6 +13,7 @@ function SignUp() {
     }
   return (
    <>
+   <Navbar/>
     <section className="signup-section">
         <div className="sign-up-container">
             <div className="sign-up-header-container">
@@ -56,7 +59,7 @@ function SignUp() {
             </form>
             <div className="exist-account-container">
                 <p> Already have an account?</p>
-                <a href="/login">Login</a>
+                <Link to="/login">Login</Link>
             </div>
         </div>
     </section>
