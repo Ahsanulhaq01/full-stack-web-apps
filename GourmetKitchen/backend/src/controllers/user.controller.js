@@ -4,7 +4,6 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 
 const registerUser = asyncHandler(async(req , res)=>{
     const {name , email , password} = req.body;
-
     const existingUser = await User.findOne({"email" :  email});
 
     if(existingUser){
@@ -33,7 +32,7 @@ const loginUser = asyncHandler(async(req , res)=>{
         return res.status(404).json(404 , null , "User not found")
     }
 
-    const isPasswordValid = await user.isPasswordCorrect(password);
+    const isPasswordValid =  user.isPasswordCorrect(password);
     if(!isPasswordValid){
         return res.status(401).json(
             new ApiResponse(401 , null , "Invalid Credentials")
@@ -47,12 +46,20 @@ const loginUser = asyncHandler(async(req , res)=>{
 
     await user.save({validateBeforeSave : false});
 
-    const loggedInUser = await User.findById(user._id).elect("-password -refreshToken");
+    const loggedInUser = await User.findById(user._id).select("-password -refreshToken");
 
-    return res.status(200).json(
-        new ApiResponse(200 , {loggedInUser , accessToken , refreshToken} , "Login SuccessFully")
+    const options = {
+        httpOnly : true,
+        secure : true
+    }
+
+    return res.status(200)
+    .cookie('accessToken' , accessToken , options)
+    .cookie('refreshToken' , refreshToken , options)
+    .json(
+        new ApiResponse(200 , loggedInUser , "Login SuccessFully")
     )
 
 });
 
-export {registerUser }
+export {registerUser , loginUser }
