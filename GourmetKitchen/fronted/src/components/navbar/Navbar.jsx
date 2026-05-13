@@ -6,7 +6,7 @@ import {Link, NavLink } from 'react-router-dom'
 import { useState } from 'react'
 
 function Navbar() {
-    const [isLoggin , SetIsLogin] = useState(true)
+    const [isLoggin , SetIsLogin] = useState(false)
     // SetIsLogin(true);
     // console.log("hello")
   return (
