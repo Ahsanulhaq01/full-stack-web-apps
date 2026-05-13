@@ -3,11 +3,15 @@ import { FiMail } from "react-icons/fi";
 import { useForm } from "react-hook-form";
 import {toast} from 'react-toastify'
 import "./signup.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/Navbar";
 import axiosInstance from "../../utils/axiosInstance";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 function SignUp() {
+  const {setIsLoggedIn} = useContext(AuthContext)
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -19,8 +23,9 @@ function SignUp() {
   const onSubmit = async (data) => {
     const response = await axiosInstance.post(`user/register` , data , {withCredentials : true} )
     toast.success(response.data.message)
-
-    // reset()
+    reset()
+    navigate('/')
+    setIsLoggedIn(true);
   };
   return (
     <>

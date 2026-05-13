@@ -16,9 +16,26 @@ const registerUser = asyncHandler(async(req , res)=>{
         name , email , password
     })
 
+    const accessToken = user.generateAccessToken();
+    const refreshToken = user.generateRefreshToken();
+
+    user.refreshToken = refreshToken;
+
+    await user.save({
+        validateBeforeSave : false
+    })
+
     const createdUser = await User.findById(user._id).select("-password -refreshToken")
 
-    return res.status(201).json(
+    const options = {
+        httpOnly : true,
+        secure :true,
+    }
+
+    return res.status(201)
+    .cookie('accessToken' , accessToken , options)
+    .cookie('refreshToken' , refreshToken , options)
+    .json(
         new ApiResponse(201 , createdUser , "User SuccessFully Registered")
     )
 })
@@ -57,9 +74,46 @@ const loginUser = asyncHandler(async(req , res)=>{
     .cookie('accessToken' , accessToken , options)
     .cookie('refreshToken' , refreshToken , options)
     .json(
-        new ApiResponse(200 , loggedInUser , "Login SuccessFully")
+        new ApiResponse(200 , loggedInUser , "LoggedIn SuccessFully")
     )
 
 });
 
-export {registerUser , loginUser }
+const uploadProfileImage = asyncHandler(async(req , res)=>{
+    const profileImageLocalPath = req?.files.profileImage[0].path;
+    
+    if(!profileImageLocalPath){
+        return res.status(400).json(
+            new ApiResponse(400 , null , 'image is required')
+        )
+    }
+    
+    console.log("hello ahsan" ,profileImageLocalPath )
+    const user = await User.findByIdAndUpdate(
+        req.user._id,
+        {
+            profileImage : profileImageLocalPath
+        },
+        {
+            new : true,
+        }
+    ).select("-password -refreshToken")
+    
+    return res.status(200).json(
+        new ApiResponse(200 , user , 'Profile Image Uploaded Successfully')
+    )
+})
+
+const getUser = asyncHandler(async(req, res)=>{
+    const user = await User.find().select("-password -refreshToken");
+    if(!user){
+        return res.status(400).json(
+            new ApiResponse(400 , null , "user does not exist")
+        )
+    }
+    return res.status(200).json(
+        new ApiResponse(200, user , "user fetched SuccessFully")
+    )
+})
+
+export {registerUser , loginUser , uploadProfileImage  ,getUser }

@@ -3,18 +3,18 @@ import { FiBell } from 'react-icons/fi'
 import userPic from '../../assets/profile-pic.jpeg'
 import './navbar.css'
 import {Link, NavLink } from 'react-router-dom'
-import { useState } from 'react'
+import { useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext'
 
 function Navbar() {
-    const [isLoggin , SetIsLogin] = useState(false)
-    // SetIsLogin(true);
-    // console.log("hello")
+    const {isLoggedIn} = useContext(AuthContext)
+    
   return (
     <>
     <div className="navbar-container">
             <nav className='left-content-container'>
                 <NavLink to='/' className='navbar-heading'>GourmetKitchen</NavLink>
-                {isLoggin ? <ul>
+                {isLoggedIn ? <ul>
                     <li key={1}><NavLink to="/">Home</NavLink></li>
                     <li key={2}><NavLink to="/recipe-details">Recipes</NavLink></li>
                     <li key={3}><NavLink to="/add-recipes">Add Recipes</NavLink></li>

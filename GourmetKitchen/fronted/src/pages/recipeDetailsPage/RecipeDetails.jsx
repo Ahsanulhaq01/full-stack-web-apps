@@ -12,8 +12,13 @@ function RecipeDetails() {
   const {id} = useParams();
 
   const getRecipe = async ()=>{
-    const response = await axiosInstance.get(`/${id}`);
-    setRecipe(response.data.data)
+    try {
+      const response = await axiosInstance.get(`/recipes/${id}`);
+      setRecipe(response.data.data)
+      console.log("hello")
+    } catch (error) {
+      console.log(error)
+    }
   }
   useEffect(()=>{
     getRecipe();

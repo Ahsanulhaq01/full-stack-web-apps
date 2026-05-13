@@ -7,17 +7,77 @@ import RecipeCard from "./../../components/recipeCard/RecipeCard";
 import Navbar from "../../components/navbar/Navbar";
 import "./profilePage.css";
 import useGetRecipes from "../../customHook/useGetRecipes";
+import { useState } from "react";
+import axiosInstance from "../../utils/axiosInstance";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
+
 function ProfilePage() {
   const [recipes] = useGetRecipes([]);
+  const [userData, setUserData] = useState(null);
+  const [previewImage, setPreviewImage] = useState("");
+
+  const getUserData = async()=>{
+    try {
+      const response = await axiosInstance("user/" , {withCredentials : true});
+      setUserData(response.data.data[0])
+      console.log(response.data.data[0].profileImage)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  async function handleImageChange(e){
+      const file = e.target.files[0];
+
+      if(file){
+        // setProfileImage(file)
+
+        setPreviewImage(URL.createObjectURL(file))
+        await uploadProfileImage(file);
+      }
+  }
+
+  async function uploadProfileImage(file){
+    try {
+      const formData = new FormData();
+
+      formData.append("profileImage" , file)
+      
+      const response = await axiosInstance.patch('user/upload-profile-image' , formData , {
+        withCredentials : true,
+      })
+
+      toast.success("response.data.message")
+      console.log(response.data)
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+  useEffect(()=>{
+    getUserData();
+  } , [])
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <section className="profile-page-section">
         <div className="profile-page-container">
           <div className="profile-picture-and-intro-container">
             <div className="image-and-edit-image-container">
-              <img src={profilePic} alt="profile picture" width={150} />
-              <FaPen size={30} className="pencil-icon" />
+              {/* <img src={profilePic} alt="profile picture" width={150} /> */}
+              <FaPen size={30} className="pencil-icon"
+              onClick={()=> document.getElementById('profileInput').click()}
+              />
+
+              <input type="file" style={{ display: "none" }}
+              accept="image/*"
+              id="profileInput"
+              onChange={handleImageChange}
+              />
+
+              <img src={previewImage ||profilePic} alt="profile" />
+
+
             </div>
             <div className="text-about-user-container">
               <h1 className="profile-page-name-heading">Julian Vance</h1>
@@ -60,13 +120,18 @@ function ProfilePage() {
               </button>
             </div>
             <div className="recipe-card-container">
-              {
-              recipes?.map((recipe) =>(
-
-                
-                <RecipeCard items = {{ recipeImage :recipe.recipeImage ,recipeTitle: recipe.recipeTitle ,description : recipe.description ,preparationTime : recipe.preparationTime ,difficulty : recipe.difficulty ,id : recipe._id}  }/>
-              ))
-              }
+              {recipes?.map((recipe) => (
+                <RecipeCard
+                  items={{
+                    recipeImage: recipe.recipeImage,
+                    recipeTitle: recipe.recipeTitle,
+                    description: recipe.description,
+                    preparationTime: recipe.preparationTime,
+                    difficulty: recipe.difficulty,
+                    id: recipe._id,
+                  }}
+                />
+              ))}
             </div>
           </div>
         </div>

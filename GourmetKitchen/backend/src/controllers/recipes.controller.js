@@ -24,7 +24,7 @@ const createRecipe = asyncHandler(async (req, res) => {
         new ApiResponse(201, newRecipe, "new recipe successfully created")
     )
 })
-
+ 
 const getAllRecipes = asyncHandler(async(req ,res)=>{
     const recipes = await Recipe.find();
     return res.status(200).json(
