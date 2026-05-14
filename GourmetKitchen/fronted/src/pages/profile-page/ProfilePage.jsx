@@ -1,4 +1,4 @@
-import profilePic from "./../../assets/profile-pic.jpeg";
+import profilePic from "./../../assets/images/imageIcon.png";
 import { BsBookmark } from "react-icons/bs";
 import { LuUtensils } from "react-icons/lu";
 import { FaPen } from "react-icons/fa";
@@ -7,25 +7,19 @@ import RecipeCard from "./../../components/recipeCard/RecipeCard";
 import Navbar from "../../components/navbar/Navbar";
 import "./profilePage.css";
 import useGetRecipes from "../../customHook/useGetRecipes";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { toast } from "react-toastify";
-import { useEffect } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import useGetUser from "../../customHook/useGetUser";
 
 function ProfilePage() {
   const [recipes] = useGetRecipes([]);
-  const [userData, setUserData] = useState(null);
+  const [user] = useGetUser([]);
   const [previewImage, setPreviewImage] = useState("");
+  const {isLoggedIn} = useContext(AuthContext)
 
-  const getUserData = async()=>{
-    try {
-      const response = await axiosInstance("user/" , {withCredentials : true});
-      setUserData(response.data.data[0])
-      console.log(response.data.data[0].profileImage)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+ 
   async function handleImageChange(e){
       const file = e.target.files[0];
 
@@ -40,23 +34,17 @@ function ProfilePage() {
   async function uploadProfileImage(file){
     try {
       const formData = new FormData();
-
       formData.append("profileImage" , file)
-      
       const response = await axiosInstance.patch('user/upload-profile-image' , formData , {
         withCredentials : true,
       })
 
-      toast.success("response.data.message")
-      console.log(response.data)
+      toast.success(response.data.message)
     } catch (error) {
       console.log(error.message)
     }
   }
 
-  useEffect(()=>{
-    getUserData();
-  } , [])
   return (
     <>
       <Navbar />
@@ -75,7 +63,7 @@ function ProfilePage() {
               onChange={handleImageChange}
               />
 
-              <img src={previewImage ||profilePic} alt="profile" />
+              <img src={isLoggedIn ? previewImage ||`http://localhost:3000/${user?.profileImage}` : profilePic} alt="profile" />
 
 
             </div>

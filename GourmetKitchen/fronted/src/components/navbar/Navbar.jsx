@@ -1,13 +1,15 @@
 
 import { FiBell } from 'react-icons/fi'
-import userPic from '../../assets/profile-pic.jpeg'
+import userIcon from '../../assets/images/imageIcon.png'
 import './navbar.css'
 import {Link, NavLink } from 'react-router-dom'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
+import useGetUser from '../../customHook/useGetUser'
 
 function Navbar() {
     const {isLoggedIn} = useContext(AuthContext)
+    const [user] = useGetUser([]);
     
   return (
     <>
@@ -26,7 +28,7 @@ function Navbar() {
             </nav>
         <div className="right-content-container">
             <Link to='/profile-page'>
-            <img src= {userPic}  alt="profile_picture"  />
+            <img src= {isLoggedIn ? `http://localhost:3000/${user?.profileImage}`: userIcon}  alt="profile_picture"  />
             </Link>
              <div className="notification-icon">
                 <FiBell size={25} color= '#a96b3c' />

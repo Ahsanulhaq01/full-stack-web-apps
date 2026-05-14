@@ -15,7 +15,6 @@ function RecipeDetails() {
     try {
       const response = await axiosInstance.get(`/recipes/${id}`);
       setRecipe(response.data.data)
-      console.log("hello")
     } catch (error) {
       console.log(error)
     }

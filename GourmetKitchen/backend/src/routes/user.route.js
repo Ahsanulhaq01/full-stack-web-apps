@@ -7,7 +7,7 @@ const router = Router();
 
 router.route('/register').post(registerUser);
 router.route('/login').post(loginUser);
-router.route('/upload-profile-image').patch(
+router.route('/upload-profile-image').patch(verifyjwt ,
     upload.fields([
         {
             name : 'profileImage',

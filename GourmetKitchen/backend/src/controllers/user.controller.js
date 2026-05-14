@@ -89,13 +89,14 @@ const uploadProfileImage = asyncHandler(async(req , res)=>{
     }
     
     console.log("hello ahsan" ,profileImageLocalPath )
+    console.log(req.user)
     const user = await User.findByIdAndUpdate(
         req.user._id,
         {
-            profileImage : profileImageLocalPath
+           $set :  {profileImage : profileImageLocalPath}
         },
         {
-            new : true,
+            returnDocument : "after",
         }
     ).select("-password -refreshToken")
     

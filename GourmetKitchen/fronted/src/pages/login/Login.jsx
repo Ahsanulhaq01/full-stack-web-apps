@@ -1,7 +1,7 @@
 import { GiForkKnifeSpoon } from "react-icons/gi";
 import { MdEmail } from "react-icons/md";
 import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
-import loginPageImage from "./../../assets/loginPageImage.png";
+import loginPageImage from "./../../assets/images/loginPageImage.png";
 import "./login.css";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/Navbar";
