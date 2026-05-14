@@ -1,4 +1,4 @@
-import { registerUser ,loginUser, uploadProfileImage, getUser } from "../controllers/user.controller.js";
+import { registerUser ,loginUser, uploadProfileImage, getUser, logoutUser } from "../controllers/user.controller.js";
 import { Router } from "express";
 import verifyjwt from "../middleware/auth.middleware.js";
 import { upload } from "../middleware/multer.middleware.js";
@@ -18,5 +18,9 @@ router.route('/upload-profile-image').patch(verifyjwt ,
 )
 
 router.route('/').get(getUser);
+router.route('/check-auth').get(verifyjwt ,(req, res)=>{
+    return res.status(200).json({message : "login user" , data : req.user ,})
+})
 
+router.route('/logout').post(verifyjwt , logoutUser)
 export default router

@@ -4,24 +4,30 @@ import Navbar from "../../components/navbar/Navbar";
 
 import "./recipeDetails.css";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
+import useCheckAuth from "../../customHook/useCheckAuth";
+import useGetUser from "../../customHook/useGetUser";
 
 function RecipeDetails() {
   const [recipe , setRecipe] = useState({});
   const {id} = useParams();
-
-  const getRecipe = async ()=>{
+  const [user] = useGetUser([])
+  const [isAuth ] = useCheckAuth(null);
+ 
+  useEffect(()=>{
+     const getRecipe = async ()=>{
     try {
       const response = await axiosInstance.get(`/recipes/${id}`);
       setRecipe(response.data.data)
     } catch (error) {
-      console.log(error)
+      console.log(error.message)
     }
   }
-  useEffect(()=>{
     getRecipe();
-  } , [])
+  } , [id])
+
+  if(isAuth === false) return <Navigate to={'/login'}/>
   return (
     <>
     <Navbar/>
@@ -44,7 +50,7 @@ function RecipeDetails() {
             </div>
             <div className="author-container">
                 <p>Recipe By</p>
-                <p>ahsanulhaq</p>
+                <p>{user?.name}</p>
             </div>
             <button className="save-recipe">Save Recipe</button>
           </div>

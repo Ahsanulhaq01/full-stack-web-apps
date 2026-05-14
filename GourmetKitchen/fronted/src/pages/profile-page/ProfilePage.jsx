@@ -7,18 +7,19 @@ import RecipeCard from "./../../components/recipeCard/RecipeCard";
 import Navbar from "../../components/navbar/Navbar";
 import "./profilePage.css";
 import useGetRecipes from "../../customHook/useGetRecipes";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { toast } from "react-toastify";
-import { AuthContext } from "../../context/AuthContext";
 import useGetUser from "../../customHook/useGetUser";
+import useCheckAuth from "../../customHook/useCheckAuth";
+import { useNavigate } from "react-router-dom";
 
 function ProfilePage() {
   const [recipes] = useGetRecipes([]);
   const [user] = useGetUser([]);
   const [previewImage, setPreviewImage] = useState("");
-  const {isLoggedIn} = useContext(AuthContext)
-
+  const [isAuth , setIsAuth] = useCheckAuth(null)
+  const navigate = useNavigate();
  
   async function handleImageChange(e){
       const file = e.target.files[0];
@@ -45,6 +46,18 @@ function ProfilePage() {
     }
   }
 
+  async function handleLoggedOut() {
+    try {
+      const response = await axiosInstance.post('/user/logout' , {} ,{withCredentials : true});
+      toast.success(response.data.message)
+      setIsAuth(false);
+
+      navigate('/')
+      
+    } catch (error) {
+      toast.error(error.message)
+    }
+  }
   return (
     <>
       <Navbar />
@@ -63,7 +76,7 @@ function ProfilePage() {
               onChange={handleImageChange}
               />
 
-              <img src={isLoggedIn ? previewImage ||`http://localhost:3000/${user?.profileImage}` : profilePic} alt="profile" />
+              <img src={isAuth ? previewImage ||`http://localhost:3000/${user?.profileImage}` : profilePic} alt="profile" />
 
 
             </div>
@@ -91,6 +104,7 @@ function ProfilePage() {
             </div>
 
             <div className="follow-btn-and-share-icon-container">
+              <button onClick={handleLoggedOut}>Logout</button>
               <button>Follow</button>
               <FiShare2 className="share-icon" size={24} />
             </div>
