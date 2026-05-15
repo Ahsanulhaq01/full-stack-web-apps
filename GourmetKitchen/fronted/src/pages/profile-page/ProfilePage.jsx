@@ -76,7 +76,7 @@ function ProfilePage() {
               onChange={handleImageChange}
               />
 
-              <img src={isAuth ? previewImage ||`http://localhost:3000/${user?.profileImage}` : profilePic} alt="profile" />
+              <img src={isAuth ? user?.profileImage ?  `http://localhost:3000/${user?.profileImage}`: profilePic : profilePic} alt="profile" />
 
 
             </div>

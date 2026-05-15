@@ -17,7 +17,7 @@ router.route('/upload-profile-image').patch(verifyjwt ,
     uploadProfileImage
 )
 
-router.route('/').get(getUser);
+router.route('/').get(verifyjwt , getUser);
 router.route('/check-auth').get(verifyjwt ,(req, res)=>{
     return res.status(200).json({message : "login user" , data : req.user ,})
 })

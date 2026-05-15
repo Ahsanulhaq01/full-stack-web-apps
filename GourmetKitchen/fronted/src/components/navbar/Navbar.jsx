@@ -27,7 +27,7 @@ function Navbar() {
             </nav>
         <div className="right-content-container">
             <Link to='/profile-page'>
-            <img src= {isAuth ? `http://localhost:3000/${user?.profileImage}`: userIcon}  alt="profile_picture"  />
+            <img src= {isAuth ? user?.profileImage ? `http://localhost:3000/${user?.profileImage}` : userIcon: userIcon}  alt="profile_picture"  />
             </Link>
              <div className="notification-icon">
                 <FiBell size={25} color= '#a96b3c' />

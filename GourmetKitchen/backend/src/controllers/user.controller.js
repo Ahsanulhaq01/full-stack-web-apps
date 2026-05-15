@@ -106,7 +106,7 @@ const uploadProfileImage = asyncHandler(async(req , res)=>{
 })
 
 const getUser = asyncHandler(async(req, res)=>{
-    const user = await User.find().select("-password -refreshToken");
+    const user = await User.findById(req.user._id).select('-password -refreshToken')
     if(!user){
         return res.status(400).json(
             new ApiResponse(400 , null , "user does not exist")
