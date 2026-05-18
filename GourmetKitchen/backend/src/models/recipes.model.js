@@ -43,11 +43,11 @@ const recipesSchema = new mongoose.Schema({
     servings :{
         type : Number , 
         
+    },
+    createdBy : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "User",
     }
-    // createdBy : {
-    //     type : mongoose.Schema.Types.ObjectId,
-    //     ref : "User",
-    // }
 
 },{
     timestamps : true,
