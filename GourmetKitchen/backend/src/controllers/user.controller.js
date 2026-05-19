@@ -1,6 +1,8 @@
+import { upload } from "../middleware/multer.middleware.js";
 import User from "../models/user.model.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import { uploadToCloudinary } from "../utils/cloudinary.js";
 
 const registerUser = asyncHandler(async(req , res)=>{
     const {name , email , password} = req.body;
@@ -80,7 +82,7 @@ const loginUser = asyncHandler(async(req , res)=>{
 });
 
 const uploadProfileImage = asyncHandler(async(req , res)=>{
-    const profileImageLocalPath = req?.files.profileImage[0].path;
+    const profileImageLocalPath = req?.files.profileImage[0]?.path;
     
     if(!profileImageLocalPath){
         return res.status(400).json(
@@ -89,11 +91,12 @@ const uploadProfileImage = asyncHandler(async(req , res)=>{
     }
     
     console.log("hello ahsan" ,profileImageLocalPath )
+    const uploadedProfileImage = await uploadToCloudinary(profileImageLocalPath)
     console.log(req.user)
     const user = await User.findByIdAndUpdate(
         req.user._id,
         {
-           $set :  {profileImage : profileImageLocalPath}
+           $set :  {profileImage : uploadProfileImage?.url}
         },
         {
             returnDocument : "after",
