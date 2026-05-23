@@ -77,7 +77,7 @@ const createRecipe = asyncHandler(async (req, res) => {
 
   if (!file) {
     return res.status(400).json(
-      new ApiResponse(400, '', 'Image is required')
+      new ApiResponse(400, '', 'Image is required') 
     );
   }
 

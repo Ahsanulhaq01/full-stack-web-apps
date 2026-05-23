@@ -2,6 +2,7 @@ import { Recipe } from "../models/recipes.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import { ApiError } from '../utils/apiError.js'
+import { uploadToCloudinary } from "../utils/cloudinary.js";
 
 const createRecipe = asyncHandler(async (req, res) => {
     const { recipeTitle, description, preparationTime, difficulty, category, servings } = req.body;
@@ -14,9 +15,10 @@ const createRecipe = asyncHandler(async (req, res) => {
         )
     }
     
-    const file = req?.files.recipeImage[0]
+    const localFile = req?.files.recipeImage[0];
+    const uploadImage = await uploadToCloudinary(localFile)
     const newRecipe = await Recipe.create({
-        recipeTitle, description, preparationTime, difficulty, category, ingrediant, servings , preparationStep, recipeImage: file?.filename
+        recipeTitle, description, preparationTime, difficulty, category, ingrediant, servings , preparationStep, recipeImage: uploadImage?.url
     })
 
    
