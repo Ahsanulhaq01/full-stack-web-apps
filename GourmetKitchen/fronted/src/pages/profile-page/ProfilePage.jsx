@@ -81,7 +81,7 @@ function ProfilePage() {
 
             </div>
             <div className="text-about-user-container">
-              <h1 className="profile-page-name-heading">Julian Vance</h1>
+              <h1 className="profile-page-name-heading">{user?.name}</h1>
               <p className="intro-of-user">
                 Culinary explorer and weekend baker. Sharing my journey through
                 heritage recipes and modern fusion techniques. Always looking
