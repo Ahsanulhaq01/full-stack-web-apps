@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import useGetUser from "../../customHook/useGetUser";
 import useCheckAuth from "../../customHook/useCheckAuth";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function ProfilePage() {
   const [recipes] = useGetRecipes([]);
@@ -20,6 +21,7 @@ function ProfilePage() {
   const [previewImage, setPreviewImage] = useState("");
   const [isAuth , setIsAuth] = useCheckAuth(null)
   const navigate = useNavigate();
+  const [recipeCount , setRecipeCount] = useState()
  
   async function handleImageChange(e){
       const file = e.target.files[0];
@@ -53,11 +55,25 @@ function ProfilePage() {
       setIsAuth(false);
 
       navigate('/')
-      
     } catch (error) {
       toast.error(error.message)
     }
   }
+
+  useEffect(()=>{
+    async function recipeCounts(){
+    try {
+      const response = await axiosInstance.get('/recipes/countRecipes')
+      setRecipeCount(response.data.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  recipeCounts();
+  console.log("hello")
+  } , [])
+ 
+
   return (
     <>
       <Navbar />
@@ -81,7 +97,7 @@ function ProfilePage() {
 
             </div>
             <div className="text-about-user-container">
-              <h1 className="profile-page-name-heading">{user?.name}</h1>
+              <h1 className="profile-page-name-heading">{user?.name || 'JHON'}</h1>
               <p className="intro-of-user">
                 Culinary explorer and weekend baker. Sharing my journey through
                 heritage recipes and modern fusion techniques. Always looking
@@ -89,7 +105,7 @@ function ProfilePage() {
               </p>
               <div className="recipes-count-and-follower">
                 <div className="recipe-counts">
-                  <p className="no-of-count">24</p>
+                  <p className="no-of-count">{recipeCount}</p>
                   <p className="concern-count-name">Recipes</p>
                 </div>
                 <div className="followers-count">
@@ -104,7 +120,7 @@ function ProfilePage() {
             </div>
 
             <div className="follow-btn-and-share-icon-container">
-              <button onClick={handleLoggedOut}>Logout</button>
+              <button onClick={handleLoggedOut} >Logout</button>
               <button>Follow</button>
               <FiShare2 className="share-icon" size={24} />
             </div>

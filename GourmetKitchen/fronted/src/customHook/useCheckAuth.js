@@ -7,7 +7,7 @@ export default function useCheckAuth(intialValue){
     useEffect(()=>{
         async function checkAuth() {
         try {
-            await axiosInstance.get('user/check-auth' , {withCredentials : true})
+            await axiosInstance.get('user/check-auth')
             setIsAuth(true)
         } catch (error) {
             console.log(error.message)

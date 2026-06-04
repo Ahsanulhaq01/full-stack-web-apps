@@ -7,7 +7,7 @@ const recipesSchema = new mongoose.Schema({
     },
     description :{
         type : String,
-        requird : true,
+        required : true,
     },
     difficulty : {
         type: String,

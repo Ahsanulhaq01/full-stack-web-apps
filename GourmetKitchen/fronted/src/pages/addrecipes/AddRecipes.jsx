@@ -52,9 +52,8 @@ const handleSubmit = async (e)=>{
   formData.append('preparationStep' , JSON.stringify(preparationStep.items))
   
   try {
-
     const response = await axiosInstance.post(
-      "/create",
+      "recipes/create",
       formData
     );
     toast.success(response.data.message)

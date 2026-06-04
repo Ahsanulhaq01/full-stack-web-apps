@@ -8,7 +8,7 @@ export default function useGetUser(intialValue) {
   useEffect(() => {
     async function getUser() {
       try {
-        const response = await axiosInstance("user/current_user", { withCredentials: true });
+        const response = await axiosInstance.get("user/current_user");
         setUser(response.data.data)
       } catch (error) {
         console.log(error)

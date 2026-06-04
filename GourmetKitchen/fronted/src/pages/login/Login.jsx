@@ -26,9 +26,7 @@ function Login() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const response = await axiosInstance.post("user/login", data, {
-      withCredentials: true,
-    });
+    const response = await axiosInstance.post("user/login", data);
     toast.success(response.data.message);
     setIsLoggedIn(true);
     navigate("/");

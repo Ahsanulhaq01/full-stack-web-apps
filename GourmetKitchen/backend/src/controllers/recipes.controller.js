@@ -6,19 +6,32 @@ import { uploadToCloudinary } from "../utils/cloudinary.js";
 
 const createRecipe = asyncHandler(async (req, res) => {
     const { recipeTitle, description, preparationTime, difficulty, category, servings } = req.body;
-    
     const ingrediant = JSON.parse(req.body.ingrediant)
     const preparationStep = JSON.parse(req.body.preparationStep)
-    if (!(recipeTitle && description && preparationTime && difficulty && category && servings)) {
-        return res.status(400).json(
-            new ApiError(400, "all field are required")
-        )
-    }
+    if (
+    !recipeTitle ||
+    !description ||
+    !preparationTime ||
+    !difficulty ||
+    !category ||
+    !servings
+) {
+    return res.status(400).json(
+        new ApiError(400, "All fields are required")
+    );
+}
     
     const localFile = req?.files.recipeImage[0];
-    const uploadImage = await uploadToCloudinary(localFile)
+
+    if (!localFile) {
+    return res.status(400).json(
+        new ApiError(400, "Recipe image is required")
+    );
+}
+    const uploadImage = await uploadToCloudinary(localFile.path)
     const newRecipe = await Recipe.create({
-        recipeTitle, description, preparationTime, difficulty, category, ingrediant, servings , preparationStep, recipeImage: uploadImage?.url
+        recipeTitle, description, preparationTime, difficulty, category, ingrediant , servings , preparationStep, recipeImage: uploadImage?.url,
+        createdBy : req.user._id
     })
 
    
@@ -46,4 +59,22 @@ const getSingleRecipes = asyncHandler(async(req , res)=>{
 
 })
 
-export { createRecipe , getAllRecipes , getSingleRecipes}
+
+const countRecipes = asyncHandler(async (req, res) => {
+    try {
+
+        const recipeCount = await Recipe.countDocuments({
+            createdBy: req.user._id
+        });
+
+
+        return res.status(200).json(
+            new ApiResponse(200, recipeCount, "Successfully fetched")
+        );
+    } catch (error) {
+        console.log("COUNT RECIPES ERROR:", error);
+        throw error;
+    }
+});
+
+export { createRecipe , getAllRecipes , getSingleRecipes , countRecipes};
