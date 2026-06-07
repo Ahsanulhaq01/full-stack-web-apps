@@ -70,8 +70,8 @@ function ProfilePage() {
     }
   }
   recipeCounts();
-  console.log("hello")
   } , [])
+
  
 
   return (
@@ -92,7 +92,7 @@ function ProfilePage() {
               onChange={handleImageChange}
               />
 
-              <img src={isAuth ? user?.profileImage ?  `http://localhost:3000/${user?.profileImage}`: profilePic : profilePic} alt="profile" />
+              <img src={isAuth ? user?.profileImage : profilePic} alt="profile" />
 
 
             </div>
@@ -105,7 +105,7 @@ function ProfilePage() {
               </p>
               <div className="recipes-count-and-follower">
                 <div className="recipe-counts">
-                  <p className="no-of-count">{recipeCount}</p>
+                  <p className="no-of-count">{recipeCount || 0}</p>
                   <p className="concern-count-name">Recipes</p>
                 </div>
                 <div className="followers-count">

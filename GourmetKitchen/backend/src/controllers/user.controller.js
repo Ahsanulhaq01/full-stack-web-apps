@@ -90,21 +90,16 @@ const uploadProfileImage = asyncHandler(async(req , res)=>{
         )
     }
     
-    console.log("hello ahsan" ,profileImageLocalPath )
     const uploadedProfileImage = await uploadToCloudinary(profileImageLocalPath)
-    console.log(req.user)
-    const user = await User.findByIdAndUpdate(
-        req.user._id,
+    const result = await User.updateOne(
+        { _id : req.user._id },
         {
-           $set :  {profileImage : uploadProfileImage?.url}
-        },
-        {
-            returnDocument : "after",
+            $set : {profileImage : uploadedProfileImage?.url}
         }
-    ).select("-password -refreshToken")
+    );
     
     return res.status(200).json(
-        new ApiResponse(200 , user , 'Profile Image Uploaded Successfully')
+        new ApiResponse(200 , result , 'Profile Image Uploaded Successfully')
     )
 })
 
