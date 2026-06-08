@@ -61,10 +61,19 @@
     flex-direction: column;
 
 }
-.author-container p:nth-child(2){
+.author-container button:nth-child(2){
     padding-left: 10px;
     font-weight: bold;
+    padding: 4px 10px;
+    background-color: transparent;
+    border: none;
+    margin-top: 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline;
 }
+
 
 .save-recipe{
     padding: 20px;

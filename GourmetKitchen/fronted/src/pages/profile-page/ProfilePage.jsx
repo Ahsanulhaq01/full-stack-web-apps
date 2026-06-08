@@ -22,6 +22,8 @@ function ProfilePage() {
   const [isAuth , setIsAuth] = useCheckAuth(null)
   const navigate = useNavigate();
   const [recipeCount , setRecipeCount] = useState()
+  const [followingCount , setFollowingCount] = useState(0);
+  const [followerCount , setFollowerCount] = useState(0);
  
   async function handleImageChange(e){
       const file = e.target.files[0];
@@ -69,9 +71,34 @@ function ProfilePage() {
       console.log(error)
     }
   }
-  recipeCounts();
-  } , [])
 
+  async function getFollowingCount(){
+    try {
+      const response = await axiosInstance.get(`/following/${user?._id}`)
+      setFollowingCount(response?.data?.data);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async function getFollowerCount(){
+    try {
+      const response = await axiosInstance.get(`/followers/${user?._id}`)
+      setFollowerCount(response?.data?.data);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  recipeCounts();
+  getFollowingCount();
+  getFollowerCount();
+  } , [user])
+
+
+  async function followUser(id){
+    const response = await axiosInstance.post(`/follow/${id}` , null)
+    console.log(response);
+  }
  
 
   return (
@@ -109,11 +136,11 @@ function ProfilePage() {
                   <p className="concern-count-name">Recipes</p>
                 </div>
                 <div className="followers-count">
-                  <p className="no-of-count">10</p>
+                  <p className="no-of-count">{followerCount}</p>
                   <p className="concern-count-name">Followers</p>
                 </div>
                 <div className="following-count">
-                  <p className="no-of-count">20</p>
+                  <p className="no-of-count">{followingCount}</p>
                   <p className="concern-count-name">Following</p>
                 </div>
               </div>
@@ -121,7 +148,7 @@ function ProfilePage() {
 
             <div className="follow-btn-and-share-icon-container">
               <button onClick={handleLoggedOut} >Logout</button>
-              <button>Follow</button>
+              <button onClick={()=>{followUser(user?._id)}}>Follow</button>
               <FiShare2 className="share-icon" size={24} />
             </div>
           </div>

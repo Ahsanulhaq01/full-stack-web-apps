@@ -2,7 +2,7 @@ import { Follow } from "../models/follow.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 
-export const followUser = asyncHandler(async (req, res) => {
+const followUser = asyncHandler(async (req, res) => {
 
     const followerId = req.user._id;   // logged-in user
     const followingId = req.params.id; // user to follow
@@ -38,7 +38,7 @@ export const followUser = asyncHandler(async (req, res) => {
 
 
 
-export const getFollowersCount = asyncHandler(async (req, res) => {
+const getFollowersCount = asyncHandler(async (req, res) => {
 
     const userId = req.params.id;
 
@@ -52,7 +52,7 @@ export const getFollowersCount = asyncHandler(async (req, res) => {
 });
 
 
-export const getFollowingCount = asyncHandler(async (req, res) => {
+const getFollowingCount = asyncHandler(async (req, res) => {
 
     const userId = req.params.id;
 
@@ -64,3 +64,5 @@ export const getFollowingCount = asyncHandler(async (req, res) => {
         new ApiResponse(200, count, "Following count fetched")
     );
 });
+
+export {followUser , getFollowersCount , getFollowingCount};

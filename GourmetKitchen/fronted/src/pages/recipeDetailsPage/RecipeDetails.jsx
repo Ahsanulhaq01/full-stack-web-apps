@@ -4,7 +4,7 @@ import Navbar from "../../components/navbar/Navbar";
 
 import "./recipeDetails.css";
 import { useEffect, useState } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
 import useCheckAuth from "../../customHook/useCheckAuth";
 import useGetUser from "../../customHook/useGetUser";
@@ -27,6 +27,9 @@ function RecipeDetails() {
     getRecipe();
   } , [id])
 
+  async function handleRecipeCreator() {
+    
+  }
   if(isAuth === false) return <Navigate to={'/login'}/>
   return (
     <>
@@ -50,7 +53,7 @@ function RecipeDetails() {
             </div>
             <div className="author-container">
                 <p>Recipe By</p>
-                <p>{user?.name}</p>
+                <button onClick={handleRecipeCreator} >{recipe?.createdBy?.name}</button>
             </div>
             <button className="save-recipe">Save Recipe</button>
           </div>

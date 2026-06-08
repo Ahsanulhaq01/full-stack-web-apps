@@ -41,7 +41,7 @@ const createRecipe = asyncHandler(async (req, res) => {
 })
  
 const getAllRecipes = asyncHandler(async(req ,res)=>{
-    const recipes = await Recipe.find();
+    const recipes = await Recipe.find().populate("createdBy", "name");
     return res.status(200).json(
         new ApiResponse(200 , recipes , "Data fetched Successfully")
     )
@@ -51,7 +51,7 @@ const getAllRecipes = asyncHandler(async(req ,res)=>{
 const getSingleRecipes = asyncHandler(async(req , res)=>{
     const {id} = req.params;
     
-    const singleRecipe = await Recipe.findById(id);
+    const singleRecipe = await Recipe.findById(id).populate("createdBy" , "name");
 
     return res.status(200).json(
         new ApiResponse(200 , singleRecipe , "recipe fetched !")

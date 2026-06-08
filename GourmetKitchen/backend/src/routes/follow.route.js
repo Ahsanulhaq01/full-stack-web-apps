@@ -10,3 +10,6 @@ router.post("/follow/:id", verifyjwt, followUser);
 
 router.get("/followers/:id", getFollowersCount);
 router.get("/following/:id", getFollowingCount);
+
+
+export default router;

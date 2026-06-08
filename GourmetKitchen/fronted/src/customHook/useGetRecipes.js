@@ -10,6 +10,7 @@ export default function useGetRecipes(intialValue){
         async function getRecipes() {
         const response = await axiosInstance.get('/recipes/recipes');
         setRecipes(response.data.data)
+        console.log(response.data.data)
     }
         getRecipes();
     } , [])
