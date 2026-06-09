@@ -1,10 +1,12 @@
+import { useState } from "react";
 import MessagetoUser from "../../components/homepageComponents/MessagetoUser";
 import Navbar from "../../components/navbar/Navbar";
 import RecipeCard from "../../components/recipeCard/RecipeCard";
 import useGetRecipes from "../../customHook/useGetRecipes";
 import "./home.css";
 function Home() {
-  const [recipes] = useGetRecipes([]);
+  const [category , setCategory] = useState("All")
+  const [recipes] = useGetRecipes(category);
   return (
     <>
       <Navbar />
@@ -15,12 +17,12 @@ function Home() {
           <div className="browse-by-category-container">
             <h2>Browse by Category</h2>
             <div className="select-mealType-container">
-              <button className="active">All Recieps</button>
-              <button>Breakfast</button>
-              <button>Lunch</button>
-              <button>Dinner</button>
-              <button>Dessert</button>
-              <button>Vegertarian</button>
+              <button className={category == "All" ? 'active' : ""} onClick={()=>{setCategory("All")}}>All Recieps</button>
+              <button className={category == "Breakfast" ? 'active' : ""} onClick={()=> setCategory("Breakfast")}>Breakfast</button>
+              <button className={category == "Lunch" ? 'active' : ""} onClick={()=> setCategory("Lunch")}>Lunch</button>
+              <button className={category == "Dinner" ? 'active' : ""} onClick={()=> setCategory("Dinner")}>Dinner</button>
+              <button className={category == "Dessert" ? 'active' : ""} onClick={()=> setCategory("Dessert")}>Dessert</button>
+              <button className={category == "Vegertarian" ? 'active' : ""} onClick={()=> setCategory("Vegertarian")}>Vegertarian</button>
             </div>
           </div>
           <div className="show-all-recipe-card-container">

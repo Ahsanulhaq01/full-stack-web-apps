@@ -7,7 +7,7 @@ import useGetUser from '../../customHook/useGetUser'
 import useCheckAuth from '../../customHook/useCheckAuth'
 
 function Navbar() {
-    const [user] = useGetUser([]);
+    const [user] = useGetUser();
     const [isAuth] = useCheckAuth(null);
     
   return (
@@ -19,15 +19,15 @@ function Navbar() {
                     <li key={1}><NavLink to="/">Home</NavLink></li>
                     <li key={2}><NavLink to="/recipe-details">Recipes</NavLink></li>
                     <li key={3}><NavLink to="/add-recipes">Add Recipes</NavLink></li>
-                    <li key={4}><NavLink to="/profile-page">Profile</NavLink></li>
+                    <li key={4}><NavLink to="/profile">Profile</NavLink></li>
                 </ul> : <ul>
                     <li key={1}><NavLink to="/signup">Get Started</NavLink></li>
                     <li key={2}><NavLink to="/login">Login</NavLink></li>
                 </ul>}
             </nav>
         <div className="right-content-container">
-            <Link to='/profile-page'>
-            <img src= {isAuth ? user?.profileImage  : userIcon}  alt="profile_picture"  />
+            <Link to='/profile'>
+            <img src= {user?.profileImage  || userIcon}  alt="profile_picture"  />
             </Link>
              <div className="notification-icon">
                 <FiBell size={25} color= '#a96b3c' />

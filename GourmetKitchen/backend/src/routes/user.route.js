@@ -1,4 +1,4 @@
-import { registerUser ,loginUser, uploadProfileImage, getUser, logoutUser } from "../controllers/user.controller.js";
+import { registerUser ,loginUser, uploadProfileImage, getUser, logoutUser , getRecipeCreator } from "../controllers/user.controller.js";
 import { Router } from "express";
 import verifyjwt from "../middleware/auth.middleware.js";
 import { upload } from "../middleware/multer.middleware.js";
@@ -23,4 +23,5 @@ router.route('/check-auth').get(verifyjwt ,(req, res)=>{
 })
 
 router.route('/logout').post(verifyjwt , logoutUser)
+router.route('/profile/:id').get(getRecipeCreator);
 export default router

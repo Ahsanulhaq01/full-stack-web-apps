@@ -143,4 +143,20 @@ const logoutUser = asyncHandler(async(req ,res)=>{
 
 })
 
-export {registerUser , loginUser , uploadProfileImage  ,getUser , logoutUser }
+const getRecipeCreator = asyncHandler(async(req , res) =>{
+    const {id} = req.params;
+
+    const user = await User.findById(id).select('-password -refreshToken');
+
+    if(!user){
+        return res.status(404).json(
+            new ApiResponse(404 , null , "user not found")
+        )
+    }
+
+    return res.status(200).json(
+        new ApiResponse(200 , user , "Recieps Creator Successfully fetched")
+    )
+})
+
+export {registerUser , loginUser , uploadProfileImage  ,getUser , logoutUser , getRecipeCreator}

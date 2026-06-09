@@ -4,16 +4,15 @@ import Navbar from "../../components/navbar/Navbar";
 
 import "./recipeDetails.css";
 import { useEffect, useState } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
 import useCheckAuth from "../../customHook/useCheckAuth";
-import useGetUser from "../../customHook/useGetUser";
 
 function RecipeDetails() {
   const [recipe , setRecipe] = useState({});
   const {id} = useParams();
-  const [user] = useGetUser([])
   const [isAuth ] = useCheckAuth(null);
+  const navigate = useNavigate();
  
   useEffect(()=>{
      const getRecipe = async ()=>{
@@ -27,9 +26,6 @@ function RecipeDetails() {
     getRecipe();
   } , [id])
 
-  async function handleRecipeCreator() {
-    
-  }
   if(isAuth === false) return <Navigate to={'/login'}/>
   return (
     <>
@@ -53,7 +49,7 @@ function RecipeDetails() {
             </div>
             <div className="author-container">
                 <p>Recipe By</p>
-                <button onClick={handleRecipeCreator} >{recipe?.createdBy?.name}</button>
+                <p onClick={()=>{ navigate(`/profile/${recipe.createdBy._id}`)}}>{recipe?.createdBy?.name}</p>
             </div>
             <button className="save-recipe">Save Recipe</button>
           </div>

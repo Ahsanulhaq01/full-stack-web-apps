@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
 
-export default function useGetRecipes(intialValue){
-    const [recipes , setRecipes] = useState(intialValue);
-
+export default function useGetRecipes(category){
+    const [recipes , setRecipes] = useState(null);
+    
     
 
     useEffect(()=>{
         async function getRecipes() {
-        const response = await axiosInstance.get('/recipes/recipes');
+        const url = category == 'All' ? '/recipes/recipes' : `/recipes/recipes?category=${category}`
+        const response = await axiosInstance.get(url);
         setRecipes(response.data.data)
-        console.log(response.data.data)
     }
         getRecipes();
-    } , [])
+    } , [category])
 
     return [recipes];
 }

@@ -18,7 +18,8 @@ function App() {
         <Route path ='/recipes' element={<Home/>}/>
         <Route path="/add-recipes" element={<AddRecipes />} />
         <Route path="/:id" element={<RecipeDetails />} />
-        <Route path="/profile-page" element={<ProfilePage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile/:id" element={<ProfilePage/>}/>
       </Routes>
 
       <ToastContainer/>

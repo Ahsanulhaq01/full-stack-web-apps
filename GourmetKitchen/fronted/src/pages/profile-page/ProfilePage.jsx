@@ -12,12 +12,13 @@ import axiosInstance from "../../utils/axiosInstance";
 import { toast } from "react-toastify";
 import useGetUser from "../../customHook/useGetUser";
 import useCheckAuth from "../../customHook/useCheckAuth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
 function ProfilePage() {
-  const [recipes] = useGetRecipes([]);
-  const [user] = useGetUser([]);
+  const {id} = useParams();
+  const [recipes , setRecipes] = useState([]);
+  const [user] = useGetUser(id);
   const [previewImage, setPreviewImage] = useState("");
   const [isAuth , setIsAuth] = useCheckAuth(null)
   const navigate = useNavigate();
@@ -63,6 +64,11 @@ function ProfilePage() {
   }
 
   useEffect(()=>{
+
+    async function getCreatorRecipes() {
+      const response = await axiosInstance.get('/recipes/myRecipes');
+      setRecipes(response.data.data)
+    }
     async function recipeCounts(){
     try {
       const response = await axiosInstance.get('/recipes/countRecipes')
@@ -89,6 +95,10 @@ function ProfilePage() {
       console.log(error)
     }
   }
+
+
+  
+  getCreatorRecipes();
   recipeCounts();
   getFollowingCount();
   getFollowerCount();
@@ -96,8 +106,14 @@ function ProfilePage() {
 
 
   async function followUser(id){
-    const response = await axiosInstance.post(`/follow/${id}` , null)
-    console.log(response);
+    console.log("hello from ahsan follow")
+    try {
+      const response = await axiosInstance.post(`/follow/${id}` , null)
+      toast.success(response.data.message)
+      console.log(response.data)
+    } catch (error) {
+      console.log("hello" ,error)
+    }
   }
  
 
@@ -147,8 +163,14 @@ function ProfilePage() {
             </div>
 
             <div className="follow-btn-and-share-icon-container">
-              <button onClick={handleLoggedOut} >Logout</button>
-              <button onClick={()=>{followUser(user?._id)}}>Follow</button>
+              <button 
+              disabled={!user?._id}
+              onClick={handleLoggedOut} >Logout</button>
+              <button 
+              disabled={user?._id}
+              onClick={()=>{followUser(user?._id)}}
+              
+              >Follow</button>
               <FiShare2 className="share-icon" size={24} />
             </div>
           </div>
