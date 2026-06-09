@@ -6,7 +6,6 @@ import { FiShare2 } from "react-icons/fi";
 import RecipeCard from "./../../components/recipeCard/RecipeCard";
 import Navbar from "../../components/navbar/Navbar";
 import "./profilePage.css";
-import useGetRecipes from "../../customHook/useGetRecipes";
 import { useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { toast } from "react-toastify";
@@ -19,7 +18,6 @@ function ProfilePage() {
   const {id} = useParams();
   const [recipes , setRecipes] = useState([]);
   const [user] = useGetUser(id);
-  const [previewImage, setPreviewImage] = useState("");
   const [isAuth , setIsAuth] = useCheckAuth(null)
   const navigate = useNavigate();
   const [recipeCount , setRecipeCount] = useState()
@@ -30,9 +28,6 @@ function ProfilePage() {
       const file = e.target.files[0];
 
       if(file){
-        // setProfileImage(file)
-
-        setPreviewImage(URL.createObjectURL(file))
         await uploadProfileImage(file);
       }
   }
@@ -106,13 +101,13 @@ function ProfilePage() {
 
 
   async function followUser(id){
-    console.log("hello from ahsan follow")
     try {
       const response = await axiosInstance.post(`/follow/${id}` , null)
       toast.success(response.data.message)
-      console.log(response.data)
     } catch (error) {
-      console.log("hello" ,error)
+      console.log(error.message)
+      // console.log(error)
+      toast.error(error.message)
     }
   }
  
@@ -135,7 +130,7 @@ function ProfilePage() {
               onChange={handleImageChange}
               />
 
-              <img src={isAuth ? user?.profileImage : profilePic} alt="profile" />
+              <img src={isAuth ? (user?.profileImage == '' ? profilePic : user?.profileImage) : profilePic} alt="profile" />
 
 
             </div>
@@ -164,10 +159,10 @@ function ProfilePage() {
 
             <div className="follow-btn-and-share-icon-container">
               <button 
-              disabled={!user?._id}
+              disabled={user?._id != id}
               onClick={handleLoggedOut} >Logout</button>
               <button 
-              disabled={user?._id}
+              // disabled={user?._id}
               onClick={()=>{followUser(user?._id)}}
               
               >Follow</button>

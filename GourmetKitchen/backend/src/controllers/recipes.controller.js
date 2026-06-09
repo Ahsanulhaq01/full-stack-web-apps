@@ -49,7 +49,7 @@ const getAllRecipes = asyncHandler(async(req ,res)=>{
     }
     const recipes = await Recipe.find(filter).populate("createdBy", "name");
     return res.status(200).json(
-        new ApiResponse(200 , recipes , "Data fetched Successfully")
+        new ApiResponse(200 , recipes , recipes.length > 0 ?  "Data fetched Successfully" : "nothing exist in this category")
     )
 
 })

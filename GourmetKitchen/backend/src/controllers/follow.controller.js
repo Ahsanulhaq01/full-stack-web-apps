@@ -8,10 +8,9 @@ const followUser = asyncHandler(async (req, res) => {
     const followingId = req.params.id; // user to follow
 
     if (followerId.toString() === followingId) {
-        return res.status(400).json({
-            success: false,
-            message: "You cannot follow yourself"
-        });
+        return res.status(200).json(
+            new ApiResponse(200 , null , "you cannot follow yourself")
+        );
     }
 
     const alreadyFollowing = await Follow.findOne({
@@ -20,10 +19,11 @@ const followUser = asyncHandler(async (req, res) => {
     });
 
     if (alreadyFollowing) {
-        return res.status(400).json({
-            success: false,
-            message: "Already following this user"
-        });
+        return res.status(200).json(
+            new ApiResponse(200,
+            null,
+            "Already following this user"
+        ));
     }
 
     const follow = await Follow.create({
