@@ -56,7 +56,7 @@ GourmetKitchen is a full-stack, feature-rich web application designed for culina
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/GourmetKitchen.git
+git clone https://github.com/Ahsanulhaq01/full-stack-web-apps/tree/master/GourmetKitchen
 cd GourmetKitchen
 ```
 
