@@ -1,4 +1,5 @@
 import { Follow } from "../models/follow.model.js";
+import { Notification } from "../models/notification.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 
@@ -29,6 +30,13 @@ const followUser = asyncHandler(async (req, res) => {
     const follow = await Follow.create({
         follower: followerId,
         following: followingId
+    });
+
+    // Create notification
+    await Notification.create({
+        recipient: followingId,
+        sender: followerId,
+        type: "follow"
     });
 
     return res.status(201).json(
@@ -65,4 +73,38 @@ const getFollowingCount = asyncHandler(async (req, res) => {
     );
 });
 
-export {followUser , getFollowersCount , getFollowingCount};
+const unfollowUser = asyncHandler(async (req, res) => {
+    const followerId = req.user._id;
+    const followingId = req.params.id;
+
+    const result = await Follow.findOneAndDelete({
+        follower: followerId,
+        following: followingId
+    });
+
+    if (!result) {
+        return res.status(404).json(
+            new ApiResponse(404, null, "You were not following this user")
+        );
+    }
+
+    return res.status(200).json(
+        new ApiResponse(200, null, "User unfollowed successfully")
+    );
+});
+
+const checkFollowStatus = asyncHandler(async (req, res) => {
+    const followerId = req.user._id;
+    const followingId = req.params.id;
+
+    const follow = await Follow.findOne({
+        follower: followerId,
+        following: followingId
+    });
+
+    return res.status(200).json(
+        new ApiResponse(200, !!follow, "Follow status fetched")
+    );
+});
+
+export {followUser , getFollowersCount , getFollowingCount, unfollowUser, checkFollowStatus};

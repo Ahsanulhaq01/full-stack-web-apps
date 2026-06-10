@@ -1,4 +1,5 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { GiKnifeFork } from "react-icons/gi";
 import { FiPlus } from "react-icons/fi";
@@ -16,6 +17,10 @@ import useDynamicList from "../../customHook/useDynamicList";
 import axiosInstance from "../../utils/axiosInstance";
 
 function AddRecipes() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const isEditMode = !!id;
+
   const [image, setImage] = useState(null);
   const fileRef = useRef(null);
   const ingrediants = useDynamicList([""]);
@@ -28,9 +33,33 @@ function AddRecipes() {
   // const [ingredients, setIngredients] = useState([""]);
   // const [steps, setSteps] = useState([""]);
   const [preparationTime , setPreparationTime] = useState(0)
-  const [category , setCategory] = useState("");
-  const [difficulty , setDifficulty] = useState("");
+  const [category , setCategory] = useState("Dessert");
+  const [difficulty , setDifficulty] = useState("Easy");
   const [servings , setServings] = useState("");
+
+  useEffect(() => {
+    if (isEditMode) {
+      const fetchRecipe = async () => {
+        try {
+          const response = await axiosInstance.get(`/recipes/${id}`);
+          const recipe = response.data.data;
+          setTitle(recipe.recipeTitle);
+          setDescription(recipe.description);
+          setPreparationTime(recipe.preparationTime);
+          setCategory(recipe.category);
+          setDifficulty(recipe.difficulty);
+          setServings(recipe.servings);
+          ingrediants.setItems(recipe.ingrediant);
+          preparationStep.setItems(recipe.preparationStep);
+          // For image, we might just show the existing one as a placeholder if needed
+          // but we won't set the File object until user uploads a new one.
+        } catch (error) {
+          toast.error("Failed to load recipe details");
+        }
+      };
+      fetchRecipe();
+    }
+  }, [id, isEditMode]);
 
 // const [image, setImage] = useState(null);
 
@@ -47,19 +76,22 @@ const handleSubmit = async (e)=>{
   formData.append('preparationTime' , preparationTime)
   formData.append('servings' , servings)
   // formData.append('recipeTitle' , title)
-  formData.append('recipeImage' ,image)
+  if (image) formData.append('recipeImage' ,image)
   formData.append('ingrediant' , JSON.stringify(ingrediants.items))
   formData.append('preparationStep' , JSON.stringify(preparationStep.items))
   
   try {
-    const response = await axiosInstance.post(
-      "recipes/create",
-      formData
-    );
+    const response = isEditMode 
+      ? await axiosInstance.patch(`recipes/${id}`, formData)
+      : await axiosInstance.post("recipes/create", formData);
+    
     toast.success(response.data.message)
+    if (isEditMode) navigate(`/recipe-details/${id}`);
+    else navigate("/");
 
   } catch (error) {
     console.log(error)
+    toast.error(error.message);
   }
 }
 
@@ -105,6 +137,7 @@ const handleSubmit = async (e)=>{
                       type="text"
                       placeholder="e.g Truffle Infused Wild Mushroom Risotta"
                       id="recipe-title"
+                      value={title}
                       onChange={(e) => setTitle(e.target.value)}
                     />
                   </div>
@@ -112,7 +145,7 @@ const handleSubmit = async (e)=>{
                   <div className="category-and-preparation-time-container">
                     <div className="category-container">
                       <label htmlFor="gategory-field">Category</label>
-                      <select id="gategory-field" onChange={(e)=>setCategory(e.target.value)}>
+                      <select id="gategory-field" value={category} onChange={(e)=>setCategory(e.target.value)}>
                         <option value="Dessert">Dessert</option>
                         <option value="Dinner">Dinner</option>
                         <option value="Breakfast">Breakfast</option>
@@ -122,7 +155,7 @@ const handleSubmit = async (e)=>{
 
                     <div className="preparation-time">
                       <label htmlFor="prep-time"> Prep Time (Mins) </label>
-                      <input type="number" placeholder="45" onChange={(e)=> setPreparationTime(e.target.value)}/>
+                      <input type="number" placeholder="45" value={preparationTime} onChange={(e)=> setPreparationTime(e.target.value)}/>
                     </div>
                   </div>
                   <div className="recipe-description">
@@ -132,16 +165,16 @@ const handleSubmit = async (e)=>{
                     <textarea
                       name="recipe_Description"
                       id="description-of-recipe"
+                      value={description}
                       onChange={(e) => setDescription(e.target.value)}
                     >
-                      hello ahsan
                     </textarea>
                   </div>
 
                   <div className="recipe-difficulty-and-serving-container">
                     <div className="recipe-difficulty-level">
                       <label htmlFor="difficulty-lvl">Difficulty</label>
-                      <select name="difficulty" id="difficulty-lvl" onChange={(e) => setDifficulty(e.target.value)}>
+                      <select name="difficulty" id="difficulty-lvl" value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
                         <option value="Easy">Easy</option>
                         <option value="Intermediate">Intermediate</option>
                         <option value="Advance">Advance</option>
@@ -149,7 +182,7 @@ const handleSubmit = async (e)=>{
                     </div>
                     <div className="recipe-serving-container">
                       <label htmlFor="servingInput">Servings</label>
-                      <input type="number" id="servingInput" placeholder="1" onChange={(e)=>setServings(e.target.value)} />
+                      <input type="number" id="servingInput" placeholder="1" value={servings} onChange={(e)=>setServings(e.target.value)} />
                     </div>
                   </div>
                 </div>
@@ -260,7 +293,7 @@ const handleSubmit = async (e)=>{
                   </div>
                 </div>
                 <button className="publish-recipe-btn" type="submit">
-                  <FiUpload size={20} /> publish Publish Masterpiece{" "}
+                  <FiUpload size={20} /> {isEditMode ? "Update Masterpiece" : "Publish Masterpiece"}
                 </button>
               </div>
             </form>

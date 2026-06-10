@@ -1,9 +1,20 @@
 import { FiSearch ,FiSliders } from "react-icons/fi";
 import './messagetouser.css'
+import { useState, useEffect } from "react";
 
 
 
-function MessagetoUser() {
+function MessagetoUser({ setSearch }) {
+  const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      setSearch(inputValue);
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [inputValue, setSearch]);
+
   return (
       <div className="home-header-user-msg-container">
         <h1 className="first-heading"> Discover Delicious Recipes </h1>
@@ -18,7 +29,9 @@ function MessagetoUser() {
             <FiSearch size={20} className="search-icon"/>
             <input
               type="text"
-              placeholder="Search for Ingrediant , Recipes, and Cuisine...."
+              placeholder="Search by Recipes ,Description and Ingrediants...."
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
             />
           </div>
           <button className="filter-items-btn">

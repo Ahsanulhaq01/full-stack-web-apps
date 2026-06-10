@@ -16,13 +16,15 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/" element={<Home />} />
         <Route path ='/recipes' element={<Home/>}/>
+        <Route path="/recipe-details" element={<RecipeDetails />} />
+        <Route path="/recipe-details/:id" element={<RecipeDetails />} />
         <Route path="/add-recipes" element={<AddRecipes />} />
-        <Route path="/:id" element={<RecipeDetails />} />
+        <Route path="/edit-recipe/:id" element={<AddRecipes />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/profile/:id" element={<ProfilePage/>}/>
       </Routes>
 
-      <ToastContainer/>
+      <ToastContainer position="top-center" autoClose={3000} hideProgressBar={false} />
     </>
   );
 }

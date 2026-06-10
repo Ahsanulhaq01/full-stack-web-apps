@@ -17,12 +17,16 @@ import { useEffect } from "react";
 function ProfilePage() {
   const {id} = useParams();
   const [recipes , setRecipes] = useState([]);
-  const [user] = useGetUser(id);
+  const [currentUser] = useGetUser(); // Logged-in user
+  const [user] = useGetUser(id); // Profile user
   const [isAuth , setIsAuth] = useCheckAuth(null)
   const navigate = useNavigate();
   const [recipeCount , setRecipeCount] = useState()
   const [followingCount , setFollowingCount] = useState(0);
   const [followerCount , setFollowerCount] = useState(0);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [activeTab, setActiveTab] = useState("Recipes");
+  const [savedRecipes, setSavedRecipes] = useState([]);
  
   async function handleImageChange(e){
       const file = e.target.files[0];
@@ -58,13 +62,16 @@ function ProfilePage() {
     }
   }
 
-  useEffect(()=>{
-
-    async function getCreatorRecipes() {
+  async function getCreatorRecipes() {
+    try {
       const response = await axiosInstance.get('/recipes/myRecipes');
       setRecipes(response.data.data)
+    } catch (error) {
+      console.log(error);
     }
-    async function recipeCounts(){
+  }
+
+  async function recipeCounts(){
     try {
       const response = await axiosInstance.get('/recipes/countRecipes')
       setRecipeCount(response.data.data)
@@ -74,8 +81,9 @@ function ProfilePage() {
   }
 
   async function getFollowingCount(){
+    if (!user?._id) return;
     try {
-      const response = await axiosInstance.get(`/following/${user?._id}`)
+      const response = await axiosInstance.get(`/following/${user._id}`)
       setFollowingCount(response?.data?.data);
     } catch (error) {
       console.log(error)
@@ -83,31 +91,80 @@ function ProfilePage() {
   }
 
   async function getFollowerCount(){
+    if (!user?._id) return;
     try {
-      const response = await axiosInstance.get(`/followers/${user?._id}`)
+      const response = await axiosInstance.get(`/followers/${user._id}`)
       setFollowerCount(response?.data?.data);
     } catch (error) {
       console.log(error)
     }
   }
 
-
-  
-  getCreatorRecipes();
-  recipeCounts();
-  getFollowingCount();
-  getFollowerCount();
-  } , [user])
-
-
-  async function followUser(id){
+  async function getFollowStatus(){
+    if (!user?._id || !isAuth) return;
     try {
-      const response = await axiosInstance.post(`/follow/${id}` , null)
-      toast.success(response.data.message)
+      const response = await axiosInstance.get(`/status/${user._id}`);
+      setIsFollowing(response.data.data);
     } catch (error) {
-      console.log(error.message)
-      // console.log(error)
-      toast.error(error.message)
+      console.log(error);
+    }
+  }
+
+  async function getSavedRecipes() {
+    if (!isAuth) return;
+    try {
+      const response = await axiosInstance.get('/saved-recipes');
+      setSavedRecipes(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleShare = async () => {
+    const shareData = {
+      title: 'GourmetKitchen Profile',
+      text: `Check out ${user?.name || 'this'} profile on GourmetKitchen!`,
+      url: window.location.href,
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(window.location.href);
+        toast.success("Profile link copied to clipboard!");
+      }
+    } catch (err) {
+      console.log('Error sharing:', err);
+    }
+  };
+
+  useEffect(()=>{
+    getCreatorRecipes();
+    recipeCounts();
+    getFollowingCount();
+    getFollowerCount();
+    getFollowStatus();
+    if (activeTab === "Saved") getSavedRecipes();
+  } , [user, isAuth, activeTab])
+
+
+  async function toggleFollow(profileId){
+    try {
+      if (isFollowing) {
+        const response = await axiosInstance.delete(`/unfollow/${profileId}`);
+        toast.success(response.data.message);
+        setIsFollowing(false);
+        setFollowerCount(prev => prev - 1);
+      } else {
+        const response = await axiosInstance.post(`/follow/${profileId}`, null);
+        toast.success(response.data.message);
+        setIsFollowing(true);
+        setFollowerCount(prev => prev + 1);
+      }
+    } catch (error) {
+      console.log(error.message);
+      toast.error(error.message);
     }
   }
  
@@ -158,32 +215,41 @@ function ProfilePage() {
             </div>
 
             <div className="follow-btn-and-share-icon-container">
-              <button 
-              disabled={user?._id != id}
-              onClick={handleLoggedOut} >Logout</button>
-              <button 
-              // disabled={user?._id}
-              onClick={()=>{followUser(user?._id)}}
+              {currentUser?._id === user?._id && (
+                <button onClick={handleLoggedOut}>Logout</button>
+              )}
               
-              >Follow</button>
-              <FiShare2 className="share-icon" size={24} />
+              {currentUser && user && currentUser._id !== user._id && (
+                <button onClick={() => toggleFollow(user._id)}>
+                  {isFollowing ? "Unfollow" : "Follow"}
+                </button>
+              )}
+              
+              <FiShare2 className="share-icon" size={24} onClick={handleShare} />
             </div>
           </div>
 
           <div className="my-recipes-and-saved-recipes-container">
             <div className="my-recipe-and-saved-recipe-selection-container">
-              <button className="active">
+              <button 
+                className={activeTab === "Recipes" ? "active" : ""} 
+                onClick={() => setActiveTab("Recipes")}
+              >
                 <LuUtensils />
                 Recipe
               </button>
-              <button>
+              <button 
+                className={activeTab === "Saved" ? "active" : ""} 
+                onClick={() => setActiveTab("Saved")}
+              >
                 <BsBookmark />
                 Saved Recipes
               </button>
             </div>
             <div className="recipe-card-container">
-              {recipes?.map((recipe) => (
+              {(activeTab === "Recipes" ? recipes : savedRecipes)?.map((recipe) => (
                 <RecipeCard
+                  key={recipe._id}
                   items={{
                     recipeImage: recipe.recipeImage,
                     recipeTitle: recipe.recipeTitle,

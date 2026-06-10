@@ -6,14 +6,15 @@ import useGetRecipes from "../../customHook/useGetRecipes";
 import "./home.css";
 function Home() {
   const [category , setCategory] = useState("All")
-  const [recipes] = useGetRecipes(category);
+  const [search, setSearch] = useState("");
+  const [recipes] = useGetRecipes(category, search);
   return (
     <>
       <Navbar />
 
       <div className="parent-container">
         <div className="home-section">
-          <MessagetoUser />
+          <MessagetoUser setSearch={setSearch} />
           <div className="browse-by-category-container">
             <h2>Browse by Category</h2>
             <div className="select-mealType-container">

@@ -28,7 +28,7 @@ function RecipeCard({items}) {
                 </span>
             </div>
             <button className="view-more-btn" onClick={()=>{
-                navigate(`/${items?.id}`)
+                navigate(`/recipe-details/${items?.id}`)
             }}>View Recipe</button>
             </div>
         </div>
