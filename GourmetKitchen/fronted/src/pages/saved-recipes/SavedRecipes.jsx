@@ -1,15 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Navbar from "../../components/navbar/Navbar";
 import RecipeCard from "../../components/recipeCard/RecipeCard";
 import axiosInstance from "../../utils/axiosInstance";
 import "./savedRecipes.css";
 import { FiBookmark } from "react-icons/fi";
+import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function SavedRecipes() {
   const [savedRecipes, setSavedRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { isLoggedIn, authLoading } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!authLoading && isLoggedIn === false) {
+      toast.info("you are not register");
+      navigate('/login');
+    }
+  }, [isLoggedIn, authLoading, navigate]);
+
+  useEffect(() => {
+    if (!isLoggedIn) return;
     const fetchSavedRecipes = async () => {
       try {
         const response = await axiosInstance.get("/saved-recipes");
@@ -22,7 +35,9 @@ function SavedRecipes() {
     };
 
     fetchSavedRecipes();
-  }, []);
+  }, [isLoggedIn]);
+
+  if (authLoading || isLoggedIn === false) return null;
 
   return (
     <>

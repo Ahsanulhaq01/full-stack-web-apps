@@ -106,8 +106,14 @@ function RecipeDetails() {
     navigate(`/edit-recipe/${recipe._id}`);
   };
 
-  if (authLoading) return null;
-  if (isLoggedIn === false) return <Navigate to={'/login'}/>
+  useEffect(() => {
+    if (!authLoading && isLoggedIn === false) {
+      toast.info("you are not register");
+      navigate('/login');
+    }
+  }, [isLoggedIn, authLoading, navigate]);
+
+  if (authLoading || isLoggedIn === false) return null;
   return (
     <>
     <Navbar/>

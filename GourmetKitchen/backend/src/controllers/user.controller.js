@@ -48,7 +48,9 @@ const loginUser = asyncHandler(async(req , res)=>{
     const user = await User.findOne({email});
 
     if(!user){
-        return res.status(404).json(404 , null , "User not found")
+        return res.status(404).json(
+            new ApiResponse(404, null, "you are not register")
+        )
     }
 
     const isPasswordValid =  user.isPasswordCorrect(password);
@@ -91,15 +93,16 @@ const uploadProfileImage = asyncHandler(async(req , res)=>{
     }
     
     const uploadedProfileImage = await uploadToCloudinary(profileImageLocalPath)
-    const result = await User.updateOne(
-        { _id : req.user._id },
+    const updatedUser = await User.findByIdAndUpdate(
+        req.user._id,
         {
             $set : {profileImage : uploadedProfileImage?.url}
-        }
-    );
+        },
+        { new: true }
+    ).select("-password -refreshToken");
     
     return res.status(200).json(
-        new ApiResponse(200 , result , 'Profile Image Uploaded Successfully')
+        new ApiResponse(200 , updatedUser , 'Profile Image Uploaded Successfully')
     )
 })
 

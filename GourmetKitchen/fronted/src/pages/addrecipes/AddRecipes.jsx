@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { GiKnifeFork } from "react-icons/gi";
@@ -15,16 +15,25 @@ import { MdOutlineShoppingBasket } from "react-icons/md";
 import "./addRecipes.css";
 import useDynamicList from "../../customHook/useDynamicList";
 import axiosInstance from "../../utils/axiosInstance";
+import { AuthContext } from "../../context/AuthContext";
 
 function AddRecipes() {
   const { id } = useParams();
   const navigate = useNavigate();
   const isEditMode = !!id;
+  const { isLoggedIn, authLoading } = useContext(AuthContext);
 
   const [image, setImage] = useState(null);
   const fileRef = useRef(null);
   const ingrediants = useDynamicList([""]);
   const preparationStep = useDynamicList([""]);
+
+  useEffect(() => {
+    if (!authLoading && isLoggedIn === false) {
+      toast.info("you are not register");
+      navigate('/login');
+    }
+  }, [isLoggedIn, authLoading, navigate]);
 
   //states for input
 
@@ -91,9 +100,11 @@ const handleSubmit = async (e)=>{
 
   } catch (error) {
     console.log(error)
-    toast.error(error.message);
+    toast.error(error.response?.data?.message || error.message);
   }
 }
+
+  if (authLoading || isLoggedIn === false) return null;
 
 
   const handleFileUpload = () => {

@@ -188,7 +188,14 @@ function ProfilePage() {
     }
   }
  
-  if (authLoading) return null;
+  useEffect(() => {
+    if (!authLoading && !id && isLoggedIn === false) {
+      toast.info("you are not register");
+      navigate('/login');
+    }
+  }, [id, isLoggedIn, authLoading, navigate]);
+
+  if (authLoading || (!id && isLoggedIn === false)) return null;
 
   return (
     <>

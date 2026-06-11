@@ -30,7 +30,7 @@ function RecipeCard({items}) {
     const handleToggleSave = async (e) => {
         e.stopPropagation(); // Prevent navigating to details
         if (!isAuth) {
-            toast.info("Please login to save recipes");
+            toast.info("you are not register");
             navigate("/login");
             return;
         }

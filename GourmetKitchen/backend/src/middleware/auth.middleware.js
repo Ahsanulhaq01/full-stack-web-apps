@@ -8,7 +8,7 @@ const verifyjwt = asyncHandler(async(req , res , next)=>{
 
     if(!token){
         return res.status(404).json(
-            new ApiResponse(404 , null , "UnAuthorized Request")
+            new ApiResponse(404 , null , "you are not register")
         )
     }
 

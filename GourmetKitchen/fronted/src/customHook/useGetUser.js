@@ -22,9 +22,11 @@ import axiosInstance from "../utils/axiosInstance";
 
 export default function useGetUser(id) {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function getUser() {
+      setLoading(true);
       try {
         const url = id
           ? `/user/profile/${id}` // another user's profile
@@ -35,11 +37,13 @@ export default function useGetUser(id) {
         setUser(response.data.data);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     }
 
     getUser();
   }, [id]);
 
-  return [user];
+  return [user, setUser, loading];
 }
