@@ -15,6 +15,9 @@ A responsive Full Stack Expense Tracker built with React and Node.js. It allows 
 
 ---
 
+## Live Demo 
+
+### Expense tracker (https://expense-pro-green.vercel.app/)
 ## 🛠️ Tech Stack
 
 ### Frontend
@@ -34,7 +37,7 @@ A responsive Full Stack Expense Tracker built with React and Node.js. It allows 
 ## ⚙️ Installation & Setup
 
 ### 1. Clone the repository
-git clone https://github.com/your-username/expense-tracker.git
+git clone https://github.com/Ahsanulhaq01/full-stack-web-apps/blob/master/expense-tracker
 cd expense-tracker
 
 ### 2. Install dependencies
