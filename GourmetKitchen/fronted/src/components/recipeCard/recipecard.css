@@ -27,6 +27,36 @@
     border-top-left-radius: 20px;
 }
 
+.recipe-image-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.save-icon-wrapper {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    color: var(--tertiaryColor);
+}
+
+.save-icon-wrapper:hover {
+    transform: scale(1.1);
+    background: white;
+}
+
+.save-icon-wrapper .saved {
+    color: var(--primaryColor);
+}
+
 .recipe-card-text-container{
     display: flex;
     flex-direction: column;

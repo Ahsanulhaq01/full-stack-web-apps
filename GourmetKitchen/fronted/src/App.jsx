@@ -4,6 +4,7 @@ import SignUp from "./pages/signup/SignUp";
 import ProfilePage from "./pages/profile-page/ProfilePage";
 import AddRecipes from "./pages/addrecipes/AddRecipes";
 import RecipeDetails from "./pages/recipeDetailsPage/RecipeDetails";
+import SavedRecipes from "./pages/saved-recipes/SavedRecipes";
 import Home from "./pages/home/Home";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
@@ -20,6 +21,7 @@ function App() {
         <Route path="/recipe-details/:id" element={<RecipeDetails />} />
         <Route path="/add-recipes" element={<AddRecipes />} />
         <Route path="/edit-recipe/:id" element={<AddRecipes />} />
+        <Route path="/saved-recipes" element={<SavedRecipes />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/profile/:id" element={<ProfilePage/>}/>
       </Routes>

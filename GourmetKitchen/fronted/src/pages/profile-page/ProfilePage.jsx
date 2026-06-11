@@ -6,20 +6,20 @@ import { FiShare2 } from "react-icons/fi";
 import RecipeCard from "./../../components/recipeCard/RecipeCard";
 import Navbar from "../../components/navbar/Navbar";
 import "./profilePage.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { toast } from "react-toastify";
 import useGetUser from "../../customHook/useGetUser";
-import useCheckAuth from "../../customHook/useCheckAuth";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 function ProfilePage() {
   const {id} = useParams();
   const [recipes , setRecipes] = useState([]);
   const [currentUser] = useGetUser(); // Logged-in user
   const [user] = useGetUser(id); // Profile user
-  const [isAuth , setIsAuth] = useCheckAuth(null)
+  const { isLoggedIn, setIsLoggedIn, authLoading } = useContext(AuthContext);
   const navigate = useNavigate();
   const [recipeCount , setRecipeCount] = useState()
   const [followingCount , setFollowingCount] = useState(0);
@@ -27,11 +27,19 @@ function ProfilePage() {
   const [isFollowing, setIsFollowing] = useState(false);
   const [activeTab, setActiveTab] = useState("Recipes");
   const [savedRecipes, setSavedRecipes] = useState([]);
+  const [profilePreview, setProfilePreview] = useState(null);
  
   async function handleImageChange(e){
       const file = e.target.files[0];
 
       if(file){
+        // Create local preview immediately
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setProfilePreview(reader.result);
+        };
+        reader.readAsDataURL(file);
+
         await uploadProfileImage(file);
       }
   }
@@ -41,12 +49,22 @@ function ProfilePage() {
       const formData = new FormData();
       formData.append("profileImage" , file)
       const response = await axiosInstance.patch('user/upload-profile-image' , formData , {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
         withCredentials : true,
       })
 
       toast.success(response.data.message)
     } catch (error) {
-      console.log(error.message)
+      console.error("Upload error details:", error);
+      if (error.code === 'ERR_NETWORK') {
+        toast.error("Network error: Server might be down or file is too large. Check your connection.");
+      } else {
+        toast.error(error.response?.data?.message || "Failed to upload image");
+      }
+      // Revert preview on failure
+      setProfilePreview(null);
     }
   }
 
@@ -54,7 +72,7 @@ function ProfilePage() {
     try {
       const response = await axiosInstance.post('/user/logout' , {} ,{withCredentials : true});
       toast.success(response.data.message)
-      setIsAuth(false);
+      setIsLoggedIn(false);
 
       navigate('/')
     } catch (error) {
@@ -63,8 +81,9 @@ function ProfilePage() {
   }
 
   async function getCreatorRecipes() {
+    if (!user?._id) return;
     try {
-      const response = await axiosInstance.get('/recipes/myRecipes');
+      const response = await axiosInstance.get(`/recipes/recipes?userId=${user._id}`);
       setRecipes(response.data.data)
     } catch (error) {
       console.log(error);
@@ -72,9 +91,10 @@ function ProfilePage() {
   }
 
   async function recipeCounts(){
+    if (!user?._id) return;
     try {
-      const response = await axiosInstance.get('/recipes/countRecipes')
-      setRecipeCount(response.data.data)
+      const response = await axiosInstance.get(`/recipes/recipes?userId=${user._id}`)
+      setRecipeCount(response.data.data.length)
     } catch (error) {
       console.log(error)
     }
@@ -101,7 +121,7 @@ function ProfilePage() {
   }
 
   async function getFollowStatus(){
-    if (!user?._id || !isAuth) return;
+    if (!user?._id || !isLoggedIn) return;
     try {
       const response = await axiosInstance.get(`/status/${user._id}`);
       setIsFollowing(response.data.data);
@@ -111,7 +131,7 @@ function ProfilePage() {
   }
 
   async function getSavedRecipes() {
-    if (!isAuth) return;
+    if (!isLoggedIn) return;
     try {
       const response = await axiosInstance.get('/saved-recipes');
       setSavedRecipes(response.data.data);
@@ -146,7 +166,7 @@ function ProfilePage() {
     getFollowerCount();
     getFollowStatus();
     if (activeTab === "Saved") getSavedRecipes();
-  } , [user, isAuth, activeTab])
+  } , [user, isLoggedIn, activeTab])
 
 
   async function toggleFollow(profileId){
@@ -168,6 +188,7 @@ function ProfilePage() {
     }
   }
  
+  if (authLoading) return null;
 
   return (
     <>
@@ -187,7 +208,7 @@ function ProfilePage() {
               onChange={handleImageChange}
               />
 
-              <img src={isAuth ? (user?.profileImage == '' ? profilePic : user?.profileImage) : profilePic} alt="profile" />
+              <img src={isLoggedIn ? (user?.profileImage == '' ? profilePic : user?.profileImage) : profilePic} alt="profile" />
 
 
             </div>
@@ -215,8 +236,19 @@ function ProfilePage() {
             </div>
 
             <div className="follow-btn-and-share-icon-container">
+              {!isLoggedIn && (
+                <button 
+                  className="responsive-login-btn" 
+                  onClick={() => navigate('/login')}
+                  disabled={isLoggedIn}
+                >Login</button>
+              )}
+
               {currentUser?._id === user?._id && (
-                <button onClick={handleLoggedOut}>Logout</button>
+                <button 
+                  onClick={handleLoggedOut}
+                  disabled={!isLoggedIn}
+                >Logout</button>
               )}
               
               {currentUser && user && currentUser._id !== user._id && (
@@ -238,13 +270,15 @@ function ProfilePage() {
                 <LuUtensils />
                 Recipe
               </button>
-              <button 
-                className={activeTab === "Saved" ? "active" : ""} 
-                onClick={() => setActiveTab("Saved")}
-              >
-                <BsBookmark />
-                Saved Recipes
-              </button>
+              {currentUser?._id === user?._id && (
+                <button 
+                  className={activeTab === "Saved" ? "active" : ""} 
+                  onClick={() => setActiveTab("Saved")}
+                >
+                  <BsBookmark />
+                  Saved Recipes
+                </button>
+              )}
             </div>
             <div className="recipe-card-container">
               {(activeTab === "Recipes" ? recipes : savedRecipes)?.map((recipe) => (

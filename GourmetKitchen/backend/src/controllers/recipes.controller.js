@@ -41,11 +41,15 @@ const createRecipe = asyncHandler(async (req, res) => {
 })
 
 const getAllRecipes = asyncHandler(async (req, res) => {
-    const { category, search } = req.query;
+    const { category, search, userId } = req.query;
 
     let filter = {};
     if (category && category !== 'All') {
         filter.category = category;
+    }
+
+    if (userId) {
+        filter.createdBy = userId;
     }
 
     if (search) {

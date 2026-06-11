@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 
 function Login() {
-  const { setIsLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, setIsLoggedIn, authLoading } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -26,12 +26,21 @@ function Login() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const response = await axiosInstance.post("user/login", data);
-    toast.success(response.data.message);
-    setIsLoggedIn(true);
-    navigate("/");
-    reset();
+    try {
+      const response = await axiosInstance.post("user/login", data);
+      toast.success(response.data.message);
+      setIsLoggedIn(true);
+      navigate("/");
+      reset();
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Login failed");
+    }
   };
+
+  if (!authLoading && isLoggedIn) {
+    navigate("/");
+    return null;
+  }
 
   const handleClick = () => {
     setShowPassword(!showPassword);

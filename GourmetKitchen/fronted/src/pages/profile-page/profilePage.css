@@ -109,6 +109,10 @@
     cursor: pointer;
 }
 
+.responsive-login-btn {
+    background: linear-gradient(to right, var(--primaryColor), #994700) !important;
+}
+
 .follow-btn-and-share-icon-container .share-icon{
     /* background-color:#FFEADF; */
     align-self: center;

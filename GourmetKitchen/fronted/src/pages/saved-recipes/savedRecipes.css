@@ -1,0 +1,84 @@
+.saved-recipes-page {
+  background-color: #FFF8F5;
+  min-height: 100vh;
+  padding-bottom: 50px;
+}
+
+.saved-recipes-container {
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.saved-recipes-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.saved-recipes-header h1 {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: var(--tertiaryColor);
+  font-size: clamp(24px, 32px, 40px);
+}
+
+.saved-recipes-header h1 svg {
+  color: var(--primaryColor);
+}
+
+.saved-recipes-header p {
+  color: var(--neutralColor);
+  font-size: 16px;
+}
+
+.recipes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  justify-items: center;
+}
+
+.loading-state, .empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 20px;
+  text-align: center;
+  color: var(--neutralColor);
+  gap: 20px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.empty-state h3 {
+  color: var(--tertiaryColor);
+  font-size: 24px;
+}
+
+.empty-state button {
+  padding: 12px 25px;
+  background: var(--primaryColor);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.empty-state button:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 420px) {
+  .saved-recipes-container {
+    padding: 20px 10px;
+  }
+}

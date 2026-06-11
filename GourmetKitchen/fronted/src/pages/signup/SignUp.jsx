@@ -10,7 +10,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
 function SignUp() {
-  const {setIsLoggedIn} = useContext(AuthContext)
+  const { isLoggedIn, setIsLoggedIn, authLoading } = useContext(AuthContext)
   const navigate = useNavigate();
   const {
     register,
@@ -21,12 +21,21 @@ function SignUp() {
 
 
   const onSubmit = async (data) => {
-    const response = await axiosInstance.post(`user/register` , data , {withCredentials : true} )
-    toast.success(response.data.message)
-    reset()
-    navigate('/')
-    setIsLoggedIn(true);
+    try {
+      const response = await axiosInstance.post(`user/register` , data , {withCredentials : true} )
+      toast.success(response.data.message)
+      setIsLoggedIn(true);
+      reset()
+      navigate('/')
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Registration failed");
+    }
   };
+
+  if (!authLoading && isLoggedIn) {
+    navigate("/");
+    return null;
+  }
   return (
     <>
       <Navbar />

@@ -3,68 +3,77 @@ import { FiUsers } from "react-icons/fi";
 import Navbar from "../../components/navbar/Navbar";
 
 import "./recipeDetails.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
-import useCheckAuth from "../../customHook/useCheckAuth";
 import { toast } from "react-toastify";
 import useGetUser from "../../customHook/useGetUser";
+import { AuthContext } from "../../context/AuthContext";
 
 function RecipeDetails() {
   const [recipe , setRecipe] = useState({});
   const {id} = useParams();
-  const [isAuth ] = useCheckAuth(null);
+  const { isLoggedIn, authLoading } = useContext(AuthContext);
   const [currentUser] = useGetUser();
   const navigate = useNavigate();
   const [isSaved, setIsSaved] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
  
   useEffect(() => {
+    if (authLoading) return;
+
     const getRecipeData = async () => {
       try {
-        let recipeId = id;
+        let recipeId = id || localStorage.getItem('lastViewedRecipeId');
+        let fetchedRecipe = null;
 
-        // If no ID is provided in URL, check localStorage for the last viewed one
+        // Try to fetch the specific recipe (from URL or localStorage)
+        if (recipeId) {
+          try {
+            const response = await axiosInstance.get(`/recipes/${recipeId}`);
+            fetchedRecipe = response.data.data;
+          } catch (error) {
+            // Recipe likely deleted or invalid ID
+            console.log(error)
+            recipeId = null;
+          }
+        }
+
+        // Fallback: If no ID or specific fetch failed, get the first available recipe
         if (!recipeId) {
-          recipeId = localStorage.getItem('lastViewedRecipeId');
-          
-          // If still no ID, fetch the first recipe from the database
-          if (!recipeId) {
-            const allRecipesResponse = await axiosInstance.get('/recipes/recipes');
-            if (allRecipesResponse.data.data && allRecipesResponse.data.data.length > 0) {
-              recipeId = allRecipesResponse.data.data[0]._id;
-            }
-          }
-
-          // If we found an ID (from storage or DB), redirect to it so URL is updated
-          if (recipeId) {
-            navigate(`/recipe-details/${recipeId}`, { replace: true });
-            return;
-          } else {
-            return; // No recipes available at all
+          const allRecipesResponse = await axiosInstance.get('/recipes/recipes');
+          const recipes = allRecipesResponse.data.data;
+          if (recipes && recipes.length > 0) {
+            fetchedRecipe = recipes[0];
+            recipeId = fetchedRecipe._id;
           }
         }
 
-        const recipeResponse = await axiosInstance.get(`/recipes/${recipeId}`);
-        const fetchedRecipe = recipeResponse.data.data;
-        setRecipe(fetchedRecipe);
-
-        // Save this ID as the last viewed recipe
-        if (fetchedRecipe?._id) {
+        if (fetchedRecipe) {
+          setRecipe(fetchedRecipe);
           localStorage.setItem('lastViewedRecipeId', fetchedRecipe._id);
-        }
+          
+          // Sync URL if it's different (e.g., during fallback or first load)
+          if (fetchedRecipe._id !== id) {
+            navigate(`/recipe-details/${fetchedRecipe._id}`, { replace: true });
+          }
 
-        if (isAuth) {
-          const saveStatusResponse = await axiosInstance.get(`/save-status/${recipeId}`);
-          setIsSaved(saveStatusResponse.data.data);
+          if (isLoggedIn) {
+            const saveStatusResponse = await axiosInstance.get(`/save-status/${fetchedRecipe._id}`);
+            setIsSaved(saveStatusResponse.data.data);
+          }
+        } else {
+          // No recipes at all in the system
+          toast.info("No recipes found. Start by sharing your own creation!", { toastId: "no-recipes" });
+          navigate("/add-recipes");
         }
       } catch (error) {
-        console.log(error.message);
+        console.log("Error in RecipeDetails:", error.message);
       }
     };
 
     getRecipeData();
-  }, [id, isAuth, navigate]);
+  }, [id, isLoggedIn, authLoading, navigate]);
 
   const handleToggleSave = async () => {
     if (!recipe?._id) return;
@@ -97,30 +106,31 @@ function RecipeDetails() {
     navigate(`/edit-recipe/${recipe._id}`);
   };
 
-  if(isAuth === false) return <Navigate to={'/login'}/>
+  if (authLoading) return null;
+  if (isLoggedIn === false) return <Navigate to={'/login'}/>
   return (
     <>
     <Navbar/>
       <section className="reciep-details-page">
         <div className="image-with-recipe-name-container">
-          <img src={recipe.recipeImage} alt="" />
+          <img src={recipe?.recipeImage} alt="" />
           <div className="recipe-name-and-author-container">
             <h1 className="name-of-recipe">
-              {recipe.recipeTitle}
+              {recipe?.recipeTitle}
             </h1>
             <div className="creating-time-and-serving-container">
               <span className="creation-time">
                 <FiClock size={20} />
-                <p>{recipe.preparationTime} min</p>
+                <p>{recipe?.preparationTime} min</p>
               </span>
               <span className="serving-container">
                 <FiUsers size={20} />
-                <p> {recipe.servings} Servings</p>
+                <p> {recipe?.servings} Servings</p>
               </span>
             </div>
             <div className="author-container">
                 <p>Recipe By</p>
-                <p onClick={()=>{ navigate(`/profile/${recipe.createdBy._id}`)}}>{recipe?.createdBy?.name}</p>
+                <p onClick={()=>{ navigate(`/profile/${recipe?.createdBy._id}`)}}>{recipe?.createdBy?.name}</p>
             </div>
             
             <div className="action-buttons-container" style={{ display: 'flex', gap: '10px', flexDirection: 'column', width: '100%' }}>
