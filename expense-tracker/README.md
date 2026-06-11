@@ -1,72 +1,61 @@
-# 💰 Expense Tracker — React (Vite)
+# 💰 Expense Tracker — Full Stack (React + Node.js)
 
-A responsive Expense Tracker built with React that allows users to manage income and expenses with real-time balance updates and persistent storage using browser `localStorage`.
-
-> ⚠️ This is currently a **frontend-only application**. Backend integration is planned.
+A responsive Full Stack Expense Tracker built with React and Node.js. It allows users to securely manage income and expenses with real-time updates and persistent storage in MongoDB.
 
 ---
 
-🌐 Live Demo : https://full-stack-web-apps.vercel.app/
-
-
 ## 🚀 Features
 
-- 📊 Real-time balance calculation  
-- ➕ Add income (budget) and expense transactions  
-- ❌ Delete transactions with automatic recalculation  
-- 🔍 Search & filter transactions (name, amount, type)  
-- 💾 Persistent storage using `localStorage`  
-- 🔄 Instant UI updates with React state  
-- 🧹 Clear all stored data functionality  
-- 📱 Responsive design  
+- 🔐 **User Authentication:** Secure Sign Up and Login using JWT.
+- 📊 **Real-time Balance:** Automatic calculation of balance, income, and expenses.
+- ➕ **Transaction Management:** Add and delete transactions (expenses/budget).
+- 🔍 **Search & Filter:** Easily find transactions by name, amount, or type.
+- 💾 **Persistent Storage:** Data is stored in MongoDB, ensuring it's available across devices.
+- 📱 **Responsive Design:** Works seamlessly on mobile and desktop.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** React (Vite)  
-- **Language:** JavaScript (ES6+)  
-- **State Management:** React Hooks (`useState`, `useEffect`)  
-- **Storage:** Browser `localStorage`  
-- **Styling:** CSS  
+### Frontend
+- **Framework:** React (Vite)
+- **Routing:** React Router DOM
+- **API Client:** Axios
+- **Styling:** CSS
+
+### Backend
+- **Runtime:** Node.js
+- **Framework:** Express.js
+- **Database:** MongoDB (Mongoose)
+- **Authentication:** JSON Web Tokens (JWT) & BcryptJS
 
 ---
 
 ## ⚙️ Installation & Setup
 
 ### 1. Clone the repository
-
 git clone https://github.com/your-username/expense-tracker.git
 cd expense-tracker
 
-2. Install dependencies
+### 2. Install dependencies
+# Install root dependencies (for orchestration)
 npm install
 
-3. Run the application
+# Install all sub-project dependencies
+npm run install-all
+
+### 3. Environment Setup
+Create a `.env` file in the `backend` directory and add:
+PORT=5000
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+
+### 4. Run the application
+# Start both frontend and backend from the root
 npm run dev
-
-
-📈 Key Learnings
-Managing state in React applications
-Using localStorage for persistent data
-Implementing search and filtering
-
-
-⚠️ Current Limitations
-No backend (data stored only in browser)
-No authentication system
-Data is not synced across devices
-
-🚀 Future Improvements
-🔗 Backend integration (Node.js + Express + MongoDB)
-🔐 User authentication (JWT)
-☁️ Cloud database (persistent across devices)
-📊 Charts and analytics dashboard
-🧠 Redux Toolkit for advanced state management
 
 
 👨‍💻 Author
 
 Ahsan Ul Haq
-
 MERN Stack Developer
