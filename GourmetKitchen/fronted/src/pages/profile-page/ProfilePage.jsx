@@ -15,51 +15,57 @@ import { useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
 function ProfilePage() {
-  const {id} = useParams();
-  const [recipes , setRecipes] = useState([]);
+  const { id } = useParams();
+  const [recipes, setRecipes] = useState([]);
   const [currentUser] = useGetUser(); // Logged-in user
   const [user] = useGetUser(id); // Profile user
   const { isLoggedIn, setIsLoggedIn, authLoading } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [recipeCount , setRecipeCount] = useState()
-  const [followingCount , setFollowingCount] = useState(0);
-  const [followerCount , setFollowerCount] = useState(0);
+  const [recipeCount, setRecipeCount] = useState();
+  const [followingCount, setFollowingCount] = useState(0);
+  const [followerCount, setFollowerCount] = useState(0);
   const [isFollowing, setIsFollowing] = useState(false);
   const [activeTab, setActiveTab] = useState("Recipes");
   const [savedRecipes, setSavedRecipes] = useState([]);
   const [profilePreview, setProfilePreview] = useState(null);
- 
-  async function handleImageChange(e){
-      const file = e.target.files[0];
 
-      if(file){
-        // Create local preview immediately
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setProfilePreview(reader.result);
-        };
-        reader.readAsDataURL(file);
+  async function handleImageChange(e) {
+    const file = e.target.files[0];
 
-        await uploadProfileImage(file);
-      }
+    if (file) {
+      // Create local preview immediately
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfilePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+
+      await uploadProfileImage(file);
+    }
   }
 
-  async function uploadProfileImage(file){
+  async function uploadProfileImage(file) {
     try {
       const formData = new FormData();
-      formData.append("profileImage" , file)
-      const response = await axiosInstance.patch('user/upload-profile-image' , formData , {
-        headers: {
-          'Content-Type': 'multipart/form-data',
+      formData.append("profileImage", file);
+      const response = await axiosInstance.patch(
+        "user/upload-profile-image",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
         },
-        withCredentials : true,
-      })
+      );
 
-      toast.success(response.data.message)
+      toast.success(response.data.message);
     } catch (error) {
       console.error("Upload error details:", error);
-      if (error.code === 'ERR_NETWORK') {
-        toast.error("Network error: Server might be down or file is too large. Check your connection.");
+      if (error.code === "ERR_NETWORK") {
+        toast.error(
+          "Network error: Server might be down or file is too large. Check your connection.",
+        );
       } else {
         toast.error(error.response?.data?.message || "Failed to upload image");
       }
@@ -70,57 +76,65 @@ function ProfilePage() {
 
   async function handleLoggedOut() {
     try {
-      const response = await axiosInstance.post('/user/logout' , {} ,{withCredentials : true});
-      toast.success(response.data.message)
+      const response = await axiosInstance.post(
+        "/user/logout",
+        {},
+        { withCredentials: true },
+      );
+      toast.success(response.data.message);
       setIsLoggedIn(false);
 
-      navigate('/')
+      navigate("/");
     } catch (error) {
-      toast.error(error.message)
+      toast.error(error.message);
     }
   }
 
   async function getCreatorRecipes() {
     if (!user?._id) return;
     try {
-      const response = await axiosInstance.get(`/recipes/recipes?userId=${user._id}`);
-      setRecipes(response.data.data)
+      const response = await axiosInstance.get(
+        `/recipes/recipes?userId=${user._id}`,
+      );
+      setRecipes(response.data.data);
     } catch (error) {
       console.log(error);
     }
   }
 
-  async function recipeCounts(){
+  async function recipeCounts() {
     if (!user?._id) return;
     try {
-      const response = await axiosInstance.get(`/recipes/recipes?userId=${user._id}`)
-      setRecipeCount(response.data.data.length)
+      const response = await axiosInstance.get(
+        `/recipes/recipes?userId=${user._id}`,
+      );
+      setRecipeCount(response.data.data.length);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
-  async function getFollowingCount(){
+  async function getFollowingCount() {
     if (!user?._id) return;
     try {
-      const response = await axiosInstance.get(`/following/${user._id}`)
+      const response = await axiosInstance.get(`/following/${user._id}`);
       setFollowingCount(response?.data?.data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
-  async function getFollowerCount(){
+  async function getFollowerCount() {
     if (!user?._id) return;
     try {
-      const response = await axiosInstance.get(`/followers/${user._id}`)
+      const response = await axiosInstance.get(`/followers/${user._id}`);
       setFollowerCount(response?.data?.data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
-  async function getFollowStatus(){
+  async function getFollowStatus() {
     if (!user?._id || !isLoggedIn) return;
     try {
       const response = await axiosInstance.get(`/status/${user._id}`);
@@ -133,7 +147,7 @@ function ProfilePage() {
   async function getSavedRecipes() {
     if (!isLoggedIn) return;
     try {
-      const response = await axiosInstance.get('/saved-recipes');
+      const response = await axiosInstance.get("/saved-recipes");
       setSavedRecipes(response.data.data);
     } catch (error) {
       console.log(error);
@@ -142,8 +156,8 @@ function ProfilePage() {
 
   const handleShare = async () => {
     const shareData = {
-      title: 'GourmetKitchen Profile',
-      text: `Check out ${user?.name || 'this'} profile on GourmetKitchen!`,
+      title: "GourmetKitchen Profile",
+      text: `Check out ${user?.name || "this"} profile on GourmetKitchen!`,
       url: window.location.href,
     };
 
@@ -155,43 +169,42 @@ function ProfilePage() {
         toast.success("Profile link copied to clipboard!");
       }
     } catch (err) {
-      console.log('Error sharing:', err);
+      console.log("Error sharing:", err);
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     getCreatorRecipes();
     recipeCounts();
     getFollowingCount();
     getFollowerCount();
     getFollowStatus();
     if (activeTab === "Saved") getSavedRecipes();
-  } , [user, isLoggedIn, activeTab])
+  }, [user, isLoggedIn, activeTab]);
 
-
-  async function toggleFollow(profileId){
+  async function toggleFollow(profileId) {
     try {
       if (isFollowing) {
         const response = await axiosInstance.delete(`/unfollow/${profileId}`);
         toast.success(response.data.message);
         setIsFollowing(false);
-        setFollowerCount(prev => prev - 1);
+        setFollowerCount((prev) => prev - 1);
       } else {
         const response = await axiosInstance.post(`/follow/${profileId}`, null);
         toast.success(response.data.message);
         setIsFollowing(true);
-        setFollowerCount(prev => prev + 1);
+        setFollowerCount((prev) => prev + 1);
       }
     } catch (error) {
       console.log(error.message);
       toast.error(error.message);
     }
   }
- 
+
   useEffect(() => {
     if (!authLoading && !id && isLoggedIn === false) {
       toast.info("you are not register");
-      navigate('/login');
+      navigate("/login");
     }
   }, [id, isLoggedIn, authLoading, navigate]);
 
@@ -205,22 +218,35 @@ function ProfilePage() {
           <div className="profile-picture-and-intro-container">
             <div className="image-and-edit-image-container">
               {/* <img src={profilePic} alt="profile picture" width={150} /> */}
-              <FaPen size={30} className="pencil-icon"
-              onClick={()=> document.getElementById('profileInput').click()}
+              <FaPen
+                size={30}
+                className="pencil-icon"
+                onClick={() => document.getElementById("profileInput").click()}
               />
 
-              <input type="file" style={{ display: "none" }}
-              accept="image/*"
-              id="profileInput"
-              onChange={handleImageChange}
+              <input
+                type="file"
+                style={{ display: "none" }}
+                accept="image/*"
+                id="profileInput"
+                onChange={handleImageChange}
               />
 
-              <img src={isLoggedIn ? (user?.profileImage == '' ? profilePic : user?.profileImage) : profilePic} alt="profile" />
-
-
+              <img
+                src={
+                  isLoggedIn
+                    ? user?.profileImage == ""
+                      ? profilePic
+                      : user?.profileImage
+                    : profilePic
+                }
+                alt="profile"
+              />
             </div>
             <div className="text-about-user-container">
-              <h1 className="profile-page-name-heading">{user?.name || 'JHON'}</h1>
+              <h1 className="profile-page-name-heading">
+                {user?.name || "JHON"}
+              </h1>
               <p className="intro-of-user">
                 Culinary explorer and weekend baker. Sharing my journey through
                 heritage recipes and modern fusion techniques. Always looking
@@ -244,42 +270,47 @@ function ProfilePage() {
 
             <div className="follow-btn-and-share-icon-container">
               {!isLoggedIn && (
-                <button 
-                  className="responsive-login-btn" 
-                  onClick={() => navigate('/login')}
+                <button
+                  className="responsive-login-btn"
+                  onClick={() => navigate("/login")}
                   disabled={isLoggedIn}
-                >Login</button>
+                >
+                  Login
+                </button>
               )}
 
               {currentUser?._id === user?._id && (
-                <button 
-                  onClick={handleLoggedOut}
-                  disabled={!isLoggedIn}
-                >Logout</button>
+                <button onClick={handleLoggedOut} disabled={!isLoggedIn}>
+                  Logout
+                </button>
               )}
-              
+
               {currentUser && user && currentUser._id !== user._id && (
                 <button onClick={() => toggleFollow(user._id)}>
                   {isFollowing ? "Unfollow" : "Follow"}
                 </button>
               )}
-              
-              <FiShare2 className="share-icon" size={24} onClick={handleShare} />
+
+              <FiShare2
+                className="share-icon"
+                size={24}
+                onClick={handleShare}
+              />
             </div>
           </div>
 
           <div className="my-recipes-and-saved-recipes-container">
             <div className="my-recipe-and-saved-recipe-selection-container">
-              <button 
-                className={activeTab === "Recipes" ? "active" : ""} 
+              <button
+                className={activeTab === "Recipes" ? "active" : ""}
                 onClick={() => setActiveTab("Recipes")}
               >
                 <LuUtensils />
                 Recipe
               </button>
               {currentUser?._id === user?._id && (
-                <button 
-                  className={activeTab === "Saved" ? "active" : ""} 
+                <button
+                  className={activeTab === "Saved" ? "active" : ""}
                   onClick={() => setActiveTab("Saved")}
                 >
                   <BsBookmark />
@@ -288,19 +319,21 @@ function ProfilePage() {
               )}
             </div>
             <div className="recipe-card-container">
-              {(activeTab === "Recipes" ? recipes : savedRecipes)?.map((recipe) => (
-                <RecipeCard
-                  key={recipe._id}
-                  items={{
-                    recipeImage: recipe.recipeImage,
-                    recipeTitle: recipe.recipeTitle,
-                    description: recipe.description,
-                    preparationTime: recipe.preparationTime,
-                    difficulty: recipe.difficulty,
-                    id: recipe._id,
-                  }}
-                />
-              ))}
+              {(activeTab === "Recipes" ? recipes : savedRecipes)?.map(
+                (recipe) => (
+                  <RecipeCard
+                    key={recipe._id}
+                    items={{
+                      recipeImage: recipe.recipeImage,
+                      recipeTitle: recipe.recipeTitle,
+                      description: recipe.description,
+                      preparationTime: recipe.preparationTime,
+                      difficulty: recipe.difficulty,
+                      id: recipe._id,
+                    }}
+                  />
+                ),
+              )}
             </div>
           </div>
         </div>
