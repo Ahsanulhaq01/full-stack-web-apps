@@ -1,5 +1,8 @@
 import { Router } from "express";
-import { getNotifications, markAsRead } from "../controllers/notification.controller.js";
+import {
+  getNotifications,
+  markAsRead,
+} from "../controllers/notification.controller.js";
 import verifyjwt from "../middleware/auth.middleware.js";
 
 const router = Router();
